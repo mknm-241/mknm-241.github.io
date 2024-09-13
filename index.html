@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расписание МКНм-241</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="date" id="currentDate"></div>
+            <div class="week" id="currentWeek"></div>
+        </div>
+        <div class="segmented-control">
+            <input type="radio" name="week" id="oddWeek" checked>
+            <label for="oddWeek" onclick="toggleWeek('odd')">Нечётная</label>
+            <input type="radio" name="week" id="evenWeek">
+            <label for="evenWeek" onclick="toggleWeek('even')">Чётная</label>
+        </div>
+
+        <div id="evenWeekTable" style="display:none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>День</th>
+                        <th>Время</th>
+                        <th>Занятие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2">Понедельник</td>
+                        <td>17:15-18:50</td>
+                        <td><em>Информационные технологии в профессиональной деятельности</em> <br> <strong>Лекция</strong> <br> проф. Гудов А.М., ауд. 2139</td>
+                    </tr>
+                    <tr>
+                        <td>19:00-20:35</td>
+                        <td><em>Метрология и качество программного обеспечения</em> <br> <strong>Лекция</strong> <br> проф. Гудов А.М., онлайн</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Среда</td>
+                        <td></td>
+                        <td>
+                            <em>Современные коммуникативные технологии</em> <br>
+                            <strong>Лекция</strong> <br>
+                            <a href="mailto:greenwald.ru@rambler.ru">доц. Гринвальд О.Н.</a>, <a href="https://github.com/mknm-241/mknm-241.github.io/raw/main/greenwald.docx">онлайн</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>17:15-18:50</td>
+                        <td><em>Философия и методология научного знания</em> <br> <strong>Лекция</strong> <br> проф. Жукова О.И., ауд. 2221</td>
+                    </tr>
+                    <tr>
+                        <td>Четверг</td>
+                        <td>17:15-18:50</td>
+                        <td><em>Управление проектами в науке и профессиональной деятельности</em> <br> <strong>Лекция</strong> <br> проф. Медведев А.В., ауд. 2226</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Пятница</td>
+                        <td>17:15-18:50</td>
+                        <td><em>Математические основы информационной безопасности</em> <br> <strong>Лекция</strong> <br> доц. Сергеева О.А., <a href="https://discord.gg/mu4xj82zmJ">онлайн</a></td>
+                    </tr>
+                    <tr>
+                        <td>19:00-20:35</td>
+                        <td><em>Системы компьютерной математики в науке и производстве</em> <br> <strong>Лекция</strong> <br> проф. Гудов А.М., онлайн</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="oddWeekTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>День</th>
+                        <th>Время</th>
+                        <th>Занятие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2">Понедельник</td>
+                        <td>17:15-18:50</td>
+                        <td><em>Информационные технологии в профессиональной деятельности</em> <br> <strong>Лабораторная</strong> <br> проф. Гудов А.М., ауд. 2139</td>
+                    </tr>
+                    <tr>
+                        <td>19:00-20:35</td>
+                        <td><em>Метрология и качество программного обеспечения</em> <br> <strong>Лабораторная</strong> <br> проф. Гудов А.М., онлайн</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Среда</td>
+                        <td></td>
+                        <td>
+                            <em>Современные коммуникативные технологии</em> <br>
+                            <strong>Практика</strong> <br>
+                            <a href="mailto:greenwald.ru@rambler.ru">доц. Гринвальд О.Н.</a>, <a href="https://github.com/mknm-241/mknm-241.github.io/raw/main/greenwald.docx">онлайн</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>17:15-18:50</td>
+                        <td><em>Философия и методология научного знания</em> <br> <strong>Лекция</strong> <br> проф. Жукова О.И., ауд. 2221</td>
+                    </tr>
+                    <tr>
+                        <td>Четверг</td>
+                        <td>17:15-18:50</td>
+                        <td><em>Управление проектами в науке и профессиональной деятельности</em> <br> <strong>Лекция</strong> <br> проф. Медведев А.В., ауд. 2226</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Пятница</td>
+                        <td>17:15-18:50</td>
+                        <td><em>Математические основы информационной безопасности</em> <br> <strong>Практика</strong> <br> доц. Сергеева О.А., <a href="https://discord.gg/mu4xj82zmJ">онлайн</a></td>
+                    </tr>
+                    <tr>
+                        <td>19:00-20:35</td>
+                        <td><em>Системы компьютерной математики в науке и производстве</em> <br> <strong>Лабораторная</strong> <br> проф. Гудов А.М., онлайн</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

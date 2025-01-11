@@ -1,9 +1,18 @@
-function getWeekNumber(d) {
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-    var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-    var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
-    return weekNo - 34;
+function getWeekNumber(date) {
+    const currentYear = date.getFullYear();
+    const septemberFirst = new Date(currentYear, 8, 1);
+
+    const academicYearStart = date < septemberFirst
+        ? new Date(currentYear - 1, 8, 1)
+        : septemberFirst;
+
+    const firstWeekMonday = new Date(academicYearStart);
+    const dayShift = (firstWeekMonday.getDay() + 6) % 7;
+    firstWeekMonday.setDate(firstWeekMonday.getDate() - dayShift);
+
+    const diffInDays = Math.floor((date - firstWeekMonday) / (1000 * 60 * 60 * 24));
+
+    return Math.ceil((diffInDays + 1) / 7);
 }
 
 function updateDateAndWeek() {
@@ -11,28 +20,30 @@ function updateDateAndWeek() {
     const weekNumber = getWeekNumber(today);
     const isEvenWeek = weekNumber % 2 === 0;
 
-    const options = {
+    const formattedDate = today.toLocaleDateString('ru-RU', {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric',
         weekday: 'long'
-    };
-    
-    let dateString = today.toLocaleDateString('ru-RU', options);
+    });
 
-    document.getElementById('currentDate').textContent = dateString;
-
+    document.getElementById('currentDate').textContent = formattedDate;
     document.getElementById('currentWeek').innerHTML = `
-        Неделя <span>${weekNumber}</span>${isEvenWeek ? 'чётная' : 'нечётная'}
+        Неделя <span>${weekNumber}</span>${isEvenWeek ? ' чётная' : ' нечётная'}
     `;
 
-    document.getElementById(isEvenWeek ? 'evenWeek' : 'oddWeek').checked = true;
-    toggleWeek(isEvenWeek ? 'even' : 'odd');
+    const weekType = isEvenWeek ? 'even' : 'odd';
+    document.getElementById(`${weekType}Week`).checked = true;
+
+    toggleWeek(weekType);
 }
 
 function toggleWeek(weekType) {
-    document.getElementById('evenWeekTable').style.display = weekType === 'even' ? 'block' : 'none';
-    document.getElementById('oddWeekTable').style.display = weekType === 'odd' ? 'block' : 'none';
+    const evenTable = document.getElementById('evenWeekTable');
+    const oddTable = document.getElementById('oddWeekTable');
+
+    evenTable.style.display = weekType === 'even' ? 'block' : 'none';
+    oddTable.style.display = weekType === 'odd' ? 'block' : 'none';
 }
 
-updateDateAndWeek();
+document.addEventListener('DOMContentLoaded', updateDateAndWeek);

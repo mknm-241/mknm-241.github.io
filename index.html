@@ -411,15 +411,16 @@
         const DAYS_OF_WEEK = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
         const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
         const FORMAT_LOCALE = 'ru-RU';
-        const SEPTEMBER = 8;
+        const SEPTEMBER_MONTH_INDEX = 8;
 
-        function getAcademicWeekNumber(date) {
+        const getAcademicWeekNumber = (date) => {
             const currentYear = date.getFullYear();
             const currentMonth = date.getMonth();
 
-            const startYear = (currentMonth < SEPTEMBER) ? currentYear - 1 : currentYear;
+            const startYear = (currentMonth < SEPTEMBER_MONTH_INDEX) ? currentYear - 1 : currentYear;
 
-            const septemberFirst = new Date(startYear, SEPTEMBER, 1);
+            const septemberFirst = new Date(startYear, SEPTEMBER_MONTH_INDEX, 1);
+            septemberFirst.setHours(0, 0, 0, 0);
 
             const dayOfWeek = septemberFirst.getDay();
             const dayAdjustment = (dayOfWeek === 0) ? 6 : (dayOfWeek - 1); 
@@ -431,13 +432,14 @@
             const diffInTime = date.getTime() - firstWeekMonday.getTime();
             
             return Math.ceil(diffInTime / MS_PER_WEEK);
-        }
+        };
 
-        function createLessonHtml(lesson) {
-            const hasLink = lesson.link && lesson.link.trim() !== '';
+        const createLessonHtml = (lesson) => {
+            const { time, name, type, info, link } = lesson;
+            const hasLink = link && link.trim() !== '';
             
             const itemTag = hasLink ? 'a' : 'div';
-            const itemAttributes = hasLink ? `href="${lesson.link}" target="_blank" rel="noopener noreferrer"` : '';
+            const itemAttributes = hasLink ? `href="${link}" target="_blank" rel="noopener noreferrer"` : '';
 
             return `
                 <${itemTag} class="class-item" ${itemAttributes}>
@@ -446,20 +448,20 @@
                             <svg class="time-icon" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                             </svg>
-                            ${lesson.time}
+                            ${time}
                         </div>
-                        <div class="class-name">${lesson.name}</div>
+                        <div class="class-name">${name}</div>
                         <div class="class-meta">
-                            <span class="class-type">${lesson.type}</span>
-                            <span class="class-info">${lesson.info}</span>
+                            <span class="class-type">${type}</span>
+                            <span class="class-info">${info}</span>
                         </div>
                     </div>
                 </${itemTag}>
             `;
-        }
+        };
 
-        function renderSchedule(weekSchedule) {
-            let htmlContent = DAYS_OF_WEEK.reduce((acc, day) => {
+        const renderSchedule = (weekSchedule) => {
+            const htmlContent = DAYS_OF_WEEK.reduce((acc, day) => {
                 const lessons = weekSchedule[day];
                 
                 if (lessons && lessons.length > 0) {
@@ -476,20 +478,21 @@
             }, '');
 
             DOM.scheduleDisplay.innerHTML = htmlContent;
-        }
+        };
 
-        function updateHeaderInfo() {
+        const updateHeaderInfo = () => {
             const today = new Date();
             const weekNumber = getAcademicWeekNumber(today);
             const isEvenWeek = weekNumber % 2 === 0;
             const weekTypeKey = isEvenWeek ? 'even' : 'odd';
 
-            const formattedDate = today.toLocaleDateString(FORMAT_LOCALE, {
+            const dayOfWeekShort = today.toLocaleDateString(FORMAT_LOCALE, { weekday: 'short' });
+            const datePart = today.toLocaleDateString(FORMAT_LOCALE, {
                 day: 'numeric',
                 month: 'long',
-                year: 'numeric',
-                weekday: 'long'
+                year: 'numeric'
             });
+            const formattedDate = `${dayOfWeekShort}, ${datePart}`; 
             
             const weekSchedule = SCHEDULE_DATA[weekTypeKey];
 
@@ -497,7 +500,7 @@
             DOM.weekNumber.textContent = weekNumber;
 
             renderSchedule(weekSchedule);
-        }
+        };
 
         document.addEventListener('DOMContentLoaded', updateHeaderInfo);
     </script>

@@ -406,27 +406,28 @@
             weekType: document.getElementById('weekType'),
             scheduleDisplay: document.getElementById('scheduleDisplay')
         };
+        
+        const DAYS_OF_WEEK = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+        const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
 
         function getAcademicWeekNumber(date) {
             const currentYear = date.getFullYear();
             const currentMonth = date.getMonth();
 
-            const academicYearStart = (currentMonth < 8) ?
-                new Date(currentYear - 1, 8, 1) :
-                new Date(currentYear, 8, 1);
+            const academicYearStart = (currentMonth < 8)
+                ? new Date(currentYear - 1, 8, 1)
+                : new Date(currentYear, 8, 1);
 
             const firstWeekMonday = new Date(academicYearStart);
             let dayOfWeek = firstWeekMonday.getDay();
-            dayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek;
 
-            if (dayOfWeek !== 1) {
-                firstWeekMonday.setDate(firstWeekMonday.getDate() - (dayOfWeek - 1));
-            }
+            const dayAdjustment = (dayOfWeek === 0) ? 6 : (dayOfWeek - 1);
+            firstWeekMonday.setDate(firstWeekMonday.getDate() - dayAdjustment);
+            firstWeekMonday.setHours(0, 0, 0, 0);
 
             const diffInTime = date.getTime() - firstWeekMonday.getTime();
-            const diffInDays = Math.floor(diffInTime / (1000 * 60 * 60 * 24));
-
-            return Math.ceil((diffInDays + 1) / 7);
+            
+            return Math.ceil(diffInTime / MS_PER_WEEK);
         }
 
         function createLessonHtml(lesson) {
@@ -452,6 +453,13 @@
             `;
         }
 
+        function handleLinkClick(event) {
+            const itemElement = event.currentTarget;
+            if (itemElement.dataset.link) {
+                window.open(itemElement.dataset.link, '_blank');
+            }
+        }
+
         function renderSchedule() {
             const today = new Date();
             const weekNumber = getAcademicWeekNumber(today);
@@ -461,29 +469,25 @@
             const weekSchedule = SCHEDULE_DATA[weekTypeKey];
             let htmlContent = '';
 
-            const daysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-
-            daysOfWeek.forEach(day => {
+            for (const day of DAYS_OF_WEEK) {
                 const lessons = weekSchedule[day];
                 if (lessons && lessons.length > 0) {
                     htmlContent += `
                         <div class="day-section">
                             <div class="day-header">${day}</div>
                     `;
-                    lessons.forEach(lesson => {
+                    for (const lesson of lessons) {
                         htmlContent += createLessonHtml(lesson);
-                    });
+                    }
                     htmlContent += '</div>';
                 }
-            });
+            }
 
             DOM.scheduleDisplay.innerHTML = htmlContent;
 
             DOM.scheduleDisplay.querySelectorAll('.class-item').forEach(itemElement => {
                 if (itemElement.dataset.link) {
-                    itemElement.addEventListener('click', (event) => {
-                        window.open(itemElement.dataset.link, '_blank');
-                    });
+                    itemElement.addEventListener('click', handleLinkClick);
                 }
             });
         }

@@ -141,6 +141,8 @@
             cursor: pointer;
             display: flex;
             flex-direction: column;
+            text-decoration: none;
+            color: inherit;
         }
 
         .class-item:hover {
@@ -409,20 +411,22 @@
         
         const DAYS_OF_WEEK = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
         const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
+        const FORMAT_LOCALE = 'ru-RU';
+        const SEPTEMBER = 8;
 
         function getAcademicWeekNumber(date) {
             const currentYear = date.getFullYear();
             const currentMonth = date.getMonth();
 
-            const academicYearStart = (currentMonth < 8)
-                ? new Date(currentYear - 1, 8, 1)
-                : new Date(currentYear, 8, 1);
+            const startYear = (currentMonth < SEPTEMBER) ? currentYear - 1 : currentYear;
 
-            const firstWeekMonday = new Date(academicYearStart);
-            let dayOfWeek = firstWeekMonday.getDay();
+            const septemberFirst = new Date(startYear, SEPTEMBER, 1);
 
+            const dayOfWeek = septemberFirst.getDay();
             const dayAdjustment = (dayOfWeek === 0) ? 6 : (dayOfWeek - 1);
-            firstWeekMonday.setDate(firstWeekMonday.getDate() - dayAdjustment);
+            
+            const firstWeekMonday = new Date(septemberFirst);
+            firstWeekMonday.setDate(septemberFirst.getDate() - dayAdjustment);
             firstWeekMonday.setHours(0, 0, 0, 0);
 
             const diffInTime = date.getTime() - firstWeekMonday.getTime();
@@ -432,10 +436,12 @@
 
         function createLessonHtml(lesson) {
             const hasLink = lesson.link && lesson.link.trim() !== '';
-            const linkAttribute = hasLink ? `data-link="${lesson.link}"` : '';
+            
+            const itemTag = hasLink ? 'a' : 'div';
+            const itemAttributes = hasLink ? `href="${lesson.link}" target="_blank" rel="noopener noreferrer"` : '';
 
             return `
-                <div class="class-item" ${linkAttribute}>
+                <${itemTag} class="class-item" ${itemAttributes}>
                     <div class="class-details">
                         <div class="class-time">
                             <svg class="time-icon" fill="currentColor" viewBox="0 0 20 20">
@@ -449,47 +455,30 @@
                             <span class="class-info">${lesson.info}</span>
                         </div>
                     </div>
-                </div>
+                </${itemTag}>
             `;
         }
 
-        function handleLinkClick(event) {
-            const itemElement = event.currentTarget;
-            if (itemElement.dataset.link) {
-                window.open(itemElement.dataset.link, '_blank');
-            }
-        }
-
-        function renderSchedule() {
-            const today = new Date();
-            const weekNumber = getAcademicWeekNumber(today);
-            const isEvenWeek = weekNumber % 2 === 0;
-            const weekTypeKey = isEvenWeek ? 'even' : 'odd';
-
-            const weekSchedule = SCHEDULE_DATA[weekTypeKey];
+        function renderSchedule(weekSchedule) {
             let htmlContent = '';
-
-            for (const day of DAYS_OF_WEEK) {
+            
+            htmlContent = DAYS_OF_WEEK.reduce((acc, day) => {
                 const lessons = weekSchedule[day];
+                
                 if (lessons && lessons.length > 0) {
-                    htmlContent += `
+                    const lessonsHtml = lessons.map(createLessonHtml).join('');
+                    
+                    return acc + `
                         <div class="day-section">
                             <div class="day-header">${day}</div>
+                            ${lessonsHtml}
+                        </div>
                     `;
-                    for (const lesson of lessons) {
-                        htmlContent += createLessonHtml(lesson);
-                    }
-                    htmlContent += '</div>';
                 }
-            }
+                return acc;
+            }, '');
 
             DOM.scheduleDisplay.innerHTML = htmlContent;
-
-            DOM.scheduleDisplay.querySelectorAll('.class-item').forEach(itemElement => {
-                if (itemElement.dataset.link) {
-                    itemElement.addEventListener('click', handleLinkClick);
-                }
-            });
         }
 
         function updateHeaderInfo() {
@@ -497,19 +486,22 @@
             const weekNumber = getAcademicWeekNumber(today);
             const isEvenWeek = weekNumber % 2 === 0;
             const weekTypeString = isEvenWeek ? 'Чётная неделя' : 'Нечётная неделя';
+            const weekTypeKey = isEvenWeek ? 'even' : 'odd';
 
-            const formattedDate = today.toLocaleDateString('ru-RU', {
+            const formattedDate = today.toLocaleDateString(FORMAT_LOCALE, {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric',
                 weekday: 'long'
             });
+            
+            const weekSchedule = SCHEDULE_DATA[weekTypeKey];
 
             DOM.currentDate.textContent = formattedDate;
             DOM.weekNumber.textContent = weekNumber;
             DOM.weekType.textContent = weekTypeString;
 
-            renderSchedule();
+            renderSchedule(weekSchedule);
         }
 
         document.addEventListener('DOMContentLoaded', updateHeaderInfo);

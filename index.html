@@ -86,40 +86,10 @@
             overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at 60% 80%, rgba(193, 95, 60, 0.03) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0;
-            animation: fadeIn var(--transition-slow) var(--ease-smooth) forwards;
-        }
-
-        [data-theme="dark"] body::before {
-            background: radial-gradient(circle at 40% 20%, rgba(232, 147, 115, 0.08) 0%, transparent 50%);
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
         @keyframes fadeInDown {
             from {
                 opacity: 0;
                 transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -136,50 +106,6 @@
             }
         }
         
-        @keyframes slideInUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(100%); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-        
-        @keyframes slideOutDown {
-            from { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-            to { 
-                opacity: 0; 
-                transform: translateY(100%); 
-            }
-        }
-
-        @keyframes slideInDown {
-            from { 
-                opacity: 0; 
-                transform: translateY(-100%); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-
-        @keyframes slideOutUp {
-            from { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-            to { 
-                opacity: 0; 
-                transform: translateY(-100%); 
-            }
-        }
-
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -251,7 +177,7 @@
             background: transparent;
             border-radius: 9999px;
             cursor: pointer;
-            transition: all var(--transition-normal) var(--ease-smooth);
+            transition: all var(--transition-fast) var(--ease-smooth);
             border: none;
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
@@ -263,6 +189,7 @@
         
         .week-arrow:hover:not(.disabled) {
             background: var(--bg-glass);
+            transition-duration: var(--transition-fast);
         }
         
         .week-arrow:hover:not(.disabled) svg {
@@ -278,7 +205,7 @@
             width: 16px;
             height: 16px;
             color: var(--text-secondary);
-            transition: all var(--transition-normal) var(--ease-smooth);
+            transition: all var(--transition-fast) var(--ease-smooth);
             position: relative;
             z-index: 1;
         }
@@ -295,7 +222,7 @@
             font-size: 0.9rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all var(--transition-normal) var(--ease-smooth);
+            transition: all var(--transition-fast) var(--ease-smooth);
             padding: 0;
             box-shadow: var(--shadow-accent);
             position: relative;
@@ -311,6 +238,7 @@
         .week-number:hover {
             transform: scale(1.01);
             box-shadow: 0 8px 20px var(--accent-glow);
+            transition-duration: var(--transition-fast);
         }
         
         .week-number:active {
@@ -340,6 +268,7 @@
             min-width: 0;
             display: inline-block;
             text-align: center;
+            transition: opacity var(--transition-fast) ease-in-out;
         }
         
         .week-type {
@@ -360,7 +289,7 @@
                 transparent 50%, 
                 rgba(255, 255, 255, 0.3) 100%);
             opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-smooth);
+            transition: opacity var(--transition-fast) var(--ease-smooth);
         }
 
         .week-number:hover::before {
@@ -380,10 +309,6 @@
             position: relative;
             outline: 1px solid rgba(255, 255, 255, 0.05);
             will-change: opacity, transform;
-        }
-
-        .schedule-card.initial-load {
-            animation: fadeInUp 0.8s var(--ease-smooth) 0.1s both;
         }
 
         .schedule-card::before {
@@ -463,7 +388,7 @@
 
         .class-item {
             padding: 1.35rem 1.75rem;
-            transition: all var(--transition-normal) var(--ease-smooth);
+            transition: all var(--transition-fast) var(--ease-smooth);
             cursor: pointer;
             display: flex;
             flex-direction: column;
@@ -482,7 +407,7 @@
                 var(--accent-light) 0%, 
                 transparent 50%);
             opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-smooth);
+            transition: opacity var(--transition-fast) var(--ease-smooth);
             pointer-events: none;
         }
 
@@ -518,7 +443,7 @@
             flex-shrink: 0;
             color: var(--accent-main);
             filter: drop-shadow(0 0 4px var(--accent-glow));
-            transition: all var(--transition-normal) var(--ease-smooth);
+            transition: all var(--transition-fast) var(--ease-smooth);
             will-change: transform;
         }
 
@@ -528,7 +453,7 @@
             color: var(--text-primary);
             line-height: 1.5;
             letter-spacing: -0.02em;
-            transition: color var(--transition-normal) var(--ease-smooth);
+            transition: color var(--transition-fast) var(--ease-smooth);
         }
 
         .class-meta {
@@ -544,15 +469,13 @@
         .class-type {
             display: inline-block;
             padding: 0.35rem 0.85rem;
-            background: linear-gradient(135deg, 
-                var(--accent-light) 0%, 
-                rgba(193, 95, 60, 0.12) 100%);
+            background: var(--accent-light);
             color: var(--accent-main);
             border-radius: var(--radius-sm);
             font-size: 0.75rem;
             font-weight: 600;
             border: 1px solid rgba(193, 95, 60, 0.15);
-            transition: all var(--transition-normal) var(--ease-smooth);
+            transition: all var(--transition-fast) var(--ease-smooth);
             position: relative;
             overflow: hidden;
             will-change: transform;
@@ -564,10 +487,18 @@
             inset: 0;
             background: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-hover) 100%);
             opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-smooth);
+            transition: opacity var(--transition-fast) var(--ease-smooth);
         }
 
-        .class-type:hover::before {
+        .class-type:hover,
+        .class-type:active {
+            color: white;
+            border-color: var(--accent-main);
+            box-shadow: 0 4px 8px var(--accent-glow);
+        }
+
+        .class-type:hover::before,
+        .class-type:active::before {
             opacity: 1;
         }
 
@@ -604,10 +535,7 @@
             }
             
             .class-type:hover {
-                color: white;
-                border-color: var(--accent-main);
                 transform: translateY(-1px);
-                box-shadow: 0 4px 8px var(--accent-glow);
             }
 
             .class-type:active {
@@ -724,6 +652,11 @@
                 padding: 0.3rem 0.65rem;
                 font-size: 0.7rem;
             }
+            
+            .class-type:active {
+                transform: translateY(0);
+                transition-duration: var(--transition-fast);
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -762,7 +695,7 @@
             </div>
         </header>
 
-        <main id="scheduleDisplay" class="schedule-card initial-load"></main>
+        <main id="scheduleDisplay" class="schedule-card"></main>
     </div>
 
     <nav class="bottom-floating-bar">
@@ -791,6 +724,7 @@
             MS_PER_WEEK: 604800000,
             SEPTEMBER_INDEX: 8,
             TRANSITION_DURATION: 300,
+            TRANSITION_FAST: 150,
             LOCALE: 'ru-RU',
             DAYS: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
         };
@@ -925,12 +859,7 @@
                 this.initTheme();
                 this.setViewportHeight();
                 this.attachEventListeners();
-                this.updateDisplay(0);
-                
-                requestAnimationFrame(() => {
-                    this.dom.scheduleDisplay.style.opacity = '1';
-                    this.dom.scheduleDisplay.style.transform = 'translateY(0)';
-                });
+                this.initialLoadDisplay();
             }
 
             initTheme() {
@@ -952,9 +881,9 @@
                 const changeWeek = (direction) => this.changeWeek(direction);
                 const resetWeek = () => this.resetWeek();
                 
-                [this.dom.prevWeekDesktop, this.dom.prevWeekMobile].forEach(el => el && el.addEventListener('click', () => changeWeek(-1)));
-                [this.dom.nextWeekDesktop, this.dom.nextWeekMobile].forEach(el => el && el.addEventListener('click', () => changeWeek(1)));
-                [this.dom.weekNumberDesktop, this.dom.weekNumberMobile].forEach(el => el && el.addEventListener('click', resetWeek));
+                [this.dom.prevWeekDesktop, this.dom.prevWeekMobile].forEach(el => el?.addEventListener('click', () => changeWeek(-1)));
+                [this.dom.nextWeekDesktop, this.dom.nextWeekMobile].forEach(el => el?.addEventListener('click', () => changeWeek(1)));
+                [this.dom.weekNumberDesktop, this.dom.weekNumberMobile].forEach(el => el?.addEventListener('click', resetWeek));
                 
                 window.addEventListener('resize', () => this.setViewportHeight());
                 window.addEventListener('orientationchange', () => this.setViewportHeight());
@@ -976,12 +905,6 @@
                 return Math.ceil(timeDiff / CONFIG.MS_PER_WEEK);
             }
 
-            getWeekNumber(offset = 0) {
-                const date = new Date();
-                date.setDate(date.getDate() + (offset * 7));
-                return this.getAcademicWeek(date);
-            }
-
             isWeekValid(weekNum) {
                 return weekNum >= CONFIG.MIN_WEEK && weekNum <= CONFIG.MAX_WEEK;
             }
@@ -990,19 +913,22 @@
                 if (this.state.isAnimating) return;
                 
                 const newOffset = this.state.weekOffset + direction;
-                const newWeekNum = this.getWeekNumber(newOffset);
                 
+                const date = new Date();
+                date.setDate(date.getDate() + (newOffset * 7));
+                const newWeekNum = this.getAcademicWeek(date);
+
                 if (!this.isWeekValid(newWeekNum)) return;
                 
                 this.state.weekOffset = newOffset;
-                this.updateDisplay(direction);
+                this.animateAndDisplay(direction);
             }
 
             resetWeek() {
                 if (this.state.isAnimating || this.state.weekOffset === 0) return;
                 
                 this.state.weekOffset = 0;
-                this.updateDisplay(0);
+                this.animateAndDisplay(0);
             }
 
             createLessonHTML(lesson) {
@@ -1049,30 +975,34 @@
             
             updateWeekNumberHTML(element, weekNum, direction = 0) {
                 if (!element) return;
+                const weekValueSpan = element.querySelector('.week-number-value');
+                if (!weekValueSpan) return;
                 
                 if (direction !== 0) {
-                    const oldNum = direction === 1 ? weekNum - 1 : weekNum + 1;
-                    const animClassOut = direction === 1 ? 'slideOutUp' : 'slideOutDown';
-                    const animClassIn = direction === 1 ? 'slideInUp' : 'slideInDown';
-                    
-                    element.innerHTML = `
-                        <span class="week-number-value" style="animation: ${animClassOut} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${oldNum}</span>
-                    `;
+                    weekValueSpan.style.transition = `opacity ${CONFIG.TRANSITION_FAST}ms ease-in-out`;
+                    weekValueSpan.style.opacity = '0';
                     
                     setTimeout(() => {
-                        element.innerHTML = `
-                            <span class="week-number-value" style="animation: ${animClassIn} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${weekNum}</span>
-                        `;
-                    }, CONFIG.TRANSITION_DURATION);
+                        weekValueSpan.textContent = weekNum;
+                        weekValueSpan.style.opacity = '1';
+                    }, CONFIG.TRANSITION_DURATION / 2);
 
                 } else {
-                    element.innerHTML = `
-                        <span class="week-number-value">${weekNum}</span>
-                    `;
+                    weekValueSpan.textContent = weekNum;
+                    weekValueSpan.style.opacity = '1';
+                    weekValueSpan.style.transition = '';
                 }
             }
 
-            updateDisplay(direction) {
+            updateArrowStates(weekNum) {
+                const isDisabledPrev = weekNum <= CONFIG.MIN_WEEK;
+                const isDisabledNext = weekNum >= CONFIG.MAX_WEEK;
+                
+                [this.dom.prevWeekDesktop, this.dom.prevWeekMobile].forEach(el => el?.classList.toggle('disabled', isDisabledPrev));
+                [this.dom.nextWeekDesktop, this.dom.nextWeekMobile].forEach(el => el?.classList.toggle('disabled', isDisabledNext));
+            }
+            
+            animateAndDisplay(direction) {
                 this.state.isAnimating = true;
                 
                 const date = new Date();
@@ -1092,19 +1022,12 @@
                 this.dom.scheduleDisplay.style.transform = 'translateY(10px)';
                 this.dom.currentDate.style.opacity = '0';
                 
-                this.dom.scheduleDisplay.classList.remove('initial-load');
-                
                 this.updateWeekNumberHTML(this.dom.weekNumberDesktop, weekNum, direction);
                 this.updateWeekNumberHTML(this.dom.weekNumberMobile, weekNum, direction);
 
                 
                 setTimeout(() => {
                     this.dom.currentDate.textContent = `${dayShort}, ${datePart}`;
-                    
-                    if (direction === 0) {
-                        this.updateWeekNumberHTML(this.dom.weekNumberDesktop, weekNum, 0);
-                        this.updateWeekNumberHTML(this.dom.weekNumberMobile, weekNum, 0);
-                    }
                     
                     this.updateArrowStates(weekNum);
                     this.renderSchedule(SCHEDULE_DATA[scheduleType]);
@@ -1122,13 +1045,28 @@
                     });
                 }, CONFIG.TRANSITION_DURATION);
             }
-
-            updateArrowStates(weekNum) {
-                const isDisabledPrev = weekNum <= CONFIG.MIN_WEEK;
-                const isDisabledNext = weekNum >= CONFIG.MAX_WEEK;
+            
+            initialLoadDisplay() {
+                const date = new Date();
+                const weekNum = this.getAcademicWeek(date);
+                const scheduleType = weekNum % 2 === 0 ? 'even' : 'odd';
                 
-                [this.dom.prevWeekDesktop, this.dom.prevWeekMobile].forEach(el => el && el.classList.toggle('disabled', isDisabledPrev));
-                [this.dom.nextWeekDesktop, this.dom.nextWeekMobile].forEach(el => el && el.classList.toggle('disabled', isDisabledNext));
+                const dayShort = date.toLocaleDateString(CONFIG.LOCALE, { weekday: 'short' });
+                const datePart = date.toLocaleDateString(CONFIG.LOCALE, {
+                    day: 'numeric',
+                    month: 'numeric',
+                    year: 'numeric'
+                });
+                
+                this.dom.currentDate.textContent = `${dayShort}, ${datePart}`;
+                this.updateWeekNumberHTML(this.dom.weekNumberDesktop, weekNum, 0);
+                this.updateWeekNumberHTML(this.dom.weekNumberMobile, weekNum, 0);
+                this.updateArrowStates(weekNum);
+                this.renderSchedule(SCHEDULE_DATA[scheduleType]);
+                
+                this.dom.scheduleDisplay.style.opacity = '1';
+                this.dom.scheduleDisplay.style.transform = 'translateY(0)';
+                this.dom.currentDate.style.opacity = '1';
             }
         }
 

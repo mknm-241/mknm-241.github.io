@@ -34,6 +34,12 @@
             --radius-md: 16px;
             --radius-lg: 20px;
             --radius-xl: 24px;
+            
+            --transition-fast: 150ms;
+            --transition-normal: 300ms;
+            --transition-slow: 600ms;
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         [data-theme="dark"] {
@@ -64,33 +70,36 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: radial-gradient(circle at 60% 80%, #ffffff 0%, var(--bg-primary) 40%, var(--bg-primary) 100%);
+            background: var(--bg-primary);
             min-height: 100vh;
             padding: var(--spacing-xl) var(--spacing-md);
             color: var(--text-primary);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
-                        color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background-color var(--transition-slow) var(--ease-smooth), 
+                        color var(--transition-slow) var(--ease-smooth);
+            position: relative;
+            overflow-x: hidden;
         }
 
-        [data-theme="dark"] body {
-            background: radial-gradient(circle at 40% 20%, rgba(20, 20, 20, 0.7) 0%, var(--bg-primary) 60%);
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 60% 80%, rgba(193, 95, 60, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            animation: fadeIn var(--transition-slow) var(--ease-smooth) forwards;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
+        [data-theme="dark"] body::before {
+            background: radial-gradient(circle at 40% 20%, rgba(232, 147, 115, 0.08) 0%, transparent 50%);
         }
 
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-xl);
-            gap: var(--spacing-lg);
-            animation: fadeInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
 
         @keyframes fadeInDown {
@@ -116,32 +125,81 @@
         }
 
         @keyframes shimmer {
-            0% {
-                background-position: -200% center;
+            0%, 100% {
+                background-position: 0% center;
             }
-            100% {
-                background-position: 200% center;
+            50% {
+                background-position: 100% center;
             }
         }
         
         @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(100%); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(100%); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
         
         @keyframes slideOutDown {
-            from { opacity: 1; transform: translateY(0); }
-            to { opacity: 0; transform: translateY(100%); }
+            from { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+            to { 
+                opacity: 0; 
+                transform: translateY(100%); 
+            }
         }
 
         @keyframes slideInDown {
-            from { opacity: 0; transform: translateY(-100%); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(-100%); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
 
         @keyframes slideOutUp {
-            from { opacity: 1; transform: translateY(0); }
-            to { opacity: 0; transform: translateY(-100%); }
+            from { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+            to { 
+                opacity: 0; 
+                transform: translateY(-100%); 
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+            gap: var(--spacing-lg);
+            animation: fadeInDown 0.8s var(--ease-smooth);
         }
 
         .date-info {
@@ -149,6 +207,7 @@
             flex-direction: column;
             gap: 0.35rem;
             flex-grow: 1;
+            min-width: 0;
         }
 
         #currentDate {
@@ -165,7 +224,8 @@
             -webkit-background-clip: text;
             background-clip: text;
             animation: shimmer 8s ease-in-out infinite;
-            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity var(--transition-normal) var(--ease-smooth);
+            will-change: opacity;
         }
 
         .week-status {
@@ -178,7 +238,7 @@
             border: 1px solid var(--border);
             box-shadow: var(--shadow-glass);
             flex-shrink: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-normal) var(--ease-smooth);
             backdrop-filter: blur(30px) saturate(180%);
             -webkit-backdrop-filter: blur(30px) saturate(180%);
             position: relative;
@@ -194,7 +254,7 @@
                 transparent 50%, 
                 var(--bg-glass) 100%);
             opacity: 0;
-            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity var(--transition-normal) var(--ease-smooth);
             pointer-events: none;
         }
 
@@ -211,12 +271,13 @@
             background: var(--bg-glass);
             border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-normal) var(--ease-smooth);
             border: 1px solid var(--border);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
+            will-change: transform;
         }
 
         .week-arrow::before {
@@ -225,7 +286,7 @@
             inset: 0;
             background: var(--accent-main);
             opacity: 0;
-            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity var(--transition-normal) var(--ease-smooth);
             z-index: 0;
         }
 
@@ -236,12 +297,12 @@
         .week-arrow:hover:not(.disabled) {
             border-color: var(--accent-main);
             box-shadow: 0 4px 12px var(--accent-glow);
+            transform: translateY(-1px);
         }
 
         .week-arrow:active:not(.disabled) {
             transform: scale(0.95);
-            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: none;
+            transition-duration: var(--transition-fast);
         }
 
         .week-arrow:hover:not(.disabled) svg {
@@ -259,7 +320,9 @@
             width: 15px;
             height: 15px;
             color: var(--text-secondary);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-normal) var(--ease-smooth);
+            position: relative;
+            z-index: 1;
         }
 
         .week-number {
@@ -274,24 +337,19 @@
             font-size: 0.9rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-normal) var(--ease-smooth);
             padding: 0 0.6rem;
-            box-shadow: var(--shadow-accent), 0 0 8px var(--accent-glow) inset;
+            box-shadow: var(--shadow-accent);
             position: relative;
             overflow: hidden;
+            will-change: transform;
         }
 
         .week-number > span {
             display: inline-block;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .week-number.fade-up > span {
-            animation: slideInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
-        }
-        
-        .week-number.fade-down > span {
-            animation: slideInDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+            transition: all var(--transition-normal) var(--ease-smooth);
+            position: relative;
+            z-index: 1;
         }
 
         .week-number::before {
@@ -302,24 +360,22 @@
                 rgba(255, 255, 255, 0.3) 0%, 
                 transparent 50%, 
                 rgba(255, 255, 255, 0.3) 100%);
-            transform: translateX(-100%);
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transition: opacity var(--transition-normal) var(--ease-smooth);
         }
 
         .week-number:hover::before {
-            transform: translateX(-100%);
+            opacity: 1;
         }
 
         .week-number:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-accent);
-            filter: none;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 12px 28px var(--accent-glow);
         }
 
         .week-number:active {
             transform: scale(0.98);
-            box-shadow: 0 0 5px var(--accent-glow);
-            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: var(--transition-fast);
         }
 
         .week-text-group {
@@ -340,15 +396,17 @@
             overflow: hidden;
             border: 1px solid var(--border);
             box-shadow: var(--shadow-elevated);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity var(--transition-normal) var(--ease-smooth),
+                        transform var(--transition-normal) var(--ease-smooth);
             backdrop-filter: blur(50px) saturate(190%);
             -webkit-backdrop-filter: blur(50px) saturate(190%);
             position: relative;
-            outline: 1px solid rgba(255, 255, 255, 0.1);
+            outline: 1px solid rgba(255, 255, 255, 0.05);
+            will-change: opacity, transform;
         }
 
         .schedule-card.initial-load {
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+            animation: fadeInUp 0.8s var(--ease-smooth) 0.1s both;
         }
 
         .schedule-card::before {
@@ -361,22 +419,15 @@
                 transparent 70%, 
                 var(--bg-glass) 100%);
             opacity: 0;
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity var(--transition-slow) var(--ease-smooth);
             pointer-events: none;
         }
 
         .schedule-card:hover::before {
             opacity: 1;
-            background: linear-gradient(135deg, 
-                var(--bg-glass) 10%, 
-                transparent 40%, 
-                transparent 60%, 
-                var(--bg-glass) 90%);
         }
 
         .day-section {
-            border-bottom: none;
-            box-shadow: 0 1px 0 var(--border), inset 0 -1px 0 rgba(255, 255, 255, 0.03);
             position: relative;
             overflow: hidden;
         }
@@ -393,16 +444,19 @@
                 var(--accent-main) 50%, 
                 transparent 100%);
             opacity: 0;
-            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity var(--transition-normal) var(--ease-smooth);
         }
 
         .day-section:hover::after {
             opacity: 0.3;
         }
 
-        .day-section:last-child {
-            border-bottom: none;
-            box-shadow: none;
+        .day-section:last-child::after {
+            display: none;
+        }
+
+        .day-section:not(:last-child) {
+            border-bottom: 1px solid var(--border);
         }
 
         .day-header {
@@ -436,7 +490,7 @@
 
         .class-item {
             padding: 1.35rem 1.75rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-normal) var(--ease-smooth);
             cursor: pointer;
             display: flex;
             flex-direction: column;
@@ -444,6 +498,7 @@
             color: inherit;
             position: relative;
             overflow: hidden;
+            will-change: transform, background-color;
         }
 
         .class-item::before {
@@ -454,7 +509,7 @@
                 var(--accent-light) 0%, 
                 transparent 50%);
             opacity: 0;
-            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity var(--transition-normal) var(--ease-smooth);
             pointer-events: none;
         }
 
@@ -463,8 +518,7 @@
         }
 
         .class-item:not(:last-child) {
-            border-bottom: none;
-            box-shadow: inset 0 -1px 0 var(--border);
+            border-bottom: 1px solid var(--border);
         }
 
         .class-details {
@@ -491,21 +545,17 @@
             flex-shrink: 0;
             color: var(--accent-main);
             filter: drop-shadow(0 0 4px var(--accent-glow));
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-normal) var(--ease-smooth);
+            will-change: transform;
         }
 
         .class-name {
             font-size: 1.05rem;
-            font-weight: 60;
+            font-weight: 600;
             color: var(--text-primary);
             line-height: 1.5;
             letter-spacing: -0.02em;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-shadow: 0 0 1px rgba(0, 0, 0, 0.05);
-        }
-
-        [data-theme="dark"] .class-name {
-            text-shadow: 0 0 2px rgba(255, 255, 255, 0.1);
+            transition: color var(--transition-normal) var(--ease-smooth);
         }
 
         .class-meta {
@@ -529,22 +579,40 @@
             font-size: 0.75rem;
             font-weight: 600;
             border: 1px solid rgba(193, 95, 60, 0.15);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-normal) var(--ease-smooth);
             position: relative;
             overflow: hidden;
+            will-change: transform;
+        }
+
+        .class-type::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-hover) 100%);
+            opacity: 0;
+            transition: opacity var(--transition-normal) var(--ease-smooth);
+        }
+
+        .class-type:hover::before {
+            opacity: 1;
         }
 
         .class-type:hover {
-            background: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-hover) 100%);
             color: white;
             border-color: var(--accent-main);
             transform: translateY(-1px);
             box-shadow: 0 4px 8px var(--accent-glow);
         }
 
+        .class-type > span {
+            position: relative;
+            z-index: 1;
+        }
+
         .class-type:active {
             transform: translateY(0);
-            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: var(--transition-fast);
         }
 
         .class-info {
@@ -562,9 +630,9 @@
 
             .class-item:active {
                 transform: translateX(4px) scale(0.99);
-                transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+                transition-duration: var(--transition-fast);
             }
-            
+
             .class-item:hover .time-icon {
                 transform: scale(1.15) rotate(360deg);
                 filter: drop-shadow(0 0 8px var(--accent-glow));
@@ -583,6 +651,7 @@
             .top-bar {
                 margin-bottom: var(--spacing-lg);
                 gap: var(--spacing-md);
+                flex-wrap: wrap;
             }
 
             #currentDate {
@@ -636,6 +705,16 @@
                 font-size: 0.7rem;
             }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -646,29 +725,39 @@
             </div>
 
             <div class="week-status">
-                <div class="week-arrow" id="prevWeek">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="week-arrow" id="prevWeek" aria-label="Предыдущая неделя">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                 </div>
-                <div class="week-number" id="weekNumber">
+                <div class="week-number" id="weekNumber" aria-label="Текущая неделя">
                     <span></span>
                 </div>
                 <div class="week-text-group">
                     <div class="week-type">неделя</div>
                 </div>
-                <div class="week-arrow" id="nextWeek">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="week-arrow" id="nextWeek" aria-label="Следующая неделя">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
                 </div>
             </div>
         </header>
 
-        <main id="scheduleDisplay" class="schedule-card initial-load"></main>
+        <main id="scheduleDisplay" class="schedule-card initial-load" role="main"></main>
     </div>
 
     <script>
+        const CONFIG = {
+            MIN_WEEK: 1,
+            MAX_WEEK: 18,
+            MS_PER_WEEK: 604800000,
+            SEPTEMBER_INDEX: 8,
+            TRANSITION_DURATION: 300,
+            LOCALE: 'ru-RU',
+            DAYS: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
+        };
+
         const SCHEDULE_DATA = {
             odd: {
                 'Понедельник': [
@@ -774,197 +863,204 @@
             }
         };
 
-        const DOM = {
-            currentDate: document.getElementById('currentDate'),
-            weekNumberContainer: document.getElementById('weekNumber'),
-            scheduleDisplay: document.getElementById('scheduleDisplay'),
-            prevWeek: document.getElementById('prevWeek'),
-            nextWeek: document.getElementById('nextWeek')
-        };
-        
-        let currentWeekOffset = 0;
-        const MIN_WEEK = 1;
-        const MAX_WEEK = 18;
-        const DAYS_OF_WEEK = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-        const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
-        const FORMAT_LOCALE = 'ru-RU';
-        const SEPTEMBER_MONTH_INDEX = 8;
-        const TRANSITION_DURATION = 300;
-
-        const initTheme = () => {
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const theme = prefersDark ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', theme);
-            
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                const newTheme = e.matches ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', newTheme);
-            });
-        };
-
-        const getAcademicWeekNumber = (date) => {
-            const currentYear = date.getFullYear();
-            const currentMonth = date.getMonth();
-            const startYear = (currentMonth < SEPTEMBER_MONTH_INDEX) ? currentYear - 1 : currentYear;
-            const septemberFirst = new Date(startYear, SEPTEMBER_MONTH_INDEX, 1);
-            septemberFirst.setHours(0, 0, 0, 0);
-            const dayOfWeek = septemberFirst.getDay();
-            const dayAdjustment = (dayOfWeek === 0) ? 6 : (dayOfWeek - 1); 
-            const firstWeekMonday = new Date(septemberFirst);
-            firstWeekMonday.setDate(septemberFirst.getDate() - dayAdjustment);
-            firstWeekMonday.setHours(0, 0, 0, 0);
-            const diffInTime = date.getTime() - firstWeekMonday.getTime();
-            return Math.ceil(diffInTime / MS_PER_WEEK);
-        };
-
-        const createLessonHtml = (lesson) => {
-            const { time, name, type, info, link } = lesson;
-            const hasLink = link && link.trim() !== '';
-            const itemTag = hasLink ? 'a' : 'div';
-            const itemAttributes = hasLink ? `href="${link}" target="_blank" rel="noopener noreferrer"` : '';
-
-            return `
-                <${itemTag} class="class-item" ${itemAttributes}>
-                    <div class="class-details">
-                        <div class="class-time">
-                            <svg class="time-icon" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                            </svg>
-                            ${time}
-                        </div>
-                        <div class="class-name">${name}</div>
-                        <div class="class-meta">
-                            <span class="class-type">${type}</span>
-                            <span class="class-info">${info}</span>
-                        </div>
-                    </div>
-                </${itemTag}>
-            `;
-        };
-
-        const renderSchedule = (weekSchedule) => {
-            const htmlContent = DAYS_OF_WEEK.reduce((acc, day) => {
-                const lessons = weekSchedule[day];
-                if (lessons && lessons.length > 0) {
-                    const lessonsHtml = lessons.map(createLessonHtml).join('');
-                    return acc + `
-                        <div class="day-section">
-                            <div class="day-header">${day}</div>
-                            ${lessonsHtml}
-                        </div>
-                    `;
-                }
-                return acc;
-            }, '');
-            DOM.scheduleDisplay.innerHTML = htmlContent;
-        };
-
-        const updateHeaderInfo = (direction = 0) => {
-            const today = new Date();
-            const adjustedDate = new Date(today);
-            adjustedDate.setDate(today.getDate() + (currentWeekOffset * 7));
-            const weekNumber = getAcademicWeekNumber(adjustedDate);
-            const isEvenWeek = weekNumber % 2 === 0;
-            const weekTypeKey = isEvenWeek ? 'even' : 'odd';
-            const dayOfWeekShort = adjustedDate.toLocaleDateString(FORMAT_LOCALE, { weekday: 'short' });
-            const datePart = adjustedDate.toLocaleDateString(FORMAT_LOCALE, {
-                day: 'numeric',
-                month: 'numeric',
-                year: 'numeric'
-            });
-            const formattedDate = `${dayOfWeekShort}, ${datePart}`; 
-            const weekSchedule = SCHEDULE_DATA[weekTypeKey];
-
-            DOM.scheduleDisplay.style.opacity = '0';
-            DOM.scheduleDisplay.style.transform = 'translateY(10px)';
-            DOM.currentDate.style.opacity = '0';
-            
-            if (direction === 1) {
-                DOM.weekNumberContainer.innerHTML = `<span class="fade-down">${weekNumber - 1}</span>`;
-                DOM.weekNumberContainer.querySelector('span').style.animation = `slideOutUp ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
-            } else if (direction === -1) {
-                DOM.weekNumberContainer.innerHTML = `<span class="fade-up">${weekNumber + 1}</span>`;
-                DOM.weekNumberContainer.querySelector('span').style.animation = `slideOutDown ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+        class ScheduleApp {
+            constructor() {
+                this.dom = {
+                    currentDate: document.getElementById('currentDate'),
+                    weekNumber: document.getElementById('weekNumber'),
+                    scheduleDisplay: document.getElementById('scheduleDisplay'),
+                    prevWeek: document.getElementById('prevWeek'),
+                    nextWeek: document.getElementById('nextWeek')
+                };
+                
+                this.state = {
+                    weekOffset: 0,
+                    isAnimating: false
+                };
+                
+                this.init();
             }
 
-            DOM.scheduleDisplay.classList.remove('initial-load');
-            
-            setTimeout(() => {
+            init() {
+                this.initTheme();
+                this.attachEventListeners();
+                this.updateDisplay(0);
                 
-                DOM.currentDate.textContent = formattedDate;
-
-                if (direction !== 0) {
-                    DOM.weekNumberContainer.innerHTML = `<span>${weekNumber}</span>`;
-                    const newSpan = DOM.weekNumberContainer.querySelector('span');
-                    if (direction === 1) {
-                        newSpan.style.animation = `slideInUp ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
-                    } else if (direction === -1) {
-                        newSpan.style.animation = `slideInDown ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
-                    }
-                } else {
-                    DOM.weekNumberContainer.innerHTML = `<span>${weekNumber}</span>`;
-                }
-
-
-                if (weekNumber <= MIN_WEEK) {
-                    DOM.prevWeek.classList.add('disabled');
-                } else {
-                    DOM.prevWeek.classList.remove('disabled');
-                }
-
-                if (weekNumber >= MAX_WEEK) {
-                    DOM.nextWeek.classList.add('disabled');
-                } else {
-                    DOM.nextWeek.classList.remove('disabled');
-                }
-                
-                renderSchedule(weekSchedule);
-
                 requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        DOM.scheduleDisplay.style.opacity = '1';
-                        DOM.scheduleDisplay.style.transform = 'translateY(0)';
-                        DOM.currentDate.style.opacity = '1';
-                    });
+                    this.dom.scheduleDisplay.style.opacity = '1';
+                    this.dom.scheduleDisplay.style.transform = 'translateY(0)';
                 });
-
-            }, TRANSITION_DURATION);
-        };
-
-        DOM.prevWeek.addEventListener('click', () => {
-            const today = new Date();
-            const adjustedDate = new Date(today);
-            adjustedDate.setDate(today.getDate() + ((currentWeekOffset - 1) * 7));
-            const weekNumber = getAcademicWeekNumber(adjustedDate);
-            if (weekNumber >= MIN_WEEK) {
-                currentWeekOffset--;
-                updateHeaderInfo(-1);
             }
-        });
 
-        DOM.nextWeek.addEventListener('click', () => {
-            const today = new Date();
-            const adjustedDate = new Date(today);
-            adjustedDate.setDate(today.getDate() + ((currentWeekOffset + 1) * 7));
-            const weekNumber = getAcademicWeekNumber(adjustedDate);
-            if (weekNumber <= MAX_WEEK) {
-                currentWeekOffset++;
-                updateHeaderInfo(1);
+            initTheme() {
+                const setTheme = (isDark) => {
+                    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+                };
+                
+                const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                setTheme(mediaQuery.matches);
+                mediaQuery.addEventListener('change', (e) => setTheme(e.matches));
             }
-        });
 
-        DOM.weekNumberContainer.addEventListener('click', () => {
-            currentWeekOffset = 0;
-            updateHeaderInfo(0);
-        });
+            attachEventListeners() {
+                this.dom.prevWeek.addEventListener('click', () => this.changeWeek(-1));
+                this.dom.nextWeek.addEventListener('click', () => this.changeWeek(1));
+                this.dom.weekNumber.addEventListener('click', () => this.resetWeek());
+            }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initTheme();
-            updateHeaderInfo(0);
-            
-            DOM.scheduleDisplay.style.opacity = '1';
-            DOM.scheduleDisplay.style.transform = 'translateY(0)';
-        });
+            getAcademicWeek(date) {
+                const year = date.getFullYear();
+                const month = date.getMonth();
+                const startYear = month < CONFIG.SEPTEMBER_INDEX ? year - 1 : year;
+                
+                const sept1 = new Date(startYear, CONFIG.SEPTEMBER_INDEX, 1, 0, 0, 0, 0);
+                const dayOfWeek = sept1.getDay();
+                const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+                
+                const firstMonday = new Date(sept1);
+                firstMonday.setDate(sept1.getDate() - daysToMonday);
+                
+                const timeDiff = date.getTime() - firstMonday.getTime();
+                return Math.ceil(timeDiff / CONFIG.MS_PER_WEEK);
+            }
+
+            getWeekNumber(offset = 0) {
+                const date = new Date();
+                date.setDate(date.getDate() + (offset * 7));
+                return this.getAcademicWeek(date);
+            }
+
+            isWeekValid(weekNum) {
+                return weekNum >= CONFIG.MIN_WEEK && weekNum <= CONFIG.MAX_WEEK;
+            }
+
+            changeWeek(direction) {
+                if (this.state.isAnimating) return;
+                
+                const newOffset = this.state.weekOffset + direction;
+                const newWeekNum = this.getWeekNumber(newOffset);
+                
+                if (!this.isWeekValid(newWeekNum)) return;
+                
+                this.state.weekOffset = newOffset;
+                this.updateDisplay(direction);
+            }
+
+            resetWeek() {
+                if (this.state.isAnimating || this.state.weekOffset === 0) return;
+                
+                this.state.weekOffset = 0;
+                this.updateDisplay(0);
+            }
+
+            createLessonHTML(lesson) {
+                const { time, name, type, info, link } = lesson;
+                const tag = link?.trim() ? 'a' : 'div';
+                const attrs = link?.trim() ? `href="${link}" target="_blank" rel="noopener noreferrer"` : '';
+
+                return `
+                    <${tag} class="class-item" ${attrs}>
+                        <div class="class-details">
+                            <div class="class-time">
+                                <svg class="time-icon" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                </svg>
+                                ${time}
+                            </div>
+                            <div class="class-name">${name}</div>
+                            <div class="class-meta">
+                                <span class="class-type"><span>${type}</span></span>
+                                <span class="class-info">${info}</span>
+                            </div>
+                        </div>
+                    </${tag}>
+                `;
+            }
+
+            renderSchedule(schedule) {
+                const html = CONFIG.DAYS.reduce((acc, day) => {
+                    const lessons = schedule[day];
+                    if (lessons?.length) {
+                        const lessonsHTML = lessons.map(l => this.createLessonHTML(l)).join('');
+                        return acc + `
+                            <div class="day-section">
+                                <div class="day-header">${day}</div>
+                                ${lessonsHTML}
+                            </div>
+                        `;
+                    }
+                    return acc;
+                }, '');
+                
+                this.dom.scheduleDisplay.innerHTML = html;
+            }
+
+            updateDisplay(direction) {
+                this.state.isAnimating = true;
+                
+                const date = new Date();
+                date.setDate(date.getDate() + (this.state.weekOffset * 7));
+                
+                const weekNum = this.getAcademicWeek(date);
+                const scheduleType = weekNum % 2 === 0 ? 'even' : 'odd';
+                
+                const dayShort = date.toLocaleDateString(CONFIG.LOCALE, { weekday: 'short' });
+                const datePart = date.toLocaleDateString(CONFIG.LOCALE, {
+                    day: 'numeric',
+                    month: 'numeric',
+                    year: 'numeric'
+                });
+                
+                this.dom.scheduleDisplay.style.opacity = '0';
+                this.dom.scheduleDisplay.style.transform = 'translateY(10px)';
+                this.dom.currentDate.style.opacity = '0';
+                
+                if (direction !== 0) {
+                    const oldNum = direction === 1 ? weekNum - 1 : weekNum + 1;
+                    const animClass = direction === 1 ? 'slideOutUp' : 'slideOutDown';
+                    this.dom.weekNumber.innerHTML = `<span style="animation: ${animClass} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${oldNum}</span>`;
+                }
+                
+                this.dom.scheduleDisplay.classList.remove('initial-load');
+                
+                setTimeout(() => {
+                    this.dom.currentDate.textContent = `${dayShort}, ${datePart}`;
+                    
+                    if (direction !== 0) {
+                        const animClass = direction === 1 ? 'slideInUp' : 'slideInDown';
+                        this.dom.weekNumber.innerHTML = `<span style="animation: ${animClass} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${weekNum}</span>`;
+                    } else {
+                        this.dom.weekNumber.innerHTML = `<span>${weekNum}</span>`;
+                    }
+                    
+                    this.updateArrowStates(weekNum);
+                    this.renderSchedule(SCHEDULE_DATA[scheduleType]);
+                    
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            this.dom.scheduleDisplay.style.opacity = '1';
+                            this.dom.scheduleDisplay.style.transform = 'translateY(0)';
+                            this.dom.currentDate.style.opacity = '1';
+                            
+                            setTimeout(() => {
+                                this.state.isAnimating = false;
+                            }, CONFIG.TRANSITION_DURATION);
+                        });
+                    });
+                }, CONFIG.TRANSITION_DURATION);
+            }
+
+            updateArrowStates(weekNum) {
+                this.dom.prevWeek.classList.toggle('disabled', weekNum <= CONFIG.MIN_WEEK);
+                this.dom.nextWeek.classList.toggle('disabled', weekNum >= CONFIG.MAX_WEEK);
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => new ScheduleApp());
+        } else {
+            new ScheduleApp();
+        }
     </script>
 </body>
 </html>

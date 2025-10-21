@@ -111,17 +111,6 @@
             }
         }
 
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
         @keyframes shimmer {
             0% {
                 background-position: -200% center;
@@ -129,6 +118,27 @@
             100% {
                 background-position: 200% center;
             }
+        }
+        
+        /* Анимации для смены номера недели */
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(100%); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideOutDown {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(100%); }
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-100%); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideOutUp {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-100%); }
         }
 
         .date-info {
@@ -152,6 +162,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             animation: shimmer 8s ease-in-out infinite;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .week-status {
@@ -272,6 +283,19 @@
             overflow: hidden;
         }
 
+        .week-number > span {
+            display: inline-block;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .week-number.fade-up > span {
+            animation: slideInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+        
+        .week-number.fade-down > span {
+            animation: slideInDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+
         .week-number::before {
             content: '';
             position: absolute;
@@ -317,11 +341,14 @@
             overflow: hidden;
             border: 1px solid var(--border);
             box-shadow: var(--shadow-elevated);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(40px) saturate(180%);
             -webkit-backdrop-filter: blur(40px) saturate(180%);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
             position: relative;
+        }
+
+        .schedule-card.initial-load {
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
         }
 
         .schedule-card::before {
@@ -513,28 +540,16 @@
             overflow: hidden;
         }
 
-        .class-type::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--accent-main);
-            opacity: 0;
-            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .class-type:hover::before {
-            opacity: 1;
-        }
-
         .class-type:hover {
+            background: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-hover) 100%);
             color: white;
             border-color: var(--accent-main);
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: var(--shadow-accent);
+            transform: translateY(-1px); /* Небольшой сдвиг, без масштабирования */
+            box-shadow: 0 4px 8px var(--accent-glow); /* Более мягкая тень */
         }
 
         .class-type:active {
-            transform: translateY(0) scale(1.02);
+            transform: translateY(0);
             transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -621,7 +636,10 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                 </div>
-                <div class="week-number" id="weekNumber"></div>
+                <div class="week-number" id="weekNumber">
+                    <!-- Элемент span для анимации -->
+                    <span></span>
+                </div>
                 <div class="week-text-group">
                     <div class="week-type">неделя</div>
                 </div>
@@ -633,7 +651,7 @@
             </div>
         </header>
 
-        <main id="scheduleDisplay" class="schedule-card"></main>
+        <main id="scheduleDisplay" class="schedule-card initial-load"></main>
     </div>
 
     <script>
@@ -744,7 +762,8 @@
 
         const DOM = {
             currentDate: document.getElementById('currentDate'),
-            weekNumber: document.getElementById('weekNumber'),
+            weekNumberContainer: document.getElementById('weekNumber'),
+            weekNumberSpan: document.getElementById('weekNumber').querySelector('span'),
             scheduleDisplay: document.getElementById('scheduleDisplay'),
             prevWeek: document.getElementById('prevWeek'),
             nextWeek: document.getElementById('nextWeek')
@@ -757,6 +776,7 @@
         const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
         const FORMAT_LOCALE = 'ru-RU';
         const SEPTEMBER_MONTH_INDEX = 8;
+        const TRANSITION_DURATION = 300;
 
         const initTheme = () => {
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -826,7 +846,7 @@
             DOM.scheduleDisplay.innerHTML = htmlContent;
         };
 
-        const updateHeaderInfo = () => {
+        const updateHeaderInfo = (direction = 0) => {
             const today = new Date();
             const adjustedDate = new Date(today);
             adjustedDate.setDate(today.getDate() + (currentWeekOffset * 7));
@@ -841,22 +861,68 @@
             });
             const formattedDate = `${dayOfWeekShort}, ${datePart}`; 
             const weekSchedule = SCHEDULE_DATA[weekTypeKey];
-            DOM.currentDate.textContent = formattedDate;
-            DOM.weekNumber.textContent = weekNumber;
 
-            if (weekNumber <= MIN_WEEK) {
-                DOM.prevWeek.classList.add('disabled');
-            } else {
-                DOM.prevWeek.classList.remove('disabled');
+            // 1. Скрытие / Анимация ухода
+            DOM.scheduleDisplay.style.opacity = '0';
+            DOM.scheduleDisplay.style.transform = 'translateY(10px)';
+            DOM.currentDate.style.opacity = '0';
+            
+            // Анимация ухода для номера недели
+            if (direction === 1) { // Next week (число увеличивается -> вниз)
+                DOM.weekNumberContainer.innerHTML = `<span class="fade-down">${weekNumber - 1}</span>`;
+                DOM.weekNumberContainer.querySelector('span').style.animation = `slideOutUp ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+            } else if (direction === -1) { // Prev week (число уменьшается -> вверх)
+                DOM.weekNumberContainer.innerHTML = `<span class="fade-up">${weekNumber + 1}</span>`;
+                DOM.weekNumberContainer.querySelector('span').style.animation = `slideOutDown ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
             }
 
-            if (weekNumber >= MAX_WEEK) {
-                DOM.nextWeek.classList.add('disabled');
-            } else {
-                DOM.nextWeek.classList.remove('disabled');
-            }
+            DOM.scheduleDisplay.classList.remove('initial-load');
+            
+            setTimeout(() => {
+                
+                // 2. Обновление контента
+                DOM.currentDate.textContent = formattedDate;
 
-            renderSchedule(weekSchedule);
+                // Обновление номера недели с анимацией прихода
+                if (direction !== 0) {
+                     // 2.1 Вставляем новый элемент span
+                    DOM.weekNumberContainer.innerHTML = `<span>${weekNumber}</span>`;
+                    // 2.2 Применяем анимацию прихода
+                    const newSpan = DOM.weekNumberContainer.querySelector('span');
+                    if (direction === 1) { // Next week (число увеличивается -> приход снизу)
+                        newSpan.style.animation = `slideInUp ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+                    } else if (direction === -1) { // Prev week (число уменьшается -> приход сверху)
+                        newSpan.style.animation = `slideInDown ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+                    }
+                } else {
+                    DOM.weekNumberContainer.innerHTML = `<span>${weekNumber}</span>`;
+                }
+
+
+                if (weekNumber <= MIN_WEEK) {
+                    DOM.prevWeek.classList.add('disabled');
+                } else {
+                    DOM.prevWeek.classList.remove('disabled');
+                }
+
+                if (weekNumber >= MAX_WEEK) {
+                    DOM.nextWeek.classList.add('disabled');
+                } else {
+                    DOM.nextWeek.classList.remove('disabled');
+                }
+                
+                renderSchedule(weekSchedule);
+
+                // 3. Появление
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        DOM.scheduleDisplay.style.opacity = '1';
+                        DOM.scheduleDisplay.style.transform = 'translateY(0)';
+                        DOM.currentDate.style.opacity = '1';
+                    });
+                });
+
+            }, TRANSITION_DURATION);
         };
 
         DOM.prevWeek.addEventListener('click', () => {
@@ -866,7 +932,7 @@
             const weekNumber = getAcademicWeekNumber(adjustedDate);
             if (weekNumber >= MIN_WEEK) {
                 currentWeekOffset--;
-                updateHeaderInfo();
+                updateHeaderInfo(-1); // -1 для анимации "Prev"
             }
         });
 
@@ -877,20 +943,23 @@
             const weekNumber = getAcademicWeekNumber(adjustedDate);
             if (weekNumber <= MAX_WEEK) {
                 currentWeekOffset++;
-                updateHeaderInfo();
+                updateHeaderInfo(1); // 1 для анимации "Next"
             }
         });
 
-        DOM.weekNumber.addEventListener('click', () => {
+        DOM.weekNumberContainer.addEventListener('click', () => {
             currentWeekOffset = 0;
-            updateHeaderInfo();
+            updateHeaderInfo(0); // 0 для отсутствия анимации сдвига
         });
 
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
-            updateHeaderInfo();
+            updateHeaderInfo(0);
+            
+            // Мгновенный показ для первой загрузки
+            DOM.scheduleDisplay.style.opacity = '1';
+            DOM.scheduleDisplay.style.transform = 'translateY(0)';
         });
     </script>
 </body>
-</html> 
-            
+</html>

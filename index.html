@@ -231,7 +231,7 @@
         .week-status {
             display: flex;
             align-items: center;
-            gap: 0;
+            gap: 0.2rem;
             background: var(--bg-secondary);
             padding: 0.4rem;
             border-radius: 9999px;
@@ -245,6 +245,7 @@
             overflow: hidden;
             will-change: transform;
             min-height: 48px;
+            flex-wrap: nowrap;
         }
         
         .week-status::before {
@@ -304,7 +305,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 100px;
+            width: 40px;
             height: 40px;
             background: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-hover) 100%);
             color: white;
@@ -313,14 +314,14 @@
             font-weight: 700;
             cursor: pointer;
             transition: all var(--transition-normal) var(--ease-smooth);
-            padding: 0 1rem;
+            padding: 0;
             box-shadow: var(--shadow-accent);
             position: relative;
             overflow: hidden;
             will-change: transform;
-            flex-grow: 1;
-            flex-shrink: 1;
-            margin: 0 0.4rem;
+            flex-grow: 0;
+            flex-shrink: 0;
+            margin: 0 0.1rem;
         }
         
         .week-number:hover {
@@ -333,22 +334,32 @@
         }
         
         .week-number > span {
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
             transition: all var(--transition-normal) var(--ease-smooth);
             position: relative;
             z-index: 1;
             white-space: nowrap;
         }
-
+        
         .week-number-value {
             font-weight: 700;
-            margin-right: 0.25rem;
+            margin-right: 0;
+            min-width: 0;
+            display: inline-block;
+            text-align: center;
         }
         
         .week-type {
             font-weight: 500;
             font-size: 0.85rem;
             opacity: 0.9;
+            color: var(--text-primary);
+            flex-shrink: 0;
+            padding: 0 0.4rem;
         }
         
         .week-number::before {
@@ -614,11 +625,54 @@
                 transform: translateY(0);
                 transition-duration: var(--transition-fast);
             }
+            
+            .bottom-floating-bar {
+                display: none;
+            }
+            
+            .top-bar .week-status {
+                display: flex;
+            }
+        }
+
+        .bottom-floating-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: var(--spacing-sm) var(--spacing-md) calc(var(--spacing-sm) + env(safe-area-inset-bottom)) var(--spacing-md);
+            background: transparent;
+            pointer-events: none;
+            will-change: transform;
+        }
+        
+        .bottom-floating-bar .week-status {
+            width: fit-content;
+            max-width: 100%;
+            margin: 0 auto;
+            pointer-events: auto;
+            box-shadow: var(--shadow-elevated);
+            
+            min-height: 52px;
+            padding: 0.5rem;
+        }
+        
+        .bottom-floating-bar .week-arrow {
+            width: 42px;
+            height: 42px;
+        }
+        
+        .bottom-floating-bar .week-number {
+            height: 42px;
+            width: 42px;
         }
 
         @media (max-width: 768px) {
             body {
                 padding: var(--spacing-lg) var(--spacing-sm) 5rem var(--spacing-sm);
+                padding-bottom: calc(52px + 1.25rem + env(safe-area-inset-bottom));
             }
 
             .top-bar {
@@ -626,14 +680,19 @@
                 gap: var(--spacing-md);
                 flex-wrap: wrap;
             }
-
-            #currentDate {
-                font-size: 1.15rem;
+            
+            .top-bar .week-status {
+                display: none;
+            }
+            
+            .bottom-floating-bar {
+                display: block;
             }
 
             .week-status {
                 padding: 0.3rem;
                 min-height: 40px;
+                gap: 0.15rem;
             }
 
             .week-arrow {
@@ -641,19 +700,19 @@
                 height: 34px;
             }
 
-            .week-arrow svg {
-                width: 14px;
-                height: 14px;
-            }
-
             .week-number {
-                min-width: 90px;
+                width: 34px;
                 height: 34px;
                 font-size: 0.85rem;
             }
+            
+            .week-number-value {
+                min-width: 0;
+            }
 
             .week-type {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
+                padding: 0 0.3rem;
             }
 
             .day-header {
@@ -705,8 +764,8 @@
                 </div>
                 <div class="week-number" id="weekNumber" aria-label="Текущая неделя">
                     <span class="week-number-value"></span>
-                    <span class="week-type">неделя</span>
                 </div>
+                <div class="week-type">неделя</div>
                 <div class="week-arrow" id="nextWeek" aria-label="Следующая неделя">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -717,6 +776,25 @@
 
         <main id="scheduleDisplay" class="schedule-card initial-load" role="main"></main>
     </div>
+
+    <nav class="bottom-floating-bar" role="navigation">
+        <div class="week-status">
+            <div class="week-arrow" id="prevWeek-mobile" aria-label="Предыдущая неделя">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </div>
+            <div class="week-number" id="weekNumber-mobile" aria-label="Текущая неделя">
+                <span class="week-number-value"></span>
+            </div>
+            <div class="week-type">неделя</div>
+            <div class="week-arrow" id="nextWeek-mobile" aria-label="Следующая неделя">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </div>
+        </div>
+    </nav>
 
     <script>
         const CONFIG = {
@@ -838,10 +916,15 @@
             constructor() {
                 this.dom = {
                     currentDate: document.getElementById('currentDate'),
-                    weekNumber: document.getElementById('weekNumber'),
                     scheduleDisplay: document.getElementById('scheduleDisplay'),
-                    prevWeek: document.getElementById('prevWeek'),
-                    nextWeek: document.getElementById('nextWeek')
+                    
+                    weekNumberDesktop: document.getElementById('weekNumber'),
+                    prevWeekDesktop: document.getElementById('prevWeek'),
+                    nextWeekDesktop: document.getElementById('nextWeek'),
+                    
+                    weekNumberMobile: document.getElementById('weekNumber-mobile'),
+                    prevWeekMobile: document.getElementById('prevWeek-mobile'),
+                    nextWeekMobile: document.getElementById('nextWeek-mobile'),
                 };
                 
                 this.state = {
@@ -874,9 +957,12 @@
             }
 
             attachEventListeners() {
-                this.dom.prevWeek.addEventListener('click', () => this.changeWeek(-1));
-                this.dom.nextWeek.addEventListener('click', () => this.changeWeek(1));
-                this.dom.weekNumber.addEventListener('click', () => this.resetWeek());
+                const changeWeek = (direction) => this.changeWeek(direction);
+                const resetWeek = () => this.resetWeek();
+                
+                [this.dom.prevWeekDesktop, this.dom.prevWeekMobile].forEach(el => el && el.addEventListener('click', () => changeWeek(-1)));
+                [this.dom.nextWeekDesktop, this.dom.nextWeekMobile].forEach(el => el && el.addEventListener('click', () => changeWeek(1)));
+                [this.dom.weekNumberDesktop, this.dom.weekNumberMobile].forEach(el => el && el.addEventListener('click', resetWeek));
             }
 
             getAcademicWeek(date) {
@@ -965,6 +1051,31 @@
                 
                 this.dom.scheduleDisplay.innerHTML = html;
             }
+            
+            updateWeekNumberHTML(element, weekNum, direction = 0) {
+                if (!element) return;
+                
+                if (direction !== 0) {
+                    const oldNum = direction === 1 ? weekNum - 1 : weekNum + 1;
+                    const animClassOut = direction === 1 ? 'slideOutUp' : 'slideOutDown';
+                    const animClassIn = direction === 1 ? 'slideInUp' : 'slideInDown';
+                    
+                    element.innerHTML = `
+                        <span class="week-number-value" style="animation: ${animClassOut} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${oldNum}</span>
+                    `;
+                    
+                    setTimeout(() => {
+                        element.innerHTML = `
+                            <span class="week-number-value" style="animation: ${animClassIn} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${weekNum}</span>
+                        `;
+                    }, CONFIG.TRANSITION_DURATION);
+
+                } else {
+                    element.innerHTML = `
+                        <span class="week-number-value">${weekNum}</span>
+                    `;
+                }
+            }
 
             updateDisplay(direction) {
                 this.state.isAnimating = true;
@@ -988,30 +1099,16 @@
                 
                 this.dom.scheduleDisplay.classList.remove('initial-load');
                 
-                if (direction !== 0) {
-                    const oldNum = direction === 1 ? weekNum - 1 : weekNum + 1;
-                    const animClass = direction === 1 ? 'slideOutUp' : 'slideOutDown';
-                    
-                    this.dom.weekNumber.innerHTML = `
-                        <span class="week-number-value" style="animation: ${animClass} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${oldNum}</span>
-                        <span class="week-type">неделя</span>
-                    `;
-                }
+                this.updateWeekNumberHTML(this.dom.weekNumberDesktop, weekNum, direction);
+                this.updateWeekNumberHTML(this.dom.weekNumberMobile, weekNum, direction);
+
                 
                 setTimeout(() => {
                     this.dom.currentDate.textContent = `${dayShort}, ${datePart}`;
                     
-                    if (direction !== 0) {
-                        const animClass = direction === 1 ? 'slideInUp' : 'slideInDown';
-                         this.dom.weekNumber.innerHTML = `
-                            <span class="week-number-value" style="animation: ${animClass} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${weekNum}</span>
-                            <span class="week-type">неделя</span>
-                        `;
-                    } else {
-                        this.dom.weekNumber.innerHTML = `
-                            <span class="week-number-value">${weekNum}</span>
-                            <span class="week-type">неделя</span>
-                        `;
+                    if (direction === 0) {
+                        this.updateWeekNumberHTML(this.dom.weekNumberDesktop, weekNum, 0);
+                        this.updateWeekNumberHTML(this.dom.weekNumberMobile, weekNum, 0);
                     }
                     
                     this.updateArrowStates(weekNum);
@@ -1025,15 +1122,18 @@
                             
                             setTimeout(() => {
                                 this.state.isAnimating = false;
-                            }, CONFIG.TRANSITION_DURATION);
+                            }, CONFIG.TRANSITION_DURATION * 2);
                         });
                     });
                 }, CONFIG.TRANSITION_DURATION);
             }
 
             updateArrowStates(weekNum) {
-                this.dom.prevWeek.classList.toggle('disabled', weekNum <= CONFIG.MIN_WEEK);
-                this.dom.nextWeek.classList.toggle('disabled', weekNum >= CONFIG.MAX_WEEK);
+                const isDisabledPrev = weekNum <= CONFIG.MIN_WEEK;
+                const isDisabledNext = weekNum >= CONFIG.MAX_WEEK;
+                
+                [this.dom.prevWeekDesktop, this.dom.prevWeekMobile].forEach(el => el && el.classList.toggle('disabled', isDisabledPrev));
+                [this.dom.nextWeekDesktop, this.dom.nextWeekMobile].forEach(el => el && el.classList.toggle('disabled', isDisabledNext));
             }
         }
 

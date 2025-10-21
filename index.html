@@ -229,12 +229,12 @@
         }
 
         .week-status {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 0.65rem;
+            gap: 0;
             background: var(--bg-secondary);
-            padding: 0.6rem 1.1rem;
-            border-radius: var(--radius-xl);
+            padding: 0.4rem;
+            border-radius: 9999px;
             border: 1px solid var(--border);
             box-shadow: var(--shadow-glass);
             flex-shrink: 0;
@@ -243,82 +243,57 @@
             -webkit-backdrop-filter: blur(30px) saturate(180%);
             position: relative;
             overflow: hidden;
+            will-change: transform;
+            min-height: 48px;
         }
-
+        
         .week-status::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, 
-                var(--bg-glass) 0%, 
-                transparent 50%, 
-                var(--bg-glass) 100%);
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-smooth);
-            pointer-events: none;
-        }
-
-        .week-status:hover::before {
-            opacity: 1;
+            display: none;
         }
 
         .week-arrow {
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--bg-glass);
-            border-radius: var(--radius-sm);
+            background: transparent;
+            border-radius: 9999px;
             cursor: pointer;
             transition: all var(--transition-normal) var(--ease-smooth);
-            border: 1px solid var(--border);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            border: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
             position: relative;
             overflow: hidden;
             will-change: transform;
+            flex-shrink: 0;
         }
-
+        
         .week-arrow::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--accent-main);
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-smooth);
-            z-index: 0;
+            display: none;
         }
-
-        .week-arrow:hover:not(.disabled)::before {
-            opacity: 1;
-        }
-
+        
         .week-arrow:hover:not(.disabled) {
-            border-color: var(--accent-main);
-            box-shadow: 0 4px 12px var(--accent-glow);
-            transform: translateY(-1px);
+            background: var(--bg-glass);
+            border-color: transparent;
+            box-shadow: none;
+            transform: none;
         }
-
+        
+        .week-arrow:hover:not(.disabled) svg {
+            color: var(--text-primary);
+            filter: none;
+        }
+        
         .week-arrow:active:not(.disabled) {
             transform: scale(0.95);
             transition-duration: var(--transition-fast);
         }
 
-        .week-arrow:hover:not(.disabled) svg {
-            color: white;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
-        }
-
-        .week-arrow.disabled {
-            opacity: 0.2;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
         .week-arrow svg {
-            width: 15px;
-            height: 15px;
+            width: 16px;
+            height: 16px;
             color: var(--text-secondary);
             transition: all var(--transition-normal) var(--ease-smooth);
             position: relative;
@@ -329,29 +304,53 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 36px;
-            height: 36px;
+            min-width: 100px;
+            height: 40px;
             background: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-hover) 100%);
             color: white;
-            border-radius: var(--radius-sm);
+            border-radius: 9999px;
             font-size: 0.9rem;
             font-weight: 700;
             cursor: pointer;
             transition: all var(--transition-normal) var(--ease-smooth);
-            padding: 0 0.6rem;
+            padding: 0 1rem;
             box-shadow: var(--shadow-accent);
             position: relative;
             overflow: hidden;
             will-change: transform;
+            flex-grow: 1;
+            flex-shrink: 1;
+            margin: 0 0.4rem;
         }
-
+        
+        .week-number:hover {
+            transform: scale(1.01);
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+        .week-number:active {
+            transform: scale(0.98);
+            transition-duration: var(--transition-fast);
+        }
+        
         .week-number > span {
             display: inline-block;
             transition: all var(--transition-normal) var(--ease-smooth);
             position: relative;
             z-index: 1;
+            white-space: nowrap;
         }
 
+        .week-number-value {
+            font-weight: 700;
+            margin-right: 0.25rem;
+        }
+        
+        .week-type {
+            font-weight: 500;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        
         .week-number::before {
             content: '';
             position: absolute;
@@ -366,28 +365,6 @@
 
         .week-number:hover::before {
             opacity: 1;
-        }
-
-        .week-number:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 12px 28px var(--accent-glow);
-        }
-
-        .week-number:active {
-            transform: scale(0.98);
-            transition-duration: var(--transition-fast);
-        }
-
-        .week-text-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .week-type {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-            letter-spacing: -0.01em;
         }
 
         .schedule-card {
@@ -449,10 +426,6 @@
 
         .day-section:hover::after {
             opacity: 0.3;
-        }
-
-        .day-section:last-child::after {
-            display: none;
         }
 
         .day-section:not(:last-child) {
@@ -659,28 +632,28 @@
             }
 
             .week-status {
-                padding: 0.5rem 0.9rem;
-                gap: 0.5rem;
+                padding: 0.3rem;
+                min-height: 40px;
             }
 
             .week-arrow {
-                width: 28px;
-                height: 28px;
+                width: 34px;
+                height: 34px;
             }
 
             .week-arrow svg {
-                width: 13px;
-                height: 13px;
+                width: 14px;
+                height: 14px;
             }
 
             .week-number {
-                min-width: 32px;
-                height: 32px;
+                min-width: 90px;
+                height: 34px;
                 font-size: 0.85rem;
             }
 
             .week-type {
-                font-size: 0.75rem;
+                font-size: 0.8rem;
             }
 
             .day-header {
@@ -731,10 +704,8 @@
                     </svg>
                 </div>
                 <div class="week-number" id="weekNumber" aria-label="Текущая неделя">
-                    <span></span>
-                </div>
-                <div class="week-text-group">
-                    <div class="week-type">неделя</div>
+                    <span class="week-number-value"></span>
+                    <span class="week-type">неделя</span>
                 </div>
                 <div class="week-arrow" id="nextWeek" aria-label="Следующая неделя">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -1015,22 +986,32 @@
                 this.dom.scheduleDisplay.style.transform = 'translateY(10px)';
                 this.dom.currentDate.style.opacity = '0';
                 
+                this.dom.scheduleDisplay.classList.remove('initial-load');
+                
                 if (direction !== 0) {
                     const oldNum = direction === 1 ? weekNum - 1 : weekNum + 1;
                     const animClass = direction === 1 ? 'slideOutUp' : 'slideOutDown';
-                    this.dom.weekNumber.innerHTML = `<span style="animation: ${animClass} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${oldNum}</span>`;
+                    
+                    this.dom.weekNumber.innerHTML = `
+                        <span class="week-number-value" style="animation: ${animClass} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${oldNum}</span>
+                        <span class="week-type">неделя</span>
+                    `;
                 }
-                
-                this.dom.scheduleDisplay.classList.remove('initial-load');
                 
                 setTimeout(() => {
                     this.dom.currentDate.textContent = `${dayShort}, ${datePart}`;
                     
                     if (direction !== 0) {
                         const animClass = direction === 1 ? 'slideInUp' : 'slideInDown';
-                        this.dom.weekNumber.innerHTML = `<span style="animation: ${animClass} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${weekNum}</span>`;
+                         this.dom.weekNumber.innerHTML = `
+                            <span class="week-number-value" style="animation: ${animClass} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${weekNum}</span>
+                            <span class="week-type">неделя</span>
+                        `;
                     } else {
-                        this.dom.weekNumber.innerHTML = `<span>${weekNum}</span>`;
+                        this.dom.weekNumber.innerHTML = `
+                            <span class="week-number-value">${weekNum}</span>
+                            <span class="week-type">неделя</span>
+                        `;
                     }
                     
                     this.updateArrowStates(weekNum);

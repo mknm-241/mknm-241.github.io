@@ -180,15 +180,6 @@
             }
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -250,10 +241,6 @@
             min-height: 48px;
             flex-wrap: nowrap;
         }
-        
-        .week-status::before {
-            display: none;
-        }
 
         .week-arrow {
             width: 40px;
@@ -274,20 +261,12 @@
             flex-shrink: 0;
         }
         
-        .week-arrow::before {
-            display: none;
-        }
-        
         .week-arrow:hover:not(.disabled) {
             background: var(--bg-glass);
-            border-color: transparent;
-            box-shadow: none;
-            transform: none;
         }
         
         .week-arrow:hover:not(.disabled) svg {
             color: var(--text-primary);
-            filter: none;
         }
         
         .week-arrow:active:not(.disabled) {
@@ -325,15 +304,22 @@
             flex-grow: 0;
             flex-shrink: 0;
             margin: 0 0.1rem;
+            border: none;
+            outline: none;
         }
         
         .week-number:hover {
             transform: scale(1.01);
             box-shadow: 0 8px 20px var(--accent-glow);
         }
+        
         .week-number:active {
             transform: scale(0.98);
             transition-duration: var(--transition-fast);
+        }
+        
+        .week-number:focus {
+            box-shadow: 0 0 0 3px var(--accent-glow), var(--shadow-accent);
         }
         
         .week-number > span {
@@ -759,42 +745,42 @@
             </div>
 
             <div class="week-status">
-                <div class="week-arrow" id="prevWeek" aria-label="Предыдущая неделя">
+                <button class="week-arrow" id="prevWeek" aria-label="Предыдущая неделя">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
-                </div>
-                <div class="week-number" id="weekNumber" aria-label="Текущая неделя">
+                </button>
+                <button class="week-number" id="weekNumber" aria-label="Текущая неделя">
                     <span class="week-number-value"></span>
-                </div>
+                </button>
                 <div class="week-type">неделя</div>
-                <div class="week-arrow" id="nextWeek" aria-label="Следующая неделя">
+                <button class="week-arrow" id="nextWeek" aria-label="Следующая неделя">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
-                </div>
+                </button>
             </div>
         </header>
 
-        <main id="scheduleDisplay" class="schedule-card initial-load" role="main"></main>
+        <main id="scheduleDisplay" class="schedule-card initial-load"></main>
     </div>
 
-    <nav class="bottom-floating-bar" role="navigation">
+    <nav class="bottom-floating-bar">
         <div class="week-status">
-            <div class="week-arrow" id="prevWeek-mobile" aria-label="Предыдущая неделя">
+            <button class="week-arrow" id="prevWeekMobile" aria-label="Предыдущая неделя">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
-            </div>
-            <div class="week-number" id="weekNumber-mobile" aria-label="Текущая неделя">
+            </button>
+            <button class="week-number" id="weekNumberMobile" aria-label="Текущая неделя">
                 <span class="week-number-value"></span>
-            </div>
+            </button>
             <div class="week-type">неделя</div>
-            <div class="week-arrow" id="nextWeek-mobile" aria-label="Следующая неделя">
+            <button class="week-arrow" id="nextWeekMobile" aria-label="Следующая неделя">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-            </div>
+            </button>
         </div>
     </nav>
 
@@ -919,14 +905,12 @@
                 this.dom = {
                     currentDate: document.getElementById('currentDate'),
                     scheduleDisplay: document.getElementById('scheduleDisplay'),
-                    
                     weekNumberDesktop: document.getElementById('weekNumber'),
                     prevWeekDesktop: document.getElementById('prevWeek'),
                     nextWeekDesktop: document.getElementById('nextWeek'),
-                    
-                    weekNumberMobile: document.getElementById('weekNumber-mobile'),
-                    prevWeekMobile: document.getElementById('prevWeek-mobile'),
-                    nextWeekMobile: document.getElementById('nextWeek-mobile'),
+                    weekNumberMobile: document.getElementById('weekNumberMobile'),
+                    prevWeekMobile: document.getElementById('prevWeekMobile'),
+                    nextWeekMobile: document.getElementById('nextWeekMobile'),
                 };
                 
                 this.state = {

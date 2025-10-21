@@ -840,7 +840,7 @@
             const dayOfWeekShort = adjustedDate.toLocaleDateString(FORMAT_LOCALE, { weekday: 'short' });
             const datePart = adjustedDate.toLocaleDateString(FORMAT_LOCALE, {
                 day: 'numeric',
-                month: 'long',
+                month: 'short',
                 year: 'numeric'
             });
             const formattedDate = `${dayOfWeekShort}, ${datePart}`; 

@@ -136,6 +136,7 @@
             flex-direction: column;
             gap: 0.35rem;
             flex-grow: 1;
+            min-width: 0;
         }
 
         #currentDate {
@@ -152,6 +153,9 @@
             -webkit-background-clip: text;
             background-clip: text;
             animation: shimmer 8s ease-in-out infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .week-status {
@@ -892,5 +896,4 @@
         });
     </script>
 </body>
-</html> 
-            
+</html>

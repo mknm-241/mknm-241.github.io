@@ -91,7 +91,6 @@
             margin-bottom: var(--spacing-xl);
             gap: var(--spacing-lg);
             animation: fadeInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform, opacity;
         }
 
         @keyframes fadeInDown {
@@ -126,36 +125,23 @@
         }
         
         @keyframes slideInUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(100%); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
+            from { opacity: 0; transform: translateY(100%); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         @keyframes slideOutDown {
-            from { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-            to { 
-                opacity: 0; 
-                transform: translateY(100%); 
-            }
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(100%); }
         }
 
         @keyframes slideInDown {
-            from { 
-                opacity: 0; 
-                transform: translateY(-100%); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
+            from { opacity: 0; transform: translateY(-100%); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideOutUp {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-100%); }
         }
 
         .date-info {
@@ -179,9 +165,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             animation: shimmer 8s ease-in-out infinite;
-            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-                       transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: background-position;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .week-status {
@@ -199,7 +183,6 @@
             -webkit-backdrop-filter: blur(30px) saturate(180%);
             position: relative;
             overflow: hidden;
-            will-change: transform;
         }
 
         .week-status::before {
@@ -234,7 +217,6 @@
             -webkit-backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
-            will-change: transform;
         }
 
         .week-arrow::before {
@@ -254,11 +236,10 @@
         .week-arrow:hover:not(.disabled) {
             border-color: var(--accent-main);
             box-shadow: 0 4px 12px var(--accent-glow);
-            transform: translateZ(0);
         }
 
         .week-arrow:active:not(.disabled) {
-            transform: scale(0.95) translateZ(0);
+            transform: scale(0.95);
             transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: none;
         }
@@ -298,13 +279,11 @@
             box-shadow: var(--shadow-accent), 0 0 8px var(--accent-glow) inset;
             position: relative;
             overflow: hidden;
-            will-change: transform;
         }
 
         .week-number > span {
             display: inline-block;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform, opacity;
         }
         
         .week-number.fade-up > span {
@@ -332,13 +311,13 @@
         }
 
         .week-number:hover {
-            transform: translateY(-1px) translateZ(0);
+            transform: translateY(-1px);
             box-shadow: var(--shadow-accent);
             filter: none;
         }
 
         .week-number:active {
-            transform: scale(0.98) translateZ(0);
+            transform: scale(0.98);
             box-shadow: 0 0 5px var(--accent-glow);
             transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -366,7 +345,6 @@
             -webkit-backdrop-filter: blur(50px) saturate(190%);
             position: relative;
             outline: 1px solid rgba(255, 255, 255, 0.1);
-            will-change: transform, opacity;
         }
 
         .schedule-card.initial-load {
@@ -466,7 +444,6 @@
             color: inherit;
             position: relative;
             overflow: hidden;
-            will-change: transform;
         }
 
         .class-item::before {
@@ -486,12 +463,12 @@
         }
 
         .class-item:hover {
-            transform: translateX(8px) translateZ(0);
+            transform: translateX(8px);
             background-color: var(--accent-light);
         }
 
         .class-item:active {
-            transform: translateX(4px) scale(0.99) translateZ(0);
+            transform: translateX(4px) scale(0.99);
             transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -525,7 +502,6 @@
             color: var(--accent-main);
             filter: drop-shadow(0 0 4px var(--accent-glow));
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform;
         }
 
         .class-item:hover .time-icon {
@@ -575,19 +551,18 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            will-change: transform;
         }
 
         .class-type:hover {
             background: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-hover) 100%);
             color: white;
             border-color: var(--accent-main);
-            transform: translateY(-1px) translateZ(0);
+            transform: translateY(-1px);
             box-shadow: 0 4px 8px var(--accent-glow);
         }
 
         .class-type:active {
-            transform: translateY(0) translateZ(0);
+            transform: translateY(0);
             transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -659,12 +634,6 @@
                 font-size: 0.7rem;
             }
         }
-
-        .performance-optimized {
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            perspective: 1000px;
-        }
     </style>
 </head>
 <body>
@@ -698,335 +667,301 @@
     </div>
 
     <script>
-        class ScheduleManager {
-            constructor() {
-                this.SCHEDULE_DATA = {
-                    odd: {
-                        'Понедельник': [
-                            {
-                                time: '17:15 – 18:50',
-                                name: 'Безопасность компьютерных сетей',
-                                type: 'Лабораторная',
-                                info: 'доц. Карабцев С.Н.',
-                                link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy'
-                            },
-                            {
-                                time: '18:50 – 20:25',
-                                name: 'Анализ защищенности компьютерных систем и приложений',
-                                type: 'Лабораторная',
-                                info: 'ст. преп. Торгулькин В.В.',
-                                link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t'
-                            }
-                        ],
-                        'Вторник': [
-                            {
-                                time: '17:15 – 18:50',
-                                name: 'Администрирование защищенных баз данных',
-                                type: 'Лабораторная',
-                                info: 'зав. кафедрой Гудов А.М.',
-                                link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
-                            },
-                            {
-                                time: '18:50 – 20:25',
-                                name: 'Современные численные методы',
-                                type: 'Лабораторная',
-                                info: 'зав. кафедрой Гудов А.М.',
-                                link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
-                            }
-                        ],
-                        'Среда': [
-                            {
-                                time: '15:30 – 17:05',
-                                name: 'Математические модели и методы искусственного интеллекта',
-                                type: 'Лабораторная',
-                                info: 'доц. Саблинский А.И., ауд. 2220'
-                            },
-                            {
-                                time: '17:15 – 18:50',
-                                name: 'Введение в Data Science и машинное обучение',
-                                type: 'Лабораторная',
-                                info: 'доц. Саблинский А.И., ауд. 2220'
-                            }
-                        ],
-                        'Четверг': [],
-                        'Пятница': [],
-                        'Суббота': []
+        const SCHEDULE_DATA = {
+            odd: {
+                'Понедельник': [
+                    {
+                        time: '17:15 – 18:50',
+                        name: 'Безопасность компьютерных сетей',
+                        type: 'Лабораторная',
+                        info: 'доц. Карабцев С.Н.',
+                        link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy'
                     },
-                    even: {
-                        'Понедельник': [
-                            {
-                                time: '17:15 – 18:50',
-                                name: 'Безопасность компьютерных сетей',
-                                type: 'Лекция',
-                                info: 'доц. Карабцев С.Н.',
-                                link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy'
-                            },
-                            {
-                                time: '18:50 – 20:25',
-                                name: 'Анализ защищенности компьютерных систем и приложений',
-                                type: 'Лекция',
-                                info: 'ст. преп. Торгулькин В.В.',
-                                link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t'
-                            }
-                        ],
-                        'Вторник': [
-                            {
-                                time: '17:15 – 18:50',
-                                name: 'Администрирование защищенных баз данных',
-                                type: 'Лекция',
-                                info: 'зав. кафедрой Гудов А.М.',
-                                link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
-                            },
-                            {
-                                time: '18:50 – 20:25',
-                                name: 'Современные численные методы',
-                                type: 'Лекция',
-                                info: 'зав. кафедрой Гудов А.М.',
-                                link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
-                            }
-                        ],
-                        'Среда': [
-                            {
-                                time: '15:30 – 17:05',
-                                name: 'Математические модели и методы искусственного интеллекта',
-                                type: 'Лекция',
-                                info: 'доц. Саблинский А.И., ауд. 2220'
-                            },
-                            {
-                                time: '17:15 – 18:50',
-                                name: 'Введение в Data Science и машинное обучение',
-                                type: 'Лекция',
-                                info: 'доц. Саблинский А.И., ауд. 2220'
-                            }
-                        ],
-                        'Четверг': [],
-                        'Пятница': [],
-                        'Суббота': []
+                    {
+                        time: '18:50 – 20:25',
+                        name: 'Анализ защищенности компьютерных систем и приложений',
+                        type: 'Лабораторная',
+                        info: 'ст. преп. Торгулькин В.В.',
+                        link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t'
                     }
-                };
-
-                this.DOM = {
-                    currentDate: document.getElementById('currentDate'),
-                    weekNumberContainer: document.getElementById('weekNumber'),
-                    scheduleDisplay: document.getElementById('scheduleDisplay'),
-                    prevWeek: document.getElementById('prevWeek'),
-                    nextWeek: document.getElementById('nextWeek')
-                };
-                
-                this.currentWeekOffset = 0;
-                this.MIN_WEEK = 1;
-                this.MAX_WEEK = 18;
-                this.DAYS_OF_WEEK = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-                this.MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
-                this.FORMAT_LOCALE = 'ru-RU';
-                this.SEPTEMBER_MONTH_INDEX = 8;
-                this.TRANSITION_DURATION = 300;
-                
-                this.init();
+                ],
+                'Вторник': [
+                    {
+                        time: '17:15 – 18:50',
+                        name: 'Администрирование защищенных баз данных',
+                        type: 'Лабораторная',
+                        info: 'зав. кафедрой Гудов А.М.',
+                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
+                    },
+                    {
+                        time: '18:50 – 20:25',
+                        name: 'Современные численные методы',
+                        type: 'Лабораторная',
+                        info: 'зав. кафедрой Гудов А.М.',
+                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
+                    }
+                ],
+                'Среда': [
+                    {
+                        time: '15:30 – 17:05',
+                        name: 'Математические модели и методы искусственного интеллекта',
+                        type: 'Лабораторная',
+                        info: 'доц. Саблинский А.И., ауд. 2220'
+                    },
+                    {
+                        time: '17:15 – 18:50',
+                        name: 'Введение в Data Science и машинное обучение',
+                        type: 'Лабораторная',
+                        info: 'доц. Саблинский А.И., ауд. 2220'
+                    }
+                ],
+                'Четверг': [],
+                'Пятница': [],
+                'Суббота': []
+            },
+            even: {
+                'Понедельник': [
+                    {
+                        time: '17:15 – 18:50',
+                        name: 'Безопасность компьютерных сетей',
+                        type: 'Лекция',
+                        info: 'доц. Карабцев С.Н.',
+                        link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy'
+                    },
+                    {
+                        time: '18:50 – 20:25',
+                        name: 'Анализ защищенности компьютерных систем и приложений',
+                        type: 'Лекция',
+                        info: 'ст. преп. Торгулькин В.В.',
+                        link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t'
+                    }
+                ],
+                'Вторник': [
+                    {
+                        time: '17:15 – 18:50',
+                        name: 'Администрирование защищенных баз данных',
+                        type: 'Лекция',
+                        info: 'зав. кафедрой Гудов А.М.',
+                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
+                    },
+                    {
+                        time: '18:50 – 20:25',
+                        name: 'Современные численные методы',
+                        type: 'Лекция',
+                        info: 'зав. кафедрой Гудов А.М.',
+                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
+                    }
+                ],
+                'Среда': [
+                    {
+                        time: '15:30 – 17:05',
+                        name: 'Математические модели и методы искусственного интеллекта',
+                        type: 'Лекция',
+                        info: 'доц. Саблинский А.И., ауд. 2220'
+                    },
+                    {
+                        time: '17:15 – 18:50',
+                        name: 'Введение в Data Science и машинное обучение',
+                        type: 'Лекция',
+                        info: 'доц. Саблинский А.И., ауд. 2220'
+                    }
+                ],
+                'Четверг': [],
+                'Пятница': [],
+                'Суббота': []
             }
+        };
 
-            init() {
-                this.initTheme();
-                this.bindEvents();
-                this.updateHeaderInfo(0);
-                
-                requestAnimationFrame(() => {
-                    this.DOM.scheduleDisplay.style.opacity = '1';
-                    this.DOM.scheduleDisplay.style.transform = 'translateY(0)';
-                });
-            }
+        const DOM = {
+            currentDate: document.getElementById('currentDate'),
+            weekNumberContainer: document.getElementById('weekNumber'),
+            scheduleDisplay: document.getElementById('scheduleDisplay'),
+            prevWeek: document.getElementById('prevWeek'),
+            nextWeek: document.getElementById('nextWeek')
+        };
+        
+        let currentWeekOffset = 0;
+        const MIN_WEEK = 1;
+        const MAX_WEEK = 18;
+        const DAYS_OF_WEEK = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+        const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
+        const FORMAT_LOCALE = 'ru-RU';
+        const SEPTEMBER_MONTH_INDEX = 8;
+        const TRANSITION_DURATION = 300;
 
-            initTheme() {
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                const theme = prefersDark ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', theme);
-                
-                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                    const newTheme = e.matches ? 'dark' : 'light';
-                    document.documentElement.setAttribute('data-theme', newTheme);
-                });
-            }
-
-            bindEvents() {
-                this.DOM.prevWeek.addEventListener('click', () => this.handleWeekChange(-1));
-                this.DOM.nextWeek.addEventListener('click', () => this.handleWeekChange(1));
-                this.DOM.weekNumberContainer.addEventListener('click', () => this.resetToCurrentWeek());
-            }
-
-            getCurrentWeekNumber() {
-                const today = new Date();
-                const currentDateForOffset = new Date(today);
-                currentDateForOffset.setDate(today.getDate() + (this.currentWeekOffset * 7));
-                return this.getAcademicWeekNumber(currentDateForOffset);
-            }
+        const initTheme = () => {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = prefersDark ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
             
-            handleWeekChange(direction) {
-                const currentWeekNumber = this.getCurrentWeekNumber();
-                
-                if (direction === -1 && currentWeekNumber <= this.MIN_WEEK) {
-                    return;
-                }
-                if (direction === 1 && currentWeekNumber >= this.MAX_WEEK) {
-                    return;
-                }
-                
-                const today = new Date();
-                const adjustedDate = new Date(today);
-                adjustedDate.setDate(today.getDate() + ((this.currentWeekOffset + direction) * 7));
-                const newWeekNumber = this.getAcademicWeekNumber(adjustedDate);
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                const newTheme = e.matches ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', newTheme);
+            });
+        };
 
-                if (newWeekNumber >= this.MIN_WEEK && newWeekNumber <= this.MAX_WEEK) {
-                    this.currentWeekOffset += direction;
-                    this.updateHeaderInfo(direction);
-                }
-            }
+        const getAcademicWeekNumber = (date) => {
+            const currentYear = date.getFullYear();
+            const currentMonth = date.getMonth();
+            const startYear = (currentMonth < SEPTEMBER_MONTH_INDEX) ? currentYear - 1 : currentYear;
+            const septemberFirst = new Date(startYear, SEPTEMBER_MONTH_INDEX, 1);
+            septemberFirst.setHours(0, 0, 0, 0);
+            const dayOfWeek = septemberFirst.getDay();
+            const dayAdjustment = (dayOfWeek === 0) ? 6 : (dayOfWeek - 1); 
+            const firstWeekMonday = new Date(septemberFirst);
+            firstWeekMonday.setDate(septemberFirst.getDate() - dayAdjustment);
+            firstWeekMonday.setHours(0, 0, 0, 0);
+            const diffInTime = date.getTime() - firstWeekMonday.getTime();
+            return Math.ceil(diffInTime / MS_PER_WEEK);
+        };
 
-            resetToCurrentWeek() {
-                this.currentWeekOffset = 0;
-                this.updateHeaderInfo(0);
-            }
+        const createLessonHtml = (lesson) => {
+            const { time, name, type, info, link } = lesson;
+            const hasLink = link && link.trim() !== '';
+            const itemTag = hasLink ? 'a' : 'div';
+            const itemAttributes = hasLink ? `href="${link}" target="_blank" rel="noopener noreferrer"` : '';
 
-            getAcademicWeekNumber(date) {
-                const currentYear = date.getFullYear();
-                const currentMonth = date.getMonth();
-                const startYear = (currentMonth < this.SEPTEMBER_MONTH_INDEX) ? currentYear - 1 : currentYear;
-                const septemberFirst = new Date(startYear, this.SEPTEMBER_MONTH_INDEX, 1);
-                septemberFirst.setHours(0, 0, 0, 0);
-                const dayOfWeek = septemberFirst.getDay();
-                const dayAdjustment = (dayOfWeek === 0) ? 6 : (dayOfWeek - 1); 
-                const firstWeekMonday = new Date(septemberFirst);
-                firstWeekMonday.setDate(septemberFirst.getDate() - dayAdjustment);
-                firstWeekMonday.setHours(0, 0, 0, 0);
-                const diffInTime = date.getTime() - firstWeekMonday.getTime();
-                return Math.ceil(diffInTime / this.MS_PER_WEEK);
-            }
-
-            createLessonHtml(lesson) {
-                const { time, name, type, info, link } = lesson;
-                const hasLink = link && link.trim() !== '';
-                const itemTag = hasLink ? 'a' : 'div';
-                const itemAttributes = hasLink ? `href="${link}" target="_blank" rel="noopener noreferrer"` : '';
-
-                return `
-                    <${itemTag} class="class-item performance-optimized" ${itemAttributes}>
-                        <div class="class-details">
-                            <div class="class-time">
-                                <svg class="time-icon" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                                </svg>
-                                ${time}
-                            </div>
-                            <div class="class-name">${name}</div>
-                            <div class="class-meta">
-                                <span class="class-type performance-optimized">${type}</span>
-                                <span class="class-info">${info}</span>
-                            </div>
+            return `
+                <${itemTag} class="class-item" ${itemAttributes}>
+                    <div class="class-details">
+                        <div class="class-time">
+                            <svg class="time-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                            </svg>
+                            ${time}
                         </div>
-                    </${itemTag}>
-                `;
-            }
+                        <div class="class-name">${name}</div>
+                        <div class="class-meta">
+                            <span class="class-type">${type}</span>
+                            <span class="class-info">${info}</span>
+                        </div>
+                    </div>
+                </${itemTag}>
+            `;
+        };
 
-            renderSchedule(weekSchedule) {
-                const htmlContent = this.DAYS_OF_WEEK.reduce((acc, day) => {
-                    const lessons = weekSchedule[day];
-                    if (lessons && lessons.length > 0) {
-                        const lessonsHtml = lessons.map(lesson => this.createLessonHtml(lesson)).join('');
-                        return acc + `
-                            <div class="day-section">
-                                <div class="day-header">${day}</div>
-                                ${lessonsHtml}
-                            </div>
-                        `;
-                    }
-                    return acc;
-                }, '');
-                
-                this.DOM.scheduleDisplay.innerHTML = htmlContent;
-            }
-
-            updateHeaderInfo(direction = 0) {
-                const today = new Date();
-                const adjustedDate = new Date(today);
-                adjustedDate.setDate(today.getDate() + (this.currentWeekOffset * 7));
-                const weekNumber = this.getAcademicWeekNumber(adjustedDate);
-                const isEvenWeek = weekNumber % 2 === 0;
-                const weekTypeKey = isEvenWeek ? 'even' : 'odd';
-                const dayOfWeekShort = adjustedDate.toLocaleDateString(this.FORMAT_LOCALE, { weekday: 'short' });
-                const datePart = adjustedDate.toLocaleDateString(this.FORMAT_LOCALE, {
-                    day: 'numeric',
-                    month: 'numeric',
-                    year: 'numeric'
-                });
-                const formattedDate = `${dayOfWeekShort}, ${datePart}`; 
-                const weekSchedule = this.SCHEDULE_DATA[weekTypeKey];
-
-                this.prepareAnimation(direction, weekNumber);
-                
-                setTimeout(() => {
-                    this.applyChanges(direction, weekNumber, formattedDate, weekSchedule);
-                }, this.TRANSITION_DURATION);
-            }
-
-            prepareAnimation(direction, weekNumber) {
-                this.DOM.scheduleDisplay.style.opacity = '0';
-                this.DOM.scheduleDisplay.style.transform = 'translateY(10px)';
-                this.DOM.currentDate.style.opacity = '0';
-                
-                if (direction === 1) {
-                    this.DOM.weekNumberContainer.innerHTML = `<span class="fade-down">${weekNumber - 1}</span>`;
-                    this.DOM.weekNumberContainer.querySelector('span').style.animation = `slideOutUp ${this.TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
-                } else if (direction === -1) {
-                    this.DOM.weekNumberContainer.innerHTML = `<span class="fade-up">${weekNumber + 1}</span>`;
-                    this.DOM.weekNumberContainer.querySelector('span').style.animation = `slideOutDown ${this.TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+        const renderSchedule = (weekSchedule) => {
+            const htmlContent = DAYS_OF_WEEK.reduce((acc, day) => {
+                const lessons = weekSchedule[day];
+                if (lessons && lessons.length > 0) {
+                    const lessonsHtml = lessons.map(createLessonHtml).join('');
+                    return acc + `
+                        <div class="day-section">
+                            <div class="day-header">${day}</div>
+                            ${lessonsHtml}
+                        </div>
+                    `;
                 }
+                return acc;
+            }, '');
+            DOM.scheduleDisplay.innerHTML = htmlContent;
+        };
 
-                this.DOM.scheduleDisplay.classList.remove('initial-load');
+        const updateHeaderInfo = (direction = 0) => {
+            const today = new Date();
+            const adjustedDate = new Date(today);
+            adjustedDate.setDate(today.getDate() + (currentWeekOffset * 7));
+            const weekNumber = getAcademicWeekNumber(adjustedDate);
+            const isEvenWeek = weekNumber % 2 === 0;
+            const weekTypeKey = isEvenWeek ? 'even' : 'odd';
+            const dayOfWeekShort = adjustedDate.toLocaleDateString(FORMAT_LOCALE, { weekday: 'short' });
+            const datePart = adjustedDate.toLocaleDateString(FORMAT_LOCALE, {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric'
+            });
+            const formattedDate = `${dayOfWeekShort}, ${datePart}`; 
+            const weekSchedule = SCHEDULE_DATA[weekTypeKey];
+
+            DOM.scheduleDisplay.style.opacity = '0';
+            DOM.scheduleDisplay.style.transform = 'translateY(10px)';
+            DOM.currentDate.style.opacity = '0';
+            
+            if (direction === 1) {
+                DOM.weekNumberContainer.innerHTML = `<span class="fade-down">${weekNumber - 1}</span>`;
+                DOM.weekNumberContainer.querySelector('span').style.animation = `slideOutUp ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+            } else if (direction === -1) {
+                DOM.weekNumberContainer.innerHTML = `<span class="fade-up">${weekNumber + 1}</span>`;
+                DOM.weekNumberContainer.querySelector('span').style.animation = `slideOutDown ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
             }
 
-            applyChanges(direction, weekNumber, formattedDate, weekSchedule) {
-                this.DOM.currentDate.textContent = formattedDate;
+            DOM.scheduleDisplay.classList.remove('initial-load');
+            
+            setTimeout(() => {
+                
+                DOM.currentDate.textContent = formattedDate;
 
                 if (direction !== 0) {
-                    this.DOM.weekNumberContainer.innerHTML = `<span>${weekNumber}</span>`;
-                    const newSpan = this.DOM.weekNumberContainer.querySelector('span');
+                    DOM.weekNumberContainer.innerHTML = `<span>${weekNumber}</span>`;
+                    const newSpan = DOM.weekNumberContainer.querySelector('span');
                     if (direction === 1) {
-                        newSpan.style.animation = `slideInUp ${this.TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+                        newSpan.style.animation = `slideInUp ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
                     } else if (direction === -1) {
-                        newSpan.style.animation = `slideInDown ${this.TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+                        newSpan.style.animation = `slideInDown ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
                     }
                 } else {
-                    this.DOM.weekNumberContainer.innerHTML = `<span>${weekNumber}</span>`;
+                    DOM.weekNumberContainer.innerHTML = `<span>${weekNumber}</span>`;
                 }
 
-                this.updateWeekArrows(weekNumber);
-                this.renderSchedule(weekSchedule);
+
+                if (weekNumber <= MIN_WEEK) {
+                    DOM.prevWeek.classList.add('disabled');
+                } else {
+                    DOM.prevWeek.classList.remove('disabled');
+                }
+
+                if (weekNumber >= MAX_WEEK) {
+                    DOM.nextWeek.classList.add('disabled');
+                } else {
+                    DOM.nextWeek.classList.remove('disabled');
+                }
+                
+                renderSchedule(weekSchedule);
 
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
-                        this.DOM.scheduleDisplay.style.opacity = '1';
-                        this.DOM.scheduleDisplay.style.transform = 'translateY(0)';
-                        this.DOM.currentDate.style.opacity = '1';
+                        DOM.scheduleDisplay.style.opacity = '1';
+                        DOM.scheduleDisplay.style.transform = 'translateY(0)';
+                        DOM.currentDate.style.opacity = '1';
                     });
                 });
-            }
 
-            updateWeekArrows(weekNumber) {
-                if (weekNumber <= this.MIN_WEEK) {
-                    this.DOM.prevWeek.classList.add('disabled');
-                } else {
-                    this.DOM.prevWeek.classList.remove('disabled');
-                }
+            }, TRANSITION_DURATION);
+        };
 
-                if (weekNumber >= this.MAX_WEEK) {
-                    this.DOM.nextWeek.classList.add('disabled');
-                } else {
-                    this.DOM.nextWeek.classList.remove('disabled');
-                }
+        DOM.prevWeek.addEventListener('click', () => {
+            const today = new Date();
+            const adjustedDate = new Date(today);
+            adjustedDate.setDate(today.getDate() + ((currentWeekOffset - 1) * 7));
+            const weekNumber = getAcademicWeekNumber(adjustedDate);
+            if (weekNumber >= MIN_WEEK) {
+                currentWeekOffset--;
+                updateHeaderInfo(-1);
             }
-        }
+        });
+
+        DOM.nextWeek.addEventListener('click', () => {
+            const today = new Date();
+            const adjustedDate = new Date(today);
+            adjustedDate.setDate(today.getDate() + ((currentWeekOffset + 1) * 7));
+            const weekNumber = getAcademicWeekNumber(adjustedDate);
+            if (weekNumber <= MAX_WEEK) {
+                currentWeekOffset++;
+                updateHeaderInfo(1);
+            }
+        });
+
+        DOM.weekNumberContainer.addEventListener('click', () => {
+            currentWeekOffset = 0;
+            updateHeaderInfo(0);
+        });
 
         document.addEventListener('DOMContentLoaded', () => {
-            new ScheduleManager();
+            initTheme();
+            updateHeaderInfo(0);
+            
+            DOM.scheduleDisplay.style.opacity = '1';
+            DOM.scheduleDisplay.style.transform = 'translateY(0)';
         });
     </script>
 </body>

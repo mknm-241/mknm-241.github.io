@@ -120,7 +120,6 @@
             }
         }
         
-        /* Анимации для смены номера недели */
         @keyframes slideInUp {
             from { opacity: 0; transform: translateY(100%); }
             to { opacity: 1; transform: translateY(0); }
@@ -544,8 +543,8 @@
             background: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-hover) 100%);
             color: white;
             border-color: var(--accent-main);
-            transform: translateY(-1px); /* Небольшой сдвиг, без масштабирования */
-            box-shadow: 0 4px 8px var(--accent-glow); /* Более мягкая тень */
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px var(--accent-glow);
         }
 
         .class-type:active {
@@ -637,7 +636,6 @@
                     </svg>
                 </div>
                 <div class="week-number" id="weekNumber">
-                    <!-- Элемент span для анимации -->
                     <span></span>
                 </div>
                 <div class="week-text-group">
@@ -763,7 +761,6 @@
         const DOM = {
             currentDate: document.getElementById('currentDate'),
             weekNumberContainer: document.getElementById('weekNumber'),
-            weekNumberSpan: document.getElementById('weekNumber').querySelector('span'),
             scheduleDisplay: document.getElementById('scheduleDisplay'),
             prevWeek: document.getElementById('prevWeek'),
             nextWeek: document.getElementById('nextWeek')
@@ -862,16 +859,14 @@
             const formattedDate = `${dayOfWeekShort}, ${datePart}`; 
             const weekSchedule = SCHEDULE_DATA[weekTypeKey];
 
-            // 1. Скрытие / Анимация ухода
             DOM.scheduleDisplay.style.opacity = '0';
             DOM.scheduleDisplay.style.transform = 'translateY(10px)';
             DOM.currentDate.style.opacity = '0';
             
-            // Анимация ухода для номера недели
-            if (direction === 1) { // Next week (число увеличивается -> вниз)
+            if (direction === 1) {
                 DOM.weekNumberContainer.innerHTML = `<span class="fade-down">${weekNumber - 1}</span>`;
                 DOM.weekNumberContainer.querySelector('span').style.animation = `slideOutUp ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
-            } else if (direction === -1) { // Prev week (число уменьшается -> вверх)
+            } else if (direction === -1) {
                 DOM.weekNumberContainer.innerHTML = `<span class="fade-up">${weekNumber + 1}</span>`;
                 DOM.weekNumberContainer.querySelector('span').style.animation = `slideOutDown ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
             }
@@ -880,18 +875,14 @@
             
             setTimeout(() => {
                 
-                // 2. Обновление контента
                 DOM.currentDate.textContent = formattedDate;
 
-                // Обновление номера недели с анимацией прихода
                 if (direction !== 0) {
-                     // 2.1 Вставляем новый элемент span
                     DOM.weekNumberContainer.innerHTML = `<span>${weekNumber}</span>`;
-                    // 2.2 Применяем анимацию прихода
                     const newSpan = DOM.weekNumberContainer.querySelector('span');
-                    if (direction === 1) { // Next week (число увеличивается -> приход снизу)
+                    if (direction === 1) {
                         newSpan.style.animation = `slideInUp ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
-                    } else if (direction === -1) { // Prev week (число уменьшается -> приход сверху)
+                    } else if (direction === -1) {
                         newSpan.style.animation = `slideInDown ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
                     }
                 } else {
@@ -913,7 +904,6 @@
                 
                 renderSchedule(weekSchedule);
 
-                // 3. Появление
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
                         DOM.scheduleDisplay.style.opacity = '1';
@@ -932,7 +922,7 @@
             const weekNumber = getAcademicWeekNumber(adjustedDate);
             if (weekNumber >= MIN_WEEK) {
                 currentWeekOffset--;
-                updateHeaderInfo(-1); // -1 для анимации "Prev"
+                updateHeaderInfo(-1);
             }
         });
 
@@ -943,20 +933,19 @@
             const weekNumber = getAcademicWeekNumber(adjustedDate);
             if (weekNumber <= MAX_WEEK) {
                 currentWeekOffset++;
-                updateHeaderInfo(1); // 1 для анимации "Next"
+                updateHeaderInfo(1);
             }
         });
 
         DOM.weekNumberContainer.addEventListener('click', () => {
             currentWeekOffset = 0;
-            updateHeaderInfo(0); // 0 для отсутствия анимации сдвига
+            updateHeaderInfo(0);
         });
 
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
             updateHeaderInfo(0);
             
-            // Мгновенный показ для первой загрузки
             DOM.scheduleDisplay.style.opacity = '1';
             DOM.scheduleDisplay.style.transform = 'translateY(0)';
         });

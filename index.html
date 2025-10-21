@@ -283,6 +283,10 @@
             transform: translateY(-1px);
         }
 
+        .class-type:active {
+            transform: scale(0.98);
+        }
+
         .class-info {
             color: var(--text-secondary);
             font-size: 0.8rem;
@@ -291,7 +295,7 @@
 
         @media (max-width: 768px) {
             body {
-                padding: var(--spacing-lg) var(--spacing-sm);
+                padding: var(--spacing-lg) var(--spacing-sm) 5rem var(--spacing-sm);
             }
 
             .top-bar {

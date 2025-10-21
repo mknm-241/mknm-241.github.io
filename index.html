@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Расписание МКНм-241</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
     <style>
         :root {
             --bg-primary: #F5F5F7;
@@ -127,59 +128,6 @@
             }
         }
 
-        @keyframes shimmer {
-            0%, 100% {
-                background-position: 0% center;
-            }
-            50% {
-                background-position: 100% center;
-            }
-        }
-        
-        @keyframes slideInUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(100%); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-        
-        @keyframes slideOutDown {
-            from { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-            to { 
-                opacity: 0; 
-                transform: translateY(100%); 
-            }
-        }
-
-        @keyframes slideInDown {
-            from { 
-                opacity: 0; 
-                transform: translateY(-100%); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-
-        @keyframes slideOutUp {
-            from { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-            to { 
-                opacity: 0; 
-                transform: translateY(-100%); 
-            }
-        }
-
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -209,17 +157,7 @@
             font-size: 1.35rem;
             color: var(--text-primary);
             letter-spacing: -0.03em;
-            background: linear-gradient(90deg, 
-                var(--text-primary) 0%, 
-                var(--text-primary) 50%, 
-                var(--text-secondary) 75%, 
-                var(--text-primary) 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: shimmer 8s ease-in-out infinite;
             transition: opacity var(--transition-normal) var(--ease-smooth);
-            will-change: opacity;
         }
 
         .week-status {
@@ -237,7 +175,6 @@
             -webkit-backdrop-filter: blur(30px) saturate(180%);
             position: relative;
             overflow: hidden;
-            will-change: transform;
             min-height: 48px;
             flex-wrap: nowrap;
         }
@@ -253,20 +190,13 @@
             cursor: pointer;
             transition: all var(--transition-normal) var(--ease-smooth);
             border: none;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
             position: relative;
             overflow: hidden;
-            will-change: transform;
             flex-shrink: 0;
         }
         
         .week-arrow:hover:not(.disabled) {
             background: var(--bg-glass);
-        }
-        
-        .week-arrow:hover:not(.disabled) svg {
-            color: var(--text-primary);
         }
         
         .week-arrow:active:not(.disabled) {
@@ -279,8 +209,6 @@
             height: 16px;
             color: var(--text-secondary);
             transition: all var(--transition-normal) var(--ease-smooth);
-            position: relative;
-            z-index: 1;
         }
 
         .week-number {
@@ -300,7 +228,6 @@
             box-shadow: var(--shadow-accent);
             position: relative;
             overflow: hidden;
-            will-change: transform;
             flex-grow: 0;
             flex-shrink: 0;
             margin: 0 0.1rem;
@@ -336,9 +263,6 @@
         
         .week-number-value {
             font-weight: 700;
-            margin-right: 0;
-            min-width: 0;
-            display: inline-block;
             text-align: center;
         }
         
@@ -349,22 +273,6 @@
             color: var(--text-primary);
             flex-shrink: 0;
             padding: 0 0.4rem;
-        }
-        
-        .week-number::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.3) 0%, 
-                transparent 50%, 
-                rgba(255, 255, 255, 0.3) 100%);
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-smooth);
-        }
-
-        .week-number:hover::before {
-            opacity: 1;
         }
 
         .schedule-card {
@@ -379,53 +287,15 @@
             -webkit-backdrop-filter: blur(50px) saturate(190%);
             position: relative;
             outline: 1px solid rgba(255, 255, 255, 0.05);
-            will-change: opacity, transform;
         }
 
         .schedule-card.initial-load {
             animation: fadeInUp 0.8s var(--ease-smooth) 0.1s both;
         }
 
-        .schedule-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, 
-                var(--bg-glass) 0%, 
-                transparent 30%, 
-                transparent 70%, 
-                var(--bg-glass) 100%);
-            opacity: 0;
-            transition: opacity var(--transition-slow) var(--ease-smooth);
-            pointer-events: none;
-        }
-
-        .schedule-card:hover::before {
-            opacity: 1;
-        }
-
         .day-section {
             position: relative;
             overflow: hidden;
-        }
-
-        .day-section::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                var(--accent-main) 50%, 
-                transparent 100%);
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-smooth);
-        }
-
-        .day-section:hover::after {
-            opacity: 0.3;
         }
 
         .day-section:not(:last-child) {
@@ -458,7 +328,6 @@
             background: linear-gradient(180deg, 
                 var(--accent-main) 0%, 
                 var(--accent-hover) 100%);
-            box-shadow: 0 0 12px var(--accent-glow);
         }
 
         .class-item {
@@ -471,23 +340,6 @@
             color: inherit;
             position: relative;
             overflow: hidden;
-            will-change: transform, background-color;
-        }
-
-        .class-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, 
-                var(--accent-light) 0%, 
-                transparent 50%);
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-smooth);
-            pointer-events: none;
-        }
-
-        .class-item:hover::before {
-            opacity: 1;
         }
 
         .class-item:not(:last-child) {
@@ -517,9 +369,7 @@
             height: 16px;
             flex-shrink: 0;
             color: var(--accent-main);
-            filter: drop-shadow(0 0 4px var(--accent-glow));
             transition: all var(--transition-normal) var(--ease-smooth);
-            will-change: transform;
         }
 
         .class-name {
@@ -544,9 +394,7 @@
         .class-type {
             display: inline-block;
             padding: 0.35rem 0.85rem;
-            background: linear-gradient(135deg, 
-                var(--accent-light) 0%, 
-                rgba(193, 95, 60, 0.12) 100%);
+            background: var(--accent-light);
             color: var(--accent-main);
             border-radius: var(--radius-sm);
             font-size: 0.75rem;
@@ -555,25 +403,6 @@
             transition: all var(--transition-normal) var(--ease-smooth);
             position: relative;
             overflow: hidden;
-            will-change: transform;
-        }
-
-        .class-type::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-hover) 100%);
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-smooth);
-        }
-
-        .class-type:hover::before {
-            opacity: 1;
-        }
-
-        .class-type > span {
-            position: relative;
-            z-index: 1;
         }
 
         .class-info {
@@ -595,8 +424,7 @@
             }
 
             .class-item:hover .time-icon {
-                transform: scale(1.15) rotate(360deg);
-                filter: drop-shadow(0 0 8px var(--accent-glow));
+                transform: scale(1.15);
             }
             
             .class-item:hover .class-name {
@@ -634,7 +462,6 @@
             padding: var(--spacing-sm) var(--spacing-md) calc(var(--spacing-sm) + env(safe-area-inset-bottom)) var(--spacing-md);
             background: transparent;
             pointer-events: none;
-            will-change: transform;
         }
         
         .bottom-floating-bar .week-status {
@@ -643,7 +470,6 @@
             margin: 0 auto;
             pointer-events: auto;
             box-shadow: var(--shadow-elevated);
-            
             min-height: 52px;
             padding: 0.5rem;
         }
@@ -693,10 +519,6 @@
                 height: 34px;
                 font-size: 0.85rem;
             }
-            
-            .week-number-value {
-                min-width: 0;
-            }
 
             .week-type {
                 font-size: 0.75rem;
@@ -735,18 +557,31 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="top-bar">
             <div class="date-info">
-                <div id="currentDate"></div>
+                <h1 id="currentDate" class="sr-only">Текущая дата</h1>
+                <div aria-labelledby="currentDate" id="currentDateDisplay"></div>
             </div>
 
             <div class="week-status">
                 <button class="week-arrow" id="prevWeek" aria-label="Предыдущая неделя">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                 </button>
@@ -755,7 +590,7 @@
                 </button>
                 <div class="week-type">неделя</div>
                 <button class="week-arrow" id="nextWeek" aria-label="Следующая неделя">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
                 </button>
@@ -765,10 +600,10 @@
         <main id="scheduleDisplay" class="schedule-card initial-load"></main>
     </div>
 
-    <nav class="bottom-floating-bar">
+    <nav class="bottom-floating-bar" aria-label="Навигация по неделям">
         <div class="week-status">
             <button class="week-arrow" id="prevWeekMobile" aria-label="Предыдущая неделя">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
             </button>
@@ -777,7 +612,7 @@
             </button>
             <div class="week-type">неделя</div>
             <button class="week-arrow" id="nextWeekMobile" aria-label="Следующая неделя">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
             </button>
@@ -785,331 +620,340 @@
     </nav>
 
     <script>
-        const CONFIG = {
-            MIN_WEEK: 1,
-            MAX_WEEK: 18,
-            MS_PER_WEEK: 604800000,
-            SEPTEMBER_INDEX: 8,
-            TRANSITION_DURATION: 300,
-            LOCALE: 'ru-RU',
-            DAYS: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
-        };
+        (function() {
+            'use strict';
 
-        const SCHEDULE_DATA = {
-            odd: {
-                'Понедельник': [
-                    {
-                        time: '17:15 – 18:50',
-                        name: 'Безопасность компьютерных сетей',
-                        type: 'Лабораторная',
-                        info: 'доц. Карабцев С.Н.',
-                        link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy'
-                    },
-                    {
-                        time: '18:50 – 20:25',
-                        name: 'Анализ защищенности компьютерных систем и приложений',
-                        type: 'Лабораторная',
-                        info: 'ст. преп. Торгулькин В.В.',
-                        link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t'
-                    }
-                ],
-                'Вторник': [
-                    {
-                        time: '17:15 – 18:50',
-                        name: 'Администрирование защищенных баз данных',
-                        type: 'Лабораторная',
-                        info: 'зав. кафедрой Гудов А.М.',
-                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
-                    },
-                    {
-                        time: '18:50 – 20:25',
-                        name: 'Современные численные методы',
-                        type: 'Лабораторная',
-                        info: 'зав. кафедрой Гудов А.М.',
-                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
-                    }
-                ],
-                'Среда': [
-                    {
-                        time: '15:30 – 17:05',
-                        name: 'Математические модели и методы искусственного интеллекта',
-                        type: 'Лабораторная',
-                        info: 'доц. Саблинский А.И.'
-                    },
-                    {
-                        time: '17:15 – 18:50',
-                        name: 'Введение в Data Science и машинное обучение',
-                        type: 'Лабораторная',
-                        info: 'доц. Саблинский А.И.'
-                    }
-                ],
-                'Четверг': [],
-                'Пятница': [],
-                'Суббота': []
-            },
-            even: {
-                'Понедельник': [
-                    {
-                        time: '17:15 – 18:50',
-                        name: 'Безопасность компьютерных сетей',
-                        type: 'Лекция',
-                        info: 'доц. Карабцев С.Н.',
-                        link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy'
-                    },
-                    {
-                        time: '18:50 – 20:25',
-                        name: 'Анализ защищенности компьютерных систем и приложений',
-                        type: 'Лекция',
-                        info: 'ст. преп. Торгулькин В.В.',
-                        link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t'
-                    }
-                ],
-                'Вторник': [
-                    {
-                        time: '17:15 – 18:50',
-                        name: 'Администрирование защищенных баз данных',
-                        type: 'Лекция',
-                        info: 'зав. кафедрой Гудов А.М.',
-                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
-                    },
-                    {
-                        time: '18:50 – 20:25',
-                        name: 'Современные численные методы',
-                        type: 'Лекция',
-                        info: 'зав. кафедрой Гудов А.М.',
-                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
-                    }
-                ],
-                'Среда': [
-                    {
-                        time: '15:30 – 17:05',
-                        name: 'Математические модели и методы искусственного интеллекта',
-                        type: 'Лекция',
-                        info: 'доц. Саблинский А.И.'
-                    },
-                    {
-                        time: '17:15 – 18:50',
-                        name: 'Введение в Data Science и машинное обучение',
-                        type: 'Лекция',
-                        info: 'доц. Саблинский А.И.'
-                    }
-                ],
-                'Четверг': [],
-                'Пятница': [],
-                'Суббота': []
-            }
-        };
+            const CONFIG = {
+                MIN_WEEK: 1,
+                MAX_WEEK: 18,
+                MS_PER_WEEK: 604800000,
+                SEPTEMBER_INDEX: 8,
+                TRANSITION_DURATION: 300,
+                LOCALE: 'ru-RU',
+                DAYS: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
+            };
 
-        class ScheduleApp {
-            constructor() {
-                this.dom = {
-                    currentDate: document.getElementById('currentDate'),
-                    scheduleDisplay: document.getElementById('scheduleDisplay'),
-                    weekNumberDesktop: document.getElementById('weekNumber'),
-                    prevWeekDesktop: document.getElementById('prevWeek'),
-                    nextWeekDesktop: document.getElementById('nextWeek'),
-                    weekNumberMobile: document.getElementById('weekNumberMobile'),
-                    prevWeekMobile: document.getElementById('prevWeekMobile'),
-                    nextWeekMobile: document.getElementById('nextWeekMobile'),
-                };
-                
-                this.state = {
-                    weekOffset: 0,
-                    isAnimating: false
-                };
-                
-                this.init();
-            }
-
-            init() {
-                this.initTheme();
-                this.setViewportHeight();
-                this.attachEventListeners();
-                this.updateDisplay(0);
-                
-                requestAnimationFrame(() => {
-                    this.dom.scheduleDisplay.style.opacity = '1';
-                    this.dom.scheduleDisplay.style.transform = 'translateY(0)';
-                });
-            }
-
-            initTheme() {
-                const setTheme = (isDark) => {
-                    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-                };
-                
-                const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-                setTheme(mediaQuery.matches);
-                mediaQuery.addEventListener('change', (e) => setTheme(e.matches));
-            }
-
-            setViewportHeight() {
-                const vh = window.innerHeight * 0.01;
-                document.documentElement.style.setProperty('--vh', `${vh}px`);
-            }
-
-            attachEventListeners() {
-                const changeWeek = (direction) => this.changeWeek(direction);
-                const resetWeek = () => this.resetWeek();
-                
-                [this.dom.prevWeekDesktop, this.dom.prevWeekMobile].forEach(el => el && el.addEventListener('click', () => changeWeek(-1)));
-                [this.dom.nextWeekDesktop, this.dom.nextWeekMobile].forEach(el => el && el.addEventListener('click', () => changeWeek(1)));
-                [this.dom.weekNumberDesktop, this.dom.weekNumberMobile].forEach(el => el && el.addEventListener('click', resetWeek));
-                
-                window.addEventListener('resize', () => this.setViewportHeight());
-                window.addEventListener('orientationchange', () => this.setViewportHeight());
-            }
-
-            getAcademicWeek(date) {
-                const year = date.getFullYear();
-                const month = date.getMonth();
-                const startYear = month < CONFIG.SEPTEMBER_INDEX ? year - 1 : year;
-                
-                const sept1 = new Date(startYear, CONFIG.SEPTEMBER_INDEX, 1, 0, 0, 0, 0);
-                const dayOfWeek = sept1.getDay();
-                const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-                
-                const firstMonday = new Date(sept1);
-                firstMonday.setDate(sept1.getDate() - daysToMonday);
-                
-                const timeDiff = date.getTime() - firstMonday.getTime();
-                return Math.ceil(timeDiff / CONFIG.MS_PER_WEEK);
-            }
-
-            getWeekNumber(offset = 0) {
-                const date = new Date();
-                date.setDate(date.getDate() + (offset * 7));
-                return this.getAcademicWeek(date);
-            }
-
-            isWeekValid(weekNum) {
-                return weekNum >= CONFIG.MIN_WEEK && weekNum <= CONFIG.MAX_WEEK;
-            }
-
-            changeWeek(direction) {
-                if (this.state.isAnimating) return;
-                
-                const newOffset = this.state.weekOffset + direction;
-                const newWeekNum = this.getWeekNumber(newOffset);
-                
-                if (!this.isWeekValid(newWeekNum)) return;
-                
-                this.state.weekOffset = newOffset;
-                this.updateDisplay(direction);
-            }
-
-            resetWeek() {
-                if (this.state.isAnimating || this.state.weekOffset === 0) return;
-                
-                this.state.weekOffset = 0;
-                this.updateDisplay(0);
-            }
-
-            createLessonHTML(lesson) {
-                const { time, name, type, info, link } = lesson;
-                const tag = link?.trim() ? 'a' : 'div';
-                const attrs = link?.trim() ? `href="${link}" target="_blank" rel="noopener noreferrer"` : '';
-
-                return `
-                    <${tag} class="class-item" ${attrs}>
-                        <div class="class-details">
-                            <div class="class-time">
-                                <svg class="time-icon" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                                </svg>
-                                ${time}
-                            </div>
-                            <div class="class-name">${name}</div>
-                            <div class="class-meta">
-                                <span class="class-type"><span>${type}</span></span>
-                                <span class="class-info">${info}</span>
-                            </div>
-                        </div>
-                    </${tag}>
-                `;
-            }
-
-            renderSchedule(schedule) {
-                const html = CONFIG.DAYS.reduce((acc, day) => {
-                    const lessons = schedule[day];
-                    if (lessons?.length) {
-                        const lessonsHTML = lessons.map(l => this.createLessonHTML(l)).join('');
-                        return acc + `
-                            <div class="day-section">
-                                <div class="day-header">${day}</div>
-                                ${lessonsHTML}
-                            </div>
-                        `;
-                    }
-                    return acc;
-                }, '');
-                
-                this.dom.scheduleDisplay.innerHTML = html;
-            }
-            
-            updateWeekNumberHTML(element, weekNum, direction = 0) {
-                if (!element) return;
-                
-                if (direction !== 0) {
-                    const oldNum = direction === 1 ? weekNum - 1 : weekNum + 1;
-                    const animClassOut = direction === 1 ? 'slideOutUp' : 'slideOutDown';
-                    const animClassIn = direction === 1 ? 'slideInUp' : 'slideInDown';
-                    
-                    element.innerHTML = `
-                        <span class="week-number-value" style="animation: ${animClassOut} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${oldNum}</span>
-                    `;
-                    
-                    setTimeout(() => {
-                        element.innerHTML = `
-                            <span class="week-number-value" style="animation: ${animClassIn} ${CONFIG.TRANSITION_DURATION}ms var(--ease-smooth) forwards">${weekNum}</span>
-                        `;
-                    }, CONFIG.TRANSITION_DURATION);
-
-                } else {
-                    element.innerHTML = `
-                        <span class="week-number-value">${weekNum}</span>
-                    `;
+            const SCHEDULE_DATA = Object.freeze({
+                odd: {
+                    'Понедельник': [
+                        {
+                            time: '17:15 – 18:50',
+                            name: 'Безопасность компьютерных сетей',
+                            type: 'Лабораторная',
+                            info: 'доц. Карабцев С.Н.',
+                            link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy'
+                        },
+                        {
+                            time: '18:50 – 20:25',
+                            name: 'Анализ защищенности компьютерных систем и приложений',
+                            type: 'Лабораторная',
+                            info: 'ст. преп. Торгулькин В.В.',
+                            link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t'
+                        }
+                    ],
+                    'Вторник': [
+                        {
+                            time: '17:15 – 18:50',
+                            name: 'Администрирование защищенных баз данных',
+                            type: 'Лабораторная',
+                            info: 'зав. кафедрой Гудов А.М.',
+                            link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
+                        },
+                        {
+                            time: '18:50 – 20:25',
+                            name: 'Современные численные методы',
+                            type: 'Лабораторная',
+                            info: 'зав. кафедрой Гудов А.М.',
+                            link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
+                        }
+                    ],
+                    'Среда': [
+                        {
+                            time: '15:30 – 17:05',
+                            name: 'Математические модели и методы искусственного интеллекта',
+                            type: 'Лабораторная',
+                            info: 'доц. Саблинский А.И.'
+                        },
+                        {
+                            time: '17:15 – 18:50',
+                            name: 'Введение в Data Science и машинное обучение',
+                            type: 'Лабораторная',
+                            info: 'доц. Саблинский А.И.'
+                        }
+                    ]
+                },
+                even: {
+                    'Понедельник': [
+                        {
+                            time: '17:15 – 18:50',
+                            name: 'Безопасность компьютерных сетей',
+                            type: 'Лекция',
+                            info: 'доц. Карабцев С.Н.',
+                            link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy'
+                        },
+                        {
+                            time: '18:50 – 20:25',
+                            name: 'Анализ защищенности компьютерных систем и приложений',
+                            type: 'Лекция',
+                            info: 'ст. преп. Торгулькин В.В.',
+                            link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t'
+                        }
+                    ],
+                    'Вторник': [
+                        {
+                            time: '17:15 – 18:50',
+                            name: 'Администрирование защищенных баз данных',
+                            type: 'Лекция',
+                            info: 'зав. кафедрой Гудов А.М.',
+                            link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
+                        },
+                        {
+                            time: '18:50 – 20:25',
+                            name: 'Современные численные методы',
+                            type: 'Лекция',
+                            info: 'зав. кафедрой Гудов А.М.',
+                            link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
+                        }
+                    ],
+                    'Среда': [
+                        {
+                            time: '15:30 – 17:05',
+                            name: 'Математические модели и методы искусственного интеллекта',
+                            type: 'Лекция',
+                            info: 'доц. Саблинский А.И.'
+                        },
+                        {
+                            time: '17:15 – 18:50',
+                            name: 'Введение в Data Science и машинное обучение',
+                            type: 'Лекция',
+                            info: 'доц. Саблинский А.И.'
+                        }
+                    ]
                 }
-            }
+            });
 
-            updateDisplay(direction) {
-                this.state.isAnimating = true;
-                
-                const date = new Date();
-                date.setDate(date.getDate() + (this.state.weekOffset * 7));
-                
-                const weekNum = this.getAcademicWeek(date);
-                const scheduleType = weekNum % 2 === 0 ? 'even' : 'odd';
-                
-                const dayShort = date.toLocaleDateString(CONFIG.LOCALE, { weekday: 'short' });
-                const datePart = date.toLocaleDateString(CONFIG.LOCALE, {
-                    day: 'numeric',
-                    month: 'numeric',
-                    year: 'numeric'
-                });
-                
-                this.dom.scheduleDisplay.style.opacity = '0';
-                this.dom.scheduleDisplay.style.transform = 'translateY(10px)';
-                this.dom.currentDate.style.opacity = '0';
-                
-                this.dom.scheduleDisplay.classList.remove('initial-load');
-                
-                this.updateWeekNumberHTML(this.dom.weekNumberDesktop, weekNum, direction);
-                this.updateWeekNumberHTML(this.dom.weekNumberMobile, weekNum, direction);
+            class ScheduleApp {
+                constructor() {
+                    this.dom = {};
+                    this.state = {
+                        weekOffset: 0,
+                        isAnimating: false
+                    };
+                    
+                    this.init();
+                }
 
-                
-                setTimeout(() => {
-                    this.dom.currentDate.textContent = `${dayShort}, ${datePart}`;
-                    
-                    if (direction === 0) {
-                        this.updateWeekNumberHTML(this.dom.weekNumberDesktop, weekNum, 0);
-                        this.updateWeekNumberHTML(this.dom.weekNumberMobile, weekNum, 0);
-                    }
-                    
-                    this.updateArrowStates(weekNum);
-                    this.renderSchedule(SCHEDULE_DATA[scheduleType]);
+                init() {
+                    this.cacheDOM();
+                    this.initTheme();
+                    this.setViewportHeight();
+                    this.attachEventListeners();
+                    this.updateDisplay(0);
                     
                     requestAnimationFrame(() => {
+                        this.dom.scheduleDisplay.style.opacity = '1';
+                        this.dom.scheduleDisplay.style.transform = 'translateY(0)';
+                    });
+                }
+
+                cacheDOM() {
+                    this.dom.currentDate = document.getElementById('currentDateDisplay');
+                    this.dom.scheduleDisplay = document.getElementById('scheduleDisplay');
+                    this.dom.weekNumberDesktop = document.getElementById('weekNumber');
+                    this.dom.prevWeekDesktop = document.getElementById('prevWeek');
+                    this.dom.nextWeekDesktop = document.getElementById('nextWeek');
+                    this.dom.weekNumberMobile = document.getElementById('weekNumberMobile');
+                    this.dom.prevWeekMobile = document.getElementById('prevWeekMobile');
+                    this.dom.nextWeekMobile = document.getElementById('nextWeekMobile');
+                }
+
+                initTheme() {
+                    const setTheme = (isDark) => {
+                        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+                    };
+                    
+                    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                    setTheme(mediaQuery.matches);
+                    
+                    const themeListener = (e) => setTheme(e.matches);
+                    mediaQuery.addEventListener('change', themeListener);
+                    
+                    this.mediaQuery = mediaQuery;
+                    this.themeListener = themeListener;
+                }
+
+                setViewportHeight() {
+                    const setHeight = () => {
+                        const vh = window.innerHeight * 0.01;
+                        document.documentElement.style.setProperty('--vh', `${vh}px`);
+                    };
+                    
+                    setHeight();
+                    window.addEventListener('resize', setHeight);
+                    window.addEventListener('orientationchange', setHeight);
+                    
+                    this.setHeight = setHeight;
+                }
+
+                attachEventListeners() {
+                    const changeWeek = (direction) => this.changeWeek(direction);
+                    const resetWeek = () => this.resetWeek();
+                    
+                    [this.dom.prevWeekDesktop, this.dom.prevWeekMobile].forEach(el => {
+                        if (el) el.addEventListener('click', () => changeWeek(-1));
+                    });
+                    
+                    [this.dom.nextWeekDesktop, this.dom.nextWeekMobile].forEach(el => {
+                        if (el) el.addEventListener('click', () => changeWeek(1));
+                    });
+                    
+                    [this.dom.weekNumberDesktop, this.dom.weekNumberMobile].forEach(el => {
+                        if (el) el.addEventListener('click', resetWeek);
+                    });
+                }
+
+                getAcademicWeek(date) {
+                    const year = date.getFullYear();
+                    const month = date.getMonth();
+                    const startYear = month < CONFIG.SEPTEMBER_INDEX ? year - 1 : year;
+                    
+                    const sept1 = new Date(startYear, CONFIG.SEPTEMBER_INDEX, 1);
+                    const dayOfWeek = sept1.getDay();
+                    const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+                    
+                    const firstMonday = new Date(sept1);
+                    firstMonday.setDate(sept1.getDate() - daysToMonday);
+                    
+                    const timeDiff = date.getTime() - firstMonday.getTime();
+                    return Math.ceil(timeDiff / CONFIG.MS_PER_WEEK);
+                }
+
+                getWeekNumber(offset = 0) {
+                    const date = new Date();
+                    date.setDate(date.getDate() + (offset * 7));
+                    return this.getAcademicWeek(date);
+                }
+
+                isWeekValid(weekNum) {
+                    return weekNum >= CONFIG.MIN_WEEK && weekNum <= CONFIG.MAX_WEEK;
+                }
+
+                changeWeek(direction) {
+                    if (this.state.isAnimating) return;
+                    
+                    const newOffset = this.state.weekOffset + direction;
+                    const newWeekNum = this.getWeekNumber(newOffset);
+                    
+                    if (!this.isWeekValid(newWeekNum)) return;
+                    
+                    this.state.weekOffset = newOffset;
+                    this.updateDisplay(direction);
+                }
+
+                resetWeek() {
+                    if (this.state.isAnimating || this.state.weekOffset === 0) return;
+                    
+                    this.state.weekOffset = 0;
+                    this.updateDisplay(0);
+                }
+
+                createLessonHTML(lesson) {
+                    const { time, name, type, info, link } = lesson;
+                    const tag = link?.trim() ? 'a' : 'div';
+                    const attrs = link?.trim() ? `href="${link}" target="_blank" rel="noopener noreferrer"` : '';
+
+                    return `
+                        <${tag} class="class-item" ${attrs}>
+                            <div class="class-details">
+                                <div class="class-time">
+                                    <svg class="time-icon" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                    </svg>
+                                    ${time}
+                                </div>
+                                <div class="class-name">${name}</div>
+                                <div class="class-meta">
+                                    <span class="class-type"><span>${type}</span></span>
+                                    <span class="class-info">${info}</span>
+                                </div>
+                            </div>
+                        </${tag}>
+                    `;
+                }
+
+                renderSchedule(schedule) {
+                    const fragment = document.createDocumentFragment();
+                    const tempDiv = document.createElement('div');
+                    
+                    CONFIG.DAYS.forEach(day => {
+                        const lessons = schedule[day];
+                        if (lessons?.length) {
+                            const lessonsHTML = lessons.map(l => this.createLessonHTML(l)).join('');
+                            tempDiv.innerHTML = `
+                                <div class="day-section">
+                                    <div class="day-header">${day}</div>
+                                    ${lessonsHTML}
+                                </div>
+                            `;
+                            fragment.appendChild(tempDiv.firstElementChild);
+                        }
+                    });
+                    
+                    this.dom.scheduleDisplay.innerHTML = '';
+                    this.dom.scheduleDisplay.appendChild(fragment);
+                }
+                
+                updateWeekNumberHTML(element, weekNum, direction = 0) {
+                    if (!element) return;
+                    
+                    if (direction !== 0) {
+                        const oldNum = direction === 1 ? weekNum - 1 : weekNum + 1;
+                        element.innerHTML = `<span class="week-number-value">${oldNum}</span>`;
+                        
+                        setTimeout(() => {
+                            element.innerHTML = `<span class="week-number-value">${weekNum}</span>`;
+                        }, CONFIG.TRANSITION_DURATION);
+                    } else {
+                        element.innerHTML = `<span class="week-number-value">${weekNum}</span>`;
+                    }
+                }
+
+                updateDisplay(direction) {
+                    this.state.isAnimating = true;
+                    
+                    const date = new Date();
+                    date.setDate(date.getDate() + (this.state.weekOffset * 7));
+                    
+                    const weekNum = this.getAcademicWeek(date);
+                    const scheduleType = weekNum % 2 === 0 ? 'even' : 'odd';
+                    
+                    const dayShort = date.toLocaleDateString(CONFIG.LOCALE, { weekday: 'short' });
+                    const datePart = date.toLocaleDateString(CONFIG.LOCALE, {
+                        day: 'numeric',
+                        month: 'numeric',
+                        year: 'numeric'
+                    });
+                    
+                    this.dom.scheduleDisplay.style.opacity = '0';
+                    this.dom.scheduleDisplay.style.transform = 'translateY(10px)';
+                    this.dom.currentDate.style.opacity = '0';
+                    
+                    this.dom.scheduleDisplay.classList.remove('initial-load');
+                    
+                    this.updateWeekNumberHTML(this.dom.weekNumberDesktop, weekNum, direction);
+                    this.updateWeekNumberHTML(this.dom.weekNumberMobile, weekNum, direction);
+
+                    setTimeout(() => {
+                        this.dom.currentDate.textContent = `${dayShort}, ${datePart}`;
+                        
+                        if (direction === 0) {
+                            this.updateWeekNumberHTML(this.dom.weekNumberDesktop, weekNum, 0);
+                            this.updateWeekNumberHTML(this.dom.weekNumberMobile, weekNum, 0);
+                        }
+                        
+                        this.updateArrowStates(weekNum);
+                        this.renderSchedule(SCHEDULE_DATA[scheduleType]);
+                        
                         requestAnimationFrame(() => {
                             this.dom.scheduleDisplay.style.opacity = '1';
                             this.dom.scheduleDisplay.style.transform = 'translateY(0)';
@@ -1119,24 +963,55 @@
                                 this.state.isAnimating = false;
                             }, CONFIG.TRANSITION_DURATION * 2);
                         });
+                    }, CONFIG.TRANSITION_DURATION);
+                }
+
+                updateArrowStates(weekNum) {
+                    const isDisabledPrev = weekNum <= CONFIG.MIN_WEEK;
+                    const isDisabledNext = weekNum >= CONFIG.MAX_WEEK;
+                    
+                    [this.dom.prevWeekDesktop, this.dom.prevWeekMobile].forEach(el => {
+                        if (el) el.classList.toggle('disabled', isDisabledPrev);
                     });
-                }, CONFIG.TRANSITION_DURATION);
+                    
+                    [this.dom.nextWeekDesktop, this.dom.nextWeekMobile].forEach(el => {
+                        if (el) el.classList.toggle('disabled', isDisabledNext);
+                    });
+                }
+
+                destroy() {
+                    if (this.mediaQuery && this.themeListener) {
+                        this.mediaQuery.removeEventListener('change', this.themeListener);
+                    }
+                    
+                    if (this.setHeight) {
+                        window.removeEventListener('resize', this.setHeight);
+                        window.removeEventListener('orientationchange', this.setHeight);
+                    }
+                }
             }
 
-            updateArrowStates(weekNum) {
-                const isDisabledPrev = weekNum <= CONFIG.MIN_WEEK;
-                const isDisabledNext = weekNum >= CONFIG.MAX_WEEK;
-                
-                [this.dom.prevWeekDesktop, this.dom.prevWeekMobile].forEach(el => el && el.classList.toggle('disabled', isDisabledPrev));
-                [this.dom.nextWeekDesktop, this.dom.nextWeekMobile].forEach(el => el && el.classList.toggle('disabled', isDisabledNext));
-            }
-        }
+            let app = null;
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => new ScheduleApp());
-        } else {
-            new ScheduleApp();
-        }
+            const initApp = () => {
+                if (app) {
+                    app.destroy();
+                }
+                app = new ScheduleApp();
+            };
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initApp);
+            } else {
+                initApp();
+            }
+
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js').catch(() => {});
+                });
+            }
+        })();
     </script>
 </body>
 </html>

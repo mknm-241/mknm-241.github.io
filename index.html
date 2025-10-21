@@ -400,7 +400,7 @@
             border-bottom: none;
             box-shadow: 0 1px 0 var(--border), inset 0 -1px 0 rgba(255, 255, 255, 0.03);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .day-section::after {
@@ -644,6 +644,16 @@
 
             .class-item {
                 padding: 1.1rem 1.25rem;
+                transform: none !important;
+            }
+
+            .class-item:hover {
+                transform: none !important;
+                background-color: var(--accent-light);
+            }
+
+            .class-item:active {
+                transform: scale(0.98) !important;
             }
 
             .class-name {
@@ -657,6 +667,23 @@
             .class-type {
                 padding: 0.3rem 0.65rem;
                 font-size: 0.7rem;
+            }
+
+            .class-item:hover .time-icon {
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 6px var(--accent-glow));
+            }
+
+            .day-section {
+                overflow: visible;
+            }
+
+            [data-theme="dark"] .class-item {
+                border-bottom: 1px solid var(--border);
+            }
+
+            [data-theme="dark"] .class-item:last-child {
+                border-bottom: none;
             }
         }
 
@@ -851,6 +878,28 @@
                 this.DOM.prevWeek.addEventListener('click', () => this.handleWeekChange(-1));
                 this.DOM.nextWeek.addEventListener('click', () => this.handleWeekChange(1));
                 this.DOM.weekNumberContainer.addEventListener('click', () => this.resetToCurrentWeek());
+                
+                this.bindMobileEvents();
+            }
+
+            bindMobileEvents() {
+                if ('ontouchstart' in window) {
+                    document.addEventListener('touchstart', this.handleMobileHover.bind(this));
+                }
+            }
+
+            handleMobileHover(e) {
+                const items = document.querySelectorAll('.class-item');
+                items.forEach(item => {
+                    item.classList.remove('hover-effect');
+                });
+                
+                if (e.target.closest('.class-item')) {
+                    e.target.closest('.class-item').classList.add('hover-effect');
+                    setTimeout(() => {
+                        e.target.closest('.class-item').classList.remove('hover-effect');
+                    }, 300);
+                }
             }
 
             getCurrentWeekNumber() {

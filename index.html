@@ -130,6 +130,17 @@
             font-size: 0.8rem;
             font-weight: 600;
             flex-shrink: 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .week-number:hover {
+            background: #a04e2f;
+            transform: scale(1.05);
+        }
+
+        .week-number:active {
+            transform: scale(0.95);
         }
 
         .week-text-group {
@@ -601,6 +612,11 @@
                 currentWeekOffset++;
                 updateHeaderInfo();
             }
+        });
+
+        DOM.weekNumber.addEventListener('click', () => {
+            currentWeekOffset = 0;
+            updateHeaderInfo();
         });
 
         document.addEventListener('DOMContentLoaded', updateHeaderInfo);

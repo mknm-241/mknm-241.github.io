@@ -27,6 +27,18 @@
             --radius-lg: 12px;
         }
 
+        [data-theme="dark"] {
+            --bg-primary: #262624;
+            --bg-secondary: #30302e;
+            --text-primary: #e5e5e5;
+            --text-secondary: #b0b0b0;
+            --text-tertiary: #808080;
+            --accent-main: #D97959;
+            --accent-light: rgba(217, 121, 89, 0.15);
+            --border: #3a3a38;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -42,6 +54,7 @@
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
@@ -162,6 +175,7 @@
             overflow: hidden;
             border: 1px solid var(--border);
             box-shadow: 0 4px 12px var(--shadow);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .day-section {
@@ -479,6 +493,17 @@
         let currentWeekOffset = 0;
         const MIN_WEEK = 1;
         const MAX_WEEK = 18;
+
+        const initTheme = () => {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = prefersDark ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                const newTheme = e.matches ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', newTheme);
+            });
+        };
         
         const DAYS_OF_WEEK = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
         const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
@@ -574,7 +599,6 @@
             DOM.currentDate.textContent = formattedDate;
             DOM.weekNumber.textContent = weekNumber;
 
-            // Управление состоянием кнопок
             if (weekNumber <= MIN_WEEK) {
                 DOM.prevWeek.classList.add('disabled');
             } else {
@@ -619,7 +643,10 @@
             updateHeaderInfo();
         });
 
-        document.addEventListener('DOMContentLoaded', updateHeaderInfo);
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            updateHeaderInfo();
+        });
     </script>
 </body>
 </html>

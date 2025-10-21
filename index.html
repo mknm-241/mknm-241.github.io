@@ -83,6 +83,41 @@
             flex-shrink: 0;
         }
 
+        .week-arrow {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-light);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(193, 95, 60, 0.2);
+        }
+
+        .week-arrow:hover:not(.disabled) {
+            background: var(--accent-main);
+            border-color: var(--accent-main);
+        }
+
+        .week-arrow:hover:not(.disabled) svg {
+            color: white;
+        }
+
+        .week-arrow.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .week-arrow svg {
+            width: 14px;
+            height: 14px;
+            color: var(--accent-main);
+            transition: color 0.2s ease;
+        }
+
         .week-number {
             display: flex;
             align-items: center;
@@ -242,6 +277,16 @@
                 gap: 0.4rem;
             }
 
+            .week-arrow {
+                width: 22px;
+                height: 22px;
+            }
+
+            .week-arrow svg {
+                width: 12px;
+                height: 12px;
+            }
+
             .week-number {
                 width: 26px;
                 height: 26px;
@@ -286,9 +331,19 @@
             </div>
 
             <div class="week-status">
+                <div class="week-arrow" id="prevWeek">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </div>
                 <div class="week-number" id="weekNumber"></div>
                 <div class="week-text-group">
                     <div class="week-type">неделя</div>
+                </div>
+                <div class="week-arrow" id="nextWeek">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
                 </div>
             </div>
         </header>
@@ -405,8 +460,14 @@
         const DOM = {
             currentDate: document.getElementById('currentDate'),
             weekNumber: document.getElementById('weekNumber'),
-            scheduleDisplay: document.getElementById('scheduleDisplay')
+            scheduleDisplay: document.getElementById('scheduleDisplay'),
+            prevWeek: document.getElementById('prevWeek'),
+            nextWeek: document.getElementById('nextWeek')
         };
+        
+        let currentWeekOffset = 0;
+        const MIN_WEEK = 1;
+        const MAX_WEEK = 18;
         
         const DAYS_OF_WEEK = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
         const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
@@ -482,12 +543,15 @@
 
         const updateHeaderInfo = () => {
             const today = new Date();
-            const weekNumber = getAcademicWeekNumber(today);
+            const adjustedDate = new Date(today);
+            adjustedDate.setDate(today.getDate() + (currentWeekOffset * 7));
+            
+            const weekNumber = getAcademicWeekNumber(adjustedDate);
             const isEvenWeek = weekNumber % 2 === 0;
             const weekTypeKey = isEvenWeek ? 'even' : 'odd';
 
-            const dayOfWeekShort = today.toLocaleDateString(FORMAT_LOCALE, { weekday: 'short' });
-            const datePart = today.toLocaleDateString(FORMAT_LOCALE, {
+            const dayOfWeekShort = adjustedDate.toLocaleDateString(FORMAT_LOCALE, { weekday: 'short' });
+            const datePart = adjustedDate.toLocaleDateString(FORMAT_LOCALE, {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric'
@@ -499,8 +563,45 @@
             DOM.currentDate.textContent = formattedDate;
             DOM.weekNumber.textContent = weekNumber;
 
+            // Управление состоянием кнопок
+            if (weekNumber <= MIN_WEEK) {
+                DOM.prevWeek.classList.add('disabled');
+            } else {
+                DOM.prevWeek.classList.remove('disabled');
+            }
+
+            if (weekNumber >= MAX_WEEK) {
+                DOM.nextWeek.classList.add('disabled');
+            } else {
+                DOM.nextWeek.classList.remove('disabled');
+            }
+
             renderSchedule(weekSchedule);
         };
+
+        DOM.prevWeek.addEventListener('click', () => {
+            const today = new Date();
+            const adjustedDate = new Date(today);
+            adjustedDate.setDate(today.getDate() + ((currentWeekOffset - 1) * 7));
+            const weekNumber = getAcademicWeekNumber(adjustedDate);
+            
+            if (weekNumber >= MIN_WEEK) {
+                currentWeekOffset--;
+                updateHeaderInfo();
+            }
+        });
+
+        DOM.nextWeek.addEventListener('click', () => {
+            const today = new Date();
+            const adjustedDate = new Date(today);
+            adjustedDate.setDate(today.getDate() + ((currentWeekOffset + 1) * 7));
+            const weekNumber = getAcademicWeekNumber(adjustedDate);
+            
+            if (weekNumber <= MAX_WEEK) {
+                currentWeekOffset++;
+                updateHeaderInfo();
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', updateHeaderInfo);
     </script>

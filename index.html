@@ -598,21 +598,9 @@
             opacity: 1;
         }
 
-        .class-type:hover {
-            color: white;
-            border-color: var(--accent-main);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px var(--accent-glow);
-        }
-
         .class-type > span {
             position: relative;
             z-index: 1;
-        }
-
-        .class-type:active {
-            transform: translateY(0);
-            transition-duration: var(--transition-fast);
         }
 
         .class-info {
@@ -640,6 +628,18 @@
             
             .class-item:hover .class-name {
                 color: var(--accent-main);
+            }
+            
+            .class-type:hover {
+                color: white;
+                border-color: var(--accent-main);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 8px var(--accent-glow);
+            }
+
+            .class-type:active {
+                transform: translateY(0);
+                transition-duration: var(--transition-fast);
             }
         }
 

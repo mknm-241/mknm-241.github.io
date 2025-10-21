@@ -307,17 +307,17 @@
         }
 
         .week-number:hover::before {
-            transform: translateX(100%);
+            transform: translateX(-100%);
         }
 
         .week-number:hover {
-            transform: scale(1.05) translateY(-1px);
-            box-shadow: 0 12px 40px var(--accent-glow);
-            filter: brightness(1.1);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-accent);
+            filter: none;
         }
 
         .week-number:active {
-            transform: scale(0.95);
+            transform: scale(0.98);
             box-shadow: 0 0 5px var(--accent-glow);
             transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
         }

@@ -2,1079 +2,716 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)">
     <title>Расписание МКНм-241</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@350..600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #F5F5F7;
-            --bg-secondary: rgba(255, 255, 255, 0.72);
-            --bg-tertiary: rgba(255, 255, 255, 0.5);
-            --bg-glass: rgba(255, 255, 255, 0.25);
-            --text-primary: #1D1D1F;
-            --text-secondary: #6E6E73;
-            --text-tertiary: #86868B;
-            --accent-main: #C15F3C;
-            --accent-hover: #A04E2F;
-            --accent-light: rgba(193, 95, 60, 0.08);
-            --accent-glow: rgba(193, 95, 60, 0.4);
-            --border: rgba(0, 0, 0, 0.04);
-            --border-strong: rgba(0, 0, 0, 0.08);
-            --shadow-ambient: 0 2px 8px rgba(0, 0, 0, 0.04);
-            --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03);
-            --shadow-elevated: 0 20px 60px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.06);
-            --shadow-accent: 0 8px 24px rgba(193, 95, 60, 0.25);
-            
-            --spacing-xs: 0.25rem;
-            --spacing-sm: 0.5rem;
-            --spacing-md: 1rem;
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2rem;
-            --radius-sm: 12px;
-            --radius-md: 16px;
-            --radius-lg: 20px;
-            --radius-xl: 24px;
-            
-            --transition-fast: 150ms;
-            --transition-normal: 300ms;
-            --transition-slow: 600ms;
-            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-            
-            --vh: 1vh;
+            --color-bg-base: 250 250 250;
+            --color-bg-surface: 255 255 255;
+            --color-bg-elevated: 248 248 248;
+            --color-text-primary: 23 23 23;
+            --color-text-secondary: 82 82 82;
+            --color-text-tertiary: 115 115 115;
+            --color-accent: 217 119 6;
+            --color-accent-hover: 180 83 9;
+            --color-border: 0 0 0;
+
+            --bg-base: rgb(var(--color-bg-base));
+            --bg-surface: rgb(var(--color-bg-surface));
+            --bg-elevated: rgb(var(--color-bg-elevated));
+            --text-1: rgb(var(--color-text-primary));
+            --text-2: rgb(var(--color-text-secondary));
+            --text-3: rgb(var(--color-text-tertiary));
+            --accent: rgb(var(--color-accent));
+            --accent-hover: rgb(var(--color-accent-hover));
+            --accent-soft: rgba(var(--color-accent) / 0.08);
+            --accent-surface: rgba(var(--color-accent) / 0.12);
+            --border: rgba(var(--color-border) / 0.08);
+            --border-strong: rgba(var(--color-border) / 0.12);
+
+            --space-xs: 0.5rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+
+            --radius-sm: 0.5rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.25rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 624.9375rem;
+
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-xl: 1.25rem;
+
+            --shadow-sm: 0 1px 3px rgba(0 0 0 / 0.1), 0 1px 2px rgba(0 0 0 / 0.06);
+            --shadow-md: 0 4px 6px rgba(0 0 0 / 0.1), 0 2px 4px rgba(0 0 0 / 0.06);
+            --shadow-lg: 0 10px 15px rgba(0 0 0 / 0.1), 0 4px 6px rgba(0 0 0 / 0.05);
+            --shadow-xl: 0 20px 25px rgba(0 0 0 / 0.1), 0 10px 10px rgba(0 0 0 / 0.04);
+
+            --ease-out: cubic-bezier(0.2, 0.8, 0.4, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duration-fast: 150ms;
+            --duration-base: 300ms;
+            --duration-slow: 500ms;
         }
 
-        [data-theme="dark"] {
-            --bg-primary: #000000;
-            --bg-secondary: rgba(28, 28, 30, 0.72);
-            --bg-tertiary: rgba(44, 44, 46, 0.5);
-            --bg-glass: rgba(255, 255, 255, 0.05);
-            --text-primary: #F5F5F7;
-            --text-secondary: #AEAEB2;
-            --text-tertiary: #8E8E93;
-            --accent-main: #E89373;
-            --accent-hover: #F0A589;
-            --accent-light: rgba(232, 147, 115, 0.12);
-            --accent-glow: rgba(232, 147, 115, 0.3);
-            --border: rgba(255, 255, 255, 0.06);
-            --border-strong: rgba(255, 255, 255, 0.12);
-            --shadow-ambient: 0 2px 8px rgba(0, 0, 0, 0.4);
-            --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
-            --shadow-elevated: 0 20px 60px rgba(0, 0, 0, 0.8), 0 8px 24px rgba(0, 0, 0, 0.6);
-            --shadow-accent: 0 8px 24px rgba(232, 147, 115, 0.3);
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg-base: 10 10 10;
+                --color-bg-surface: 18 18 18;
+                --color-bg-elevated: 28 28 28;
+                --color-text-primary: 245 245 245;
+                --color-text-secondary: 163 163 163;
+                --color-border: 255 255 255;
+                --color-accent: 245 158 11;
+                --color-accent-hover: 251 191 36;
+                --shadow-sm: 0 1px 3px rgba(0 0 0 / 0.3), 0 1px 2px rgba(0 0 0 / 0.2);
+                --shadow-md: 0 4px 6px rgba(0 0 0 / 0.4), 0 2px 4px rgba(0 0 0 / 0.3);
+                --shadow-lg: 0 10px 15px rgba(0 0 0 / 0.5), 0 4px 6px rgba(0 0 0 / 0.4);
+            }
         }
 
-        * {
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg-primary);
-            min-height: 100vh;
-            min-height: calc(var(--vh) * 100);
-            padding: var(--spacing-xl) var(--spacing-md);
-            color: var(--text-primary);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            transition: background-color var(--transition-slow) var(--ease-smooth), 
-                        color var(--transition-slow) var(--ease-smooth);
-            position: relative;
-            overflow-x: hidden;
+            font-family: var(--font-sans);
+            font-size: var(--text-base);
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--text-1);
+            background: var(--bg-base);
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes shimmer {
-            0%, 100% {
-                background-position: 0% center;
-            }
-            50% {
-                background-position: 100% center;
-            }
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-xl);
-            gap: var(--spacing-lg);
-            animation: fadeInDown 0.8s var(--ease-smooth);
-        }
-
-        .date-info {
+        .app {
             display: flex;
             flex-direction: column;
-            gap: 0.35rem;
-            flex-grow: 1;
-            min-width: 0;
+            gap: var(--space-xl);
+            max-width: 56rem;
+            margin: 0 auto;
+            padding: var(--space-lg);
+            min-height: 100vh;
+            padding-bottom: calc(6rem + env(safe-area-inset-bottom));
         }
 
-        #currentDate {
-            font-weight: 600;
-            font-size: 1.35rem;
-            color: var(--text-primary);
-            letter-spacing: -0.03em;
-            background: linear-gradient(90deg, 
-                var(--text-primary) 0%, 
-                var(--text-primary) 50%, 
-                var(--text-secondary) 75%, 
-                var(--text-primary) 100%);
-            background-size: 200% auto;
+        .header {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+            transform: translateZ(0);
+            animation: headerSlideIn 0.6s var(--ease-spring) both;
+        }
+
+        @keyframes headerSlideIn {
+            from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .header__top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-md);
+        }
+
+        .header__date {
+            font-size: var(--text-xl);
+            font-weight: 450;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, var(--text-1) 0%, var(--text-2) 100%);
             -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: shimmer 8s ease-in-out infinite;
-            transition: opacity var(--transition-normal) var(--ease-smooth);
-            will-change: opacity;
         }
 
-        .week-status {
+        .week-nav {
+            position: fixed;
+            bottom: max(env(safe-area-inset-bottom), var(--space-md));
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
             display: flex;
             align-items: center;
-            gap: 0.2rem;
-            background: var(--bg-secondary);
-            padding: 0.4rem;
-            border-radius: 9999px;
+            gap: var(--space-sm);
+            background: rgba(var(--color-bg-surface) / 0.8);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
             border: 1px solid var(--border);
-            box-shadow: var(--shadow-glass);
-            flex-shrink: 0;
-            transition: all var(--transition-normal) var(--ease-smooth);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
-            position: relative;
-            overflow: hidden;
-            will-change: transform;
-            min-height: 48px;
-            flex-wrap: nowrap;
-        }
-
-        .week-arrow {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: transparent;
-            border-radius: 9999px;
-            cursor: pointer;
-            transition: all var(--transition-fast) var(--ease-smooth);
-            border: none;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
-            position: relative;
-            overflow: hidden;
-            will-change: transform;
-            flex-shrink: 0;
-        }
-        
-        .week-arrow:hover:not(.disabled) {
-            background: var(--bg-glass);
-            transition-duration: var(--transition-fast);
-        }
-        
-        .week-arrow:hover:not(.disabled) svg {
-            color: var(--text-primary);
-        }
-        
-        .week-arrow:active:not(.disabled) {
-            transform: scale(0.95);
-            transition-duration: var(--transition-fast);
-        }
-
-        .week-arrow svg {
-            width: 16px;
-            height: 16px;
-            color: var(--text-secondary);
-            transition: all var(--transition-fast) var(--ease-smooth);
-            position: relative;
-            z-index: 1;
-        }
-
-        .week-number {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-hover) 100%);
-            color: white;
-            border-radius: 9999px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all var(--transition-fast) var(--ease-smooth);
-            padding: 0;
-            box-shadow: var(--shadow-accent);
-            position: relative;
-            overflow: hidden;
-            will-change: transform;
-            flex-grow: 0;
-            flex-shrink: 0;
-            margin: 0 0.1rem;
-            border: none;
-            outline: none;
-        }
-        
-        .week-number:hover {
-            transform: scale(1.01);
-            box-shadow: 0 8px 20px var(--accent-glow);
-            transition-duration: var(--transition-fast);
-        }
-        
-        .week-number:active {
-            transform: scale(0.98);
-            transition-duration: var(--transition-fast);
-        }
-        
-        .week-number:focus {
-            box-shadow: 0 0 0 3px var(--accent-glow), var(--shadow-accent);
-        }
-        
-        .week-number > span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            width: 100%;
-            transition: all var(--transition-normal) var(--ease-smooth);
-            position: relative;
-            z-index: 1;
-            white-space: nowrap;
-        }
-        
-        .week-number-value {
-            font-weight: 700;
-            margin-right: 0;
-            min-width: 0;
-            display: inline-block;
-            text-align: center;
-            transition: opacity var(--transition-fast) ease-in-out;
-        }
-        
-        .week-type {
-            font-weight: 500;
-            font-size: 0.85rem;
-            opacity: 0.9;
-            color: var(--text-primary);
-            flex-shrink: 0;
-            padding: 0 0.4rem;
-        }
-        
-        .week-number::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.3) 0%, 
-                transparent 50%, 
-                rgba(255, 255, 255, 0.3) 100%);
-            opacity: 0;
-            transition: opacity var(--transition-fast) var(--ease-smooth);
-        }
-
-        .week-number:hover::before {
-            opacity: 1;
-        }
-
-        .schedule-card {
-            background: var(--bg-secondary);
             border-radius: var(--radius-xl);
-            overflow: hidden;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-elevated);
-            transition: opacity var(--transition-normal) var(--ease-smooth),
-                        transform var(--transition-normal) var(--ease-smooth);
-            backdrop-filter: blur(50px) saturate(190%);
-            -webkit-backdrop-filter: blur(50px) saturate(190%);
-            position: relative;
-            outline: 1px solid rgba(255, 255, 255, 0.05);
-            will-change: opacity, transform;
+            padding: var(--space-sm);
+            box-shadow: var(--shadow-lg);
+            transition: all var(--duration-base) var(--ease-out);
+            animation: bottomBarSlideUp 0.5s var(--ease-spring) both;
         }
 
-        .schedule-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, 
-                var(--bg-glass) 0%, 
-                transparent 30%, 
-                transparent 70%, 
-                var(--bg-glass) 100%);
-            opacity: 0;
-            transition: opacity var(--transition-slow) var(--ease-smooth);
-            pointer-events: none;
+        @keyframes bottomBarSlideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
+        .week-nav:hover {
+            box-shadow: var(--shadow-xl);
+            border-color: var(--border-strong);
         }
 
-        .schedule-card:hover::before {
-            opacity: 1;
-        }
-
-        .day-section {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .day-section::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                var(--accent-main) 50%, 
-                transparent 100%);
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-smooth);
-        }
-
-        .day-section:hover::after {
-            opacity: 0.3;
-        }
-
-        .day-section:not(:last-child) {
-            border-bottom: 1px solid var(--border);
-        }
-
-        .day-header {
-            padding: 1.2rem 1.75rem;
-            background: linear-gradient(135deg, 
-                var(--bg-tertiary) 0%, 
-                var(--bg-glass) 100%);
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            border-left: 3px solid var(--accent-main);
-            letter-spacing: -0.02em;
-            position: relative;
-            overflow: hidden;
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 3rem;
+            padding: 0 var(--space-lg);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--text-2);
+            background: rgba(var(--color-bg-surface) / 0.6);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-        }
-
-        .day-header::before {
-            content: '';
-            position: absolute;
-            left: -3px;
-            top: 0;
-            width: 3px;
-            height: 100%;
-            background: linear-gradient(180deg, 
-                var(--accent-main) 0%, 
-                var(--accent-hover) 100%);
-            box-shadow: 0 0 12px var(--accent-glow);
-        }
-
-        .class-item {
-            padding: 1.35rem 1.75rem;
-            transition: all var(--transition-fast) var(--ease-smooth);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            color: inherit;
-            position: relative;
-            overflow: hidden;
-            will-change: transform, background-color;
+            transition: all var(--duration-base) var(--ease-out);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .class-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, 
-                var(--accent-light) 0%, 
-                transparent 50%);
-            opacity: 0;
-            transition: opacity var(--transition-fast) var(--ease-smooth);
+        .btn--icon {
+            width: 3rem;
+            padding: 0;
+        }
+
+        .btn:hover:not(:disabled) {
+            color: var(--text-1);
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            background: rgba(var(--color-bg-surface) / 0.8);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
             pointer-events: none;
         }
 
-        .class-item:hover::before {
-            opacity: 1;
+        .btn--primary {
+            color: var(--accent);
+            border-color: var(--accent-soft);
+            background: rgba(var(--color-accent) / 0.1);
+            min-width: 4rem;
+            font-weight: 600;
+            font-size: var(--text-base);
         }
 
-        .class-item:not(:last-child) {
-            border-bottom: 1px solid var(--border);
+        .btn--primary:hover:not(:disabled) {
+            color: var(--accent-hover);
+            background: rgba(var(--color-accent) / 0.15);
+            border-color: var(--accent-soft);
         }
 
-        .class-details {
+        .btn__icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            stroke-width: 2;
+            transition: transform var(--duration-fast) var(--ease-out);
+        }
+
+        .btn:hover .btn__icon {
+            transform: scale(1.1);
+        }
+
+        .schedule-container {
             display: flex;
             flex-direction: column;
-            gap: 0.7rem;
-            position: relative;
-            z-index: 1;
+            gap: var(--space-lg);
+            transition: all var(--duration-base) var(--ease-out);
+            flex: 1;
         }
 
-        .class-time {
-            display: flex;
-            align-items: center;
-            gap: 0.55rem;
-            font-size: 0.8rem;
-            color: var(--text-tertiary);
+        .schedule-container--loading {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .day-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            animation: cardSlideIn 0.5s var(--ease-spring) both;
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        @keyframes cardSlideIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .day-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-strong);
+        }
+
+        .day-card__header {
+            padding: var(--space-lg);
+            font-size: var(--text-lg);
             font-weight: 500;
-            letter-spacing: -0.01em;
-        }
-
-        .time-icon {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-            color: var(--accent-main);
-            filter: drop-shadow(0 0 4px var(--accent-glow));
-            transition: all var(--transition-fast) var(--ease-smooth);
-            will-change: transform;
-        }
-
-        .class-name {
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            line-height: 1.5;
-            letter-spacing: -0.02em;
-            transition: color var(--transition-fast) var(--ease-smooth);
-        }
-
-        .class-meta {
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border);
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
-            gap: 0.8rem;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 0.1rem;
+            gap: var(--space-sm);
+            transition: all var(--duration-base) var(--ease-out);
         }
 
-        .class-type {
-            display: inline-block;
-            padding: 0.35rem 0.85rem;
-            background: var(--accent-light);
-            color: var(--accent-main);
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
-            font-weight: 600;
-            border: 1px solid rgba(193, 95, 60, 0.15);
-            transition: all var(--transition-fast) var(--ease-smooth);
-            position: relative;
-            overflow: hidden;
-            will-change: transform;
-        }
-
-        .class-type::before {
+        .day-card__header::before {
             content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-hover) 100%);
-            opacity: 0;
-            transition: opacity var(--transition-fast) var(--ease-smooth);
+            width: 0.5rem;
+            height: 0.5rem;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+            transition: all var(--duration-base) var(--ease-out);
         }
 
-        .class-type:hover,
-        .class-type:active {
+        .day-card:hover .day-card__header::before {
+            transform: scale(1.3);
+            background: var(--accent-hover);
+        }
+
+        .lesson {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            padding: var(--space-lg);
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+            transition: all var(--duration-base) var(--ease-out);
+            cursor: pointer;
+            animation: lessonSlideIn 0.6s var(--ease-out) both;
+        }
+
+        @keyframes lessonSlideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .lesson:last-child {
+            border-bottom: none;
+        }
+
+        .lesson:hover {
+            background: var(--accent-surface);
+            transform: translateX(8px);
+            border-color: var(--accent-soft);
+        }
+
+        .lesson:active {
+            transform: translateX(8px) scale(0.98);
+        }
+
+        .lesson__time {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--text-3);
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson:hover .lesson__time {
+            color: var(--accent);
+        }
+
+        .lesson__icon {
+            width: 1rem;
+            height: 1rem;
+            color: var(--accent);
+            flex-shrink: 0;
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson:hover .lesson__icon {
+            transform: scale(1.2) rotate(5deg);
+            color: var(--accent-hover);
+        }
+
+        .lesson__title {
+            font-weight: 450;
+            line-height: 1.4;
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson:hover .lesson__title {
+            color: var(--accent);
+            transform: translateX(2px);
+        }
+
+        .lesson__meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+
+        .lesson__tag {
+            padding: 0.375rem var(--space-sm);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--accent);
+            background: var(--accent-soft);
+            border-radius: var(--radius-md);
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson:hover .lesson__tag {
+            background: var(--accent);
             color: white;
-            border-color: var(--accent-main);
-            box-shadow: 0 4px 8px var(--accent-glow);
+            transform: translateY(-2px);
         }
 
-        .class-type:hover::before,
-        .class-type:active::before {
-            opacity: 1;
+        .lesson__teacher {
+            font-size: var(--text-sm);
+            color: var(--text-2);
+            transition: all var(--duration-base) var(--ease-out);
         }
 
-        .class-type > span {
-            position: relative;
-            z-index: 1;
+        .lesson:hover .lesson__teacher {
+            color: var(--text-1);
+            transform: translateX(2px);
         }
 
-        .class-info {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            flex-grow: 1;
-            letter-spacing: -0.01em;
-        }
+        .day-card:nth-child(1) { animation-delay: 0.1s; }
+        .day-card:nth-child(2) { animation-delay: 0.2s; }
+        .day-card:nth-child(3) { animation-delay: 0.3s; }
 
-        @media (hover: hover) and (pointer: fine) {
-            .class-item:hover {
-                transform: translateX(8px);
-                background-color: var(--accent-light);
-            }
-
-            .class-item:active {
-                transform: translateX(4px) scale(0.99);
-                transition-duration: var(--transition-fast);
-            }
-
-            .class-item:hover .time-icon {
-                transform: scale(1.15) rotate(360deg);
-                filter: drop-shadow(0 0 8px var(--accent-glow));
-            }
-            
-            .class-item:hover .class-name {
-                color: var(--accent-main);
-            }
-            
-            .class-type:hover {
-                transform: translateY(-1px);
-            }
-
-            .class-type:active {
-                transform: translateY(0);
-                transition-duration: var(--transition-fast);
-            }
-            
-            .bottom-floating-bar {
-                display: none;
-            }
-            
-            .top-bar .week-status {
-                display: flex;
-            }
-        }
-
-        .bottom-floating-bar {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: var(--spacing-sm) var(--spacing-md) calc(var(--spacing-sm) + env(safe-area-inset-bottom)) var(--spacing-md);
-            background: transparent;
-            pointer-events: none;
-            will-change: transform;
-        }
+        .lesson:nth-child(1) { animation-delay: 0.15s; }
+        .lesson:nth-child(2) { animation-delay: 0.25s; }
+        .lesson:nth-child(3) { animation-delay: 0.35s; }
+        .lesson:nth-child(4) { animation-delay: 0.45s; }
         
-        .bottom-floating-bar .week-status {
-            width: fit-content;
-            max-width: 100%;
-            margin: 0 auto;
-            pointer-events: auto;
-            box-shadow: var(--shadow-elevated);
-            
-            min-height: 52px;
-            padding: 0.5rem;
-        }
-        
-        .bottom-floating-bar .week-arrow {
-            width: 42px;
-            height: 42px;
-        }
-        
-        .bottom-floating-bar .week-number {
-            height: 42px;
-            width: 42px;
-        }
-
         @media (max-width: 768px) {
-            body {
-                padding: var(--spacing-lg) var(--spacing-sm) calc(52px + 2rem + env(safe-area-inset-bottom)) var(--spacing-sm);
+            .app {
+                padding-left: var(--space-md);
+                padding-right: var(--space-md);
+                gap: var(--space-lg);
             }
 
-            .top-bar {
-                margin-bottom: var(--spacing-lg);
-                gap: var(--spacing-md);
-                flex-wrap: wrap;
+            .header__top {
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--space-md);
             }
             
-            .top-bar .week-status {
-                display: none;
+            .day-card__header, .lesson {
+                padding: var(--space-md);
+            }
+
+            .lesson:hover {
+                transform: translateX(4px);
+            }
+
+            .lesson:active {
+                transform: translateX(4px) scale(0.98);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .btn {
+                height: 2.75rem;
+                padding: 0 var(--space-md);
             }
             
-            .bottom-floating-bar {
-                display: block;
+            .btn--icon {
+                width: 2.75rem;
             }
 
-            .week-status {
-                padding: 0.3rem;
-                min-height: 40px;
-                gap: 0.15rem;
-            }
-
-            .week-arrow {
-                width: 34px;
-                height: 34px;
-            }
-
-            .week-number {
-                width: 34px;
-                height: 34px;
-                font-size: 0.85rem;
-            }
-            
-            .week-number-value {
-                min-width: 0;
-            }
-
-            .week-type {
-                font-size: 0.75rem;
-                padding: 0 0.3rem;
-            }
-
-            .day-header {
-                padding: 1rem 1.25rem;
-                font-size: 0.9rem;
-            }
-
-            .class-item {
-                padding: 1.1rem 1.25rem;
-            }
-
-            .class-name {
-                font-size: 0.95rem;
-            }
-
-            .class-time, .class-info {
-                font-size: 0.75rem;
-            }
-
-            .class-type {
-                padding: 0.3rem 0.65rem;
-                font-size: 0.7rem;
-            }
-            
-            .class-type:active {
-                transform: translateY(0);
-                transition-duration: var(--transition-fast);
+            .btn--primary {
+                min-width: 3.5rem;
+                font-size: var(--text-sm);
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+            
+            .lesson:hover,
+            .day-card:hover,
+            .btn:hover:not(:disabled) {
+                transform: none !important;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="top-bar">
-            <div class="date-info">
-                <div id="currentDate"></div>
-            </div>
-
-            <div class="week-status">
-                <button class="week-arrow" id="prevWeek" aria-label="Предыдущая неделя">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                <button class="week-number" id="weekNumber" aria-label="Текущая неделя">
-                    <span class="week-number-value"></span>
-                </button>
-                <div class="week-type">неделя</div>
-                <button class="week-arrow" id="nextWeek" aria-label="Следующая неделя">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </button>
+    <div class="app">
+        <header class="header">
+            <div class="header__top">
+                <h1 class="header__date" id="dateDisplay"></h1>
             </div>
         </header>
 
-        <main id="scheduleDisplay" class="schedule-card"></main>
+        <main class="schedule-container" id="schedule"></main>
+
+        <nav class="week-nav" aria-label="Навигация по неделям">
+            <button class="btn btn--icon" id="prevBtn" aria-label="Предыдущая неделя">
+                <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <button class="btn btn--primary" id="resetBtn">
+                <span id="weekNumber"></span>
+            </button>
+            <button class="btn btn--icon" id="nextBtn" aria-label="Следующая неделя">
+                <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </nav>
     </div>
 
-    <nav class="bottom-floating-bar">
-        <div class="week-status">
-            <button class="week-arrow" id="prevWeekMobile" aria-label="Предыдущая неделя">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-            </button>
-            <button class="week-number" id="weekNumberMobile" aria-label="Текущая неделя">
-                <span class="week-number-value"></span>
-            </button>
-            <div class="week-type">неделя</div>
-            <button class="week-arrow" id="nextWeekMobile" aria-label="Следующая неделя">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </button>
-        </div>
-    </nav>
-
     <script>
-        const CONFIG = {
-            MIN_WEEK: 1,
-            MAX_WEEK: 18,
-            MS_PER_WEEK: 604800000,
-            SEPTEMBER_INDEX: 8,
-            TRANSITION_DURATION: 300,
-            TRANSITION_FAST: 150,
-            LOCALE: 'ru-RU',
-            DAYS: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
-        };
-
-        const SCHEDULE_DATA = {
-            odd: {
-                'Понедельник': [
-                    {
-                        time: '17:15 – 18:50',
-                        name: 'Безопасность компьютерных сетей',
-                        type: 'Лабораторная',
-                        info: 'доц. Карабцев С.Н.',
-                        link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy'
-                    },
-                    {
-                        time: '18:50 – 20:25',
-                        name: 'Анализ защищенности компьютерных систем и приложений',
-                        type: 'Лабораторная',
-                        info: 'ст. преп. Торгулькин В.В.',
-                        link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t'
-                    }
-                ],
-                'Вторник': [
-                    {
-                        time: '17:15 – 18:50',
-                        name: 'Администрирование защищенных баз данных',
-                        type: 'Лабораторная',
-                        info: 'зав. кафедрой Гудов А.М.',
-                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
-                    },
-                    {
-                        time: '18:50 – 20:25',
-                        name: 'Современные численные методы',
-                        type: 'Лабораторная',
-                        info: 'зав. кафедрой Гудов А.М.',
-                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
-                    }
-                ],
-                'Среда': [
-                    {
-                        time: '15:30 – 17:05',
-                        name: 'Математические модели и методы искусственного интеллекта',
-                        type: 'Лабораторная',
-                        info: 'доц. Саблинский А.И.'
-                    },
-                    {
-                        time: '17:15 – 18:50',
-                        name: 'Введение в Data Science и машинное обучение',
-                        type: 'Лабораторная',
-                        info: 'доц. Саблинский А.И.'
-                    }
-                ],
-                'Четверг': [],
-                'Пятница': [],
-                'Суббота': []
-            },
-            even: {
-                'Понедельник': [
-                    {
-                        time: '17:15 – 18:50',
-                        name: 'Безопасность компьютерных сетей',
-                        type: 'Лекция',
-                        info: 'доц. Карабцев С.Н.',
-                        link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy'
-                    },
-                    {
-                        time: '18:50 – 20:25',
-                        name: 'Анализ защищенности компьютерных систем и приложений',
-                        type: 'Лекция',
-                        info: 'ст. преп. Торгулькин В.В.',
-                        link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t'
-                    }
-                ],
-                'Вторник': [
-                    {
-                        time: '17:15 – 18:50',
-                        name: 'Администрирование защищенных баз данных',
-                        type: 'Лекция',
-                        info: 'зав. кафедрой Гудов А.М.',
-                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
-                    },
-                    {
-                        time: '18:50 – 20:25',
-                        name: 'Современные численные методы',
-                        type: 'Лекция',
-                        info: 'зав. кафедрой Гудов А.М.',
-                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
-                    }
-                ],
-                'Среда': [
-                    {
-                        time: '15:30 – 17:05',
-                        name: 'Математические модели и методы искусственного интеллекта',
-                        type: 'Лекция',
-                        info: 'доц. Саблинский А.И.'
-                    },
-                    {
-                        time: '17:15 – 18:50',
-                        name: 'Введение в Data Science и машинное обучение',
-                        type: 'Лекция',
-                        info: 'доц. Саблинский А.И.'
-                    }
-                ],
-                'Четверг': [],
-                'Пятница': [],
-                'Суббота': []
-            }
-        };
-
-        class ScheduleApp {
-            constructor() {
-                this.dom = {
-                    currentDate: document.getElementById('currentDate'),
-                    scheduleDisplay: document.getElementById('scheduleDisplay'),
-                    weekNumberDesktop: document.getElementById('weekNumber'),
-                    prevWeekDesktop: document.getElementById('prevWeek'),
-                    nextWeekDesktop: document.getElementById('nextWeek'),
-                    weekNumberMobile: document.getElementById('weekNumberMobile'),
-                    prevWeekMobile: document.getElementById('prevWeekMobile'),
-                    nextWeekMobile: document.getElementById('nextWeekMobile'),
-                };
-                
-                this.state = {
-                    weekOffset: 0,
-                    isAnimating: false
-                };
-                
-                this.init();
-            }
-
-            init() {
-                this.initTheme();
-                this.setViewportHeight();
-                this.attachEventListeners();
-                this.initialLoadDisplay();
-            }
-
-            initTheme() {
-                const setTheme = (isDark) => {
-                    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-                };
-                
-                const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-                setTheme(mediaQuery.matches);
-                mediaQuery.addEventListener('change', (e) => setTheme(e.matches));
-            }
-
-            setViewportHeight() {
-                const vh = window.innerHeight * 0.01;
-                document.documentElement.style.setProperty('--vh', `${vh}px`);
-            }
-
-            attachEventListeners() {
-                const changeWeek = (direction) => this.changeWeek(direction);
-                const resetWeek = () => this.resetWeek();
-                
-                [this.dom.prevWeekDesktop, this.dom.prevWeekMobile].forEach(el => el?.addEventListener('click', () => changeWeek(-1)));
-                [this.dom.nextWeekDesktop, this.dom.nextWeekMobile].forEach(el => el?.addEventListener('click', () => changeWeek(1)));
-                [this.dom.weekNumberDesktop, this.dom.weekNumberMobile].forEach(el => el?.addEventListener('click', resetWeek));
-                
-                window.addEventListener('resize', () => this.setViewportHeight());
-                window.addEventListener('orientationchange', () => this.setViewportHeight());
-            }
-
-            getAcademicWeek(date) {
-                const year = date.getFullYear();
-                const month = date.getMonth();
-                const startYear = month < CONFIG.SEPTEMBER_INDEX ? year - 1 : year;
-                
-                const sept1 = new Date(startYear, CONFIG.SEPTEMBER_INDEX, 1, 0, 0, 0, 0);
-                const dayOfWeek = sept1.getDay();
-                const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-                
-                const firstMonday = new Date(sept1);
-                firstMonday.setDate(sept1.getDate() - daysToMonday);
-                
-                const timeDiff = date.getTime() - firstMonday.getTime();
-                return Math.ceil(timeDiff / CONFIG.MS_PER_WEEK);
-            }
-
-            isWeekValid(weekNum) {
-                return weekNum >= CONFIG.MIN_WEEK && weekNum <= CONFIG.MAX_WEEK;
-            }
-
-            changeWeek(direction) {
-                if (this.state.isAnimating) return;
-                
-                const newOffset = this.state.weekOffset + direction;
-                
-                const date = new Date();
-                date.setDate(date.getDate() + (newOffset * 7));
-                const newWeekNum = this.getAcademicWeek(date);
-
-                if (!this.isWeekValid(newWeekNum)) return;
-                
-                this.state.weekOffset = newOffset;
-                this.animateAndDisplay(direction);
-            }
-
-            resetWeek() {
-                if (this.state.isAnimating || this.state.weekOffset === 0) return;
-                
-                this.state.weekOffset = 0;
-                this.animateAndDisplay(0);
-            }
-
-            createLessonHTML(lesson) {
-                const { time, name, type, info, link } = lesson;
-                const tag = link?.trim() ? 'a' : 'div';
-                const attrs = link?.trim() ? `href="${link}" target="_blank" rel="noopener noreferrer"` : '';
-
-                return `
-                    <${tag} class="class-item" ${attrs}>
-                        <div class="class-details">
-                            <div class="class-time">
-                                <svg class="time-icon" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                                </svg>
-                                ${time}
-                            </div>
-                            <div class="class-name">${name}</div>
-                            <div class="class-meta">
-                                <span class="class-type"><span>${type}</span></span>
-                                <span class="class-info">${info}</span>
-                            </div>
-                        </div>
-                    </${tag}>
-                `;
-            }
-
-            renderSchedule(schedule) {
-                const html = CONFIG.DAYS.reduce((acc, day) => {
-                    const lessons = schedule[day];
-                    if (lessons?.length) {
-                        const lessonsHTML = lessons.map(l => this.createLessonHTML(l)).join('');
-                        return acc + `
-                            <div class="day-section">
-                                <div class="day-header">${day}</div>
-                                ${lessonsHTML}
-                            </div>
-                        `;
-                    }
-                    return acc;
-                }, '');
-                
-                this.dom.scheduleDisplay.innerHTML = html;
-            }
+        document.addEventListener('DOMContentLoaded', () => {
             
-            updateWeekNumberHTML(element, weekNum, direction = 0) {
-                if (!element) return;
-                const weekValueSpan = element.querySelector('.week-number-value');
-                if (!weekValueSpan) return;
+            const CONFIG = {
+                WEEK_RANGE: { MIN: 1, MAX: 18 },
+                SEMESTER_START: { MONTH: 8, DAY: 1 },
+                DAYS: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+                LOCALE: 'ru-RU',
+                MS_PER_WEEK: 604800000
+            };
+
+            const SCHEDULE_DATA = {
+                odd: { 
+                    'Понедельник': [
+                        { time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лабораторная', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, 
+                        { time: '18:50 – 20:25', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лабораторная', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }
+                    ], 
+                    'Вторник': [
+                        { time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, 
+                        { time: '18:50 – 20:25', name: 'Современные численные методы', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }
+                    ], 
+                    'Среда': [
+                        { time: '15:30 – 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }, 
+                        { time: '17:15 – 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }
+                    ] 
+                },
+                even: { 
+                    'Понедельник': [
+                        { time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лекция', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, 
+                        { time: '18:50 – 20:25', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лекция', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }
+                    ], 
+                    'Вторник': [
+                        { time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, 
+                        { time: '18:50 – 20:25', name: 'Современные численные методы', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }
+                    ], 
+                    'Среда': [
+                        { time: '15:30 – 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }, 
+                        { time: '17:15 – 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }
+                    ] 
+                }
+            };
+
+            const DateUtils = {
+                getAcademicWeek(date) {
+                    const year = date.getFullYear();
+                    const month = date.getMonth();
+                    const startYear = month < CONFIG.SEMESTER_START.MONTH ? year - 1 : year;
+                    const semesterStart = new Date(startYear, CONFIG.SEMESTER_START.MONTH, CONFIG.SEMESTER_START.DAY);
+                    const dayOfWeek = semesterStart.getDay();
+                    const firstMonday = new Date(semesterStart);
+                    firstMonday.setDate(semesterStart.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+                    return Math.ceil((date - firstMonday) / CONFIG.MS_PER_WEEK);
+                },
+                addWeeks(date, weeks) {
+                    const result = new Date(date);
+                    result.setDate(result.getDate() + weeks * 7);
+                    return result;
+                },
+                format(date) {
+                    return date.toLocaleDateString(CONFIG.LOCALE, { 
+                        weekday: 'long', 
+                        day: 'numeric', 
+                        month: 'long',
+                        year: 'numeric'
+                    });
+                }
+            };
+
+            class ScheduleApp {
+                constructor() {
+                    this.state = { weekOffset: 0 };
+                    this._bindDom();
+                    this._bindEvents();
+                    this.render();
+                }
+
+                _bindDom() {
+                    this.dom = {
+                        dateDisplay: document.getElementById('dateDisplay'),
+                        prevBtn: document.getElementById('prevBtn'),
+                        nextBtn: document.getElementById('nextBtn'),
+                        resetBtn: document.getElementById('resetBtn'),
+                        weekNumber: document.getElementById('weekNumber'),
+                        scheduleContainer: document.getElementById('schedule')
+                    };
+                }
+
+                _bindEvents() {
+                    this.dom.prevBtn.addEventListener('click', () => this.navigate(-1));
+                    this.dom.nextBtn.addEventListener('click', () => this.navigate(1));
+                    this.dom.resetBtn.addEventListener('click', () => this.reset());
+                    document.addEventListener('keydown', e => this._handleKeyPress(e));
+                }
                 
-                if (direction !== 0) {
-                    weekValueSpan.style.transition = `opacity ${CONFIG.TRANSITION_FAST}ms ease-in-out`;
-                    weekValueSpan.style.opacity = '0';
+                _handleKeyPress(e) {
+                    if (e.target.closest('input, textarea, select')) return;
+                    const keyMap = { 
+                        'ArrowLeft': () => this.navigate(-1), 
+                        'ArrowRight': () => this.navigate(1), 
+                        'Home': () => this.reset() 
+                    };
+                    if (keyMap[e.key]) {
+                        e.preventDefault();
+                        keyMap[e.key]();
+                    }
+                }
+
+                _getWeekInfo(offset = 0) {
+                    const date = DateUtils.addWeeks(new Date(), this.state.weekOffset + offset);
+                    const weekNumber = DateUtils.getAcademicWeek(date);
+                    const scheduleType = weekNumber % 2 === 0 ? 'even' : 'odd';
+                    return { date, weekNumber, scheduleType };
+                }
+
+                navigate(direction) {
+                    const { weekNumber } = this._getWeekInfo(direction);
+                    if (weekNumber >= CONFIG.WEEK_RANGE.MIN && weekNumber <= CONFIG.WEEK_RANGE.MAX) {
+                        this.state.weekOffset += direction;
+                        this.render();
+                    }
+                }
+
+                reset() {
+                    if (this.state.weekOffset !== 0) {
+                        this.state.weekOffset = 0;
+                        this.render();
+                    }
+                }
+
+                render() {
+                    this._updateHeader();
+                    this._updateNavButtons();
+                    this._renderScheduleWithTransition();
+                }
+
+                _updateHeader() {
+                    const { date } = this._getWeekInfo();
+                    this.dom.dateDisplay.textContent = DateUtils.format(date);
+                }
+
+                _updateNavButtons() {
+                    const { weekNumber } = this._getWeekInfo();
+                    const canGoBack = this._getWeekInfo(-1).weekNumber >= CONFIG.WEEK_RANGE.MIN;
+                    const canGoForward = this._getWeekInfo(1).weekNumber <= CONFIG.WEEK_RANGE.MAX;
+                    
+                    this.dom.weekNumber.textContent = weekNumber;
+                    this.dom.prevBtn.disabled = !canGoBack;
+                    this.dom.nextBtn.disabled = !canGoForward;
+                    this.dom.resetBtn.disabled = this.state.weekOffset === 0;
+                }
+
+                _renderScheduleWithTransition() {
+                    this.dom.scheduleContainer.classList.add('schedule-container--loading');
                     
                     setTimeout(() => {
-                        weekValueSpan.textContent = weekNum;
-                        weekValueSpan.style.opacity = '1';
-                    }, CONFIG.TRANSITION_DURATION / 2);
+                        this._renderScheduleContent();
+                        this.dom.scheduleContainer.classList.remove('schedule-container--loading');
+                    }, 150);
+                }
 
-                } else {
-                    weekValueSpan.textContent = weekNum;
-                    weekValueSpan.style.opacity = '1';
-                    weekValueSpan.style.transition = '';
+                _renderScheduleContent() {
+                    const { scheduleType } = this._getWeekInfo();
+                    const scheduleForWeek = SCHEDULE_DATA[scheduleType];
+                    const content = [];
+
+                    CONFIG.DAYS.forEach(day => {
+                        const lessons = scheduleForWeek[day];
+                        if (lessons?.length > 0) {
+                            content.push(this._createDayCard(day, lessons));
+                        }
+                    });
+
+                    this.dom.scheduleContainer.innerHTML = content.length > 0 ? content.join('') : '';
+                }
+
+                _escapeHtml(text) {
+                    const p = document.createElement('p');
+                    p.textContent = text;
+                    return p.innerHTML;
+                }
+
+                _createLesson(lesson) {
+                    const { time, name, type, teacher, link } = lesson;
+                    const tag = link ? 'a' : 'div';
+                    const attrs = link ? `href="${this._escapeHtml(link)}" target="_blank" rel="noopener noreferrer"` : '';
+                    return `
+                        <${tag} class="lesson" ${attrs}>
+                            <div class="lesson__time">
+                                <svg class="lesson__icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                                <time>${this._escapeHtml(time)}</time>
+                            </div>
+                            <h3 class="lesson__title">${this._escapeHtml(name)}</h3>
+                            <div class="lesson__meta">
+                                <span class="lesson__tag">${this._escapeHtml(type)}</span>
+                                <span class="lesson__teacher">${this._escapeHtml(teacher)}</span>
+                            </div>
+                        </${tag}>
+                    `;
+                }
+
+                _createDayCard(day, lessons) {
+                    return `
+                        <article class="day-card">
+                            <h2 class="day-card__header">${this._escapeHtml(day)}</h2>
+                            <div class="day-card__lessons">${lessons.map(l => this._createLesson(l)).join('')}</div>
+                        </article>
+                    `;
                 }
             }
 
-            updateArrowStates(weekNum) {
-                const isDisabledPrev = weekNum <= CONFIG.MIN_WEEK;
-                const isDisabledNext = weekNum >= CONFIG.MAX_WEEK;
-                
-                [this.dom.prevWeekDesktop, this.dom.prevWeekMobile].forEach(el => el?.classList.toggle('disabled', isDisabledPrev));
-                [this.dom.nextWeekDesktop, this.dom.nextWeekMobile].forEach(el => el?.classList.toggle('disabled', isDisabledNext));
-            }
-            
-            animateAndDisplay(direction) {
-                this.state.isAnimating = true;
-                
-                const date = new Date();
-                date.setDate(date.getDate() + (this.state.weekOffset * 7));
-                
-                const weekNum = this.getAcademicWeek(date);
-                const scheduleType = weekNum % 2 === 0 ? 'even' : 'odd';
-                
-                const dayShort = date.toLocaleDateString(CONFIG.LOCALE, { weekday: 'short' });
-                const datePart = date.toLocaleDateString(CONFIG.LOCALE, {
-                    day: 'numeric',
-                    month: 'numeric',
-                    year: 'numeric'
-                });
-                
-                this.dom.scheduleDisplay.style.opacity = '0';
-                this.dom.scheduleDisplay.style.transform = 'translateY(10px)';
-                this.dom.currentDate.style.opacity = '0';
-                
-                this.updateWeekNumberHTML(this.dom.weekNumberDesktop, weekNum, direction);
-                this.updateWeekNumberHTML(this.dom.weekNumberMobile, weekNum, direction);
-
-                
-                setTimeout(() => {
-                    this.dom.currentDate.textContent = `${dayShort}, ${datePart}`;
-                    
-                    this.updateArrowStates(weekNum);
-                    this.renderSchedule(SCHEDULE_DATA[scheduleType]);
-                    
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            this.dom.scheduleDisplay.style.opacity = '1';
-                            this.dom.scheduleDisplay.style.transform = 'translateY(0)';
-                            this.dom.currentDate.style.opacity = '1';
-                            
-                            setTimeout(() => {
-                                this.state.isAnimating = false;
-                            }, CONFIG.TRANSITION_DURATION * 2);
-                        });
-                    });
-                }, CONFIG.TRANSITION_DURATION);
-            }
-            
-            initialLoadDisplay() {
-                const date = new Date();
-                const weekNum = this.getAcademicWeek(date);
-                const scheduleType = weekNum % 2 === 0 ? 'even' : 'odd';
-                
-                const dayShort = date.toLocaleDateString(CONFIG.LOCALE, { weekday: 'short' });
-                const datePart = date.toLocaleDateString(CONFIG.LOCALE, {
-                    day: 'numeric',
-                    month: 'numeric',
-                    year: 'numeric'
-                });
-                
-                this.dom.currentDate.textContent = `${dayShort}, ${datePart}`;
-                this.updateWeekNumberHTML(this.dom.weekNumberDesktop, weekNum, 0);
-                this.updateWeekNumberHTML(this.dom.weekNumberMobile, weekNum, 0);
-                this.updateArrowStates(weekNum);
-                this.renderSchedule(SCHEDULE_DATA[scheduleType]);
-                
-                this.dom.scheduleDisplay.style.opacity = '1';
-                this.dom.scheduleDisplay.style.transform = 'translateY(0)';
-                this.dom.currentDate.style.opacity = '1';
-            }
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => new ScheduleApp());
-        } else {
             new ScheduleApp();
-        }
+        });
     </script>
 </body>
 </html>

@@ -10,151 +10,690 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@350..600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-bg-base: 250 249 245; --color-bg-surface: 255 255 255; --color-bg-elevated: 245 244 237; --color-text-primary: 61 61 58; --color-text-secondary: 117 117 114; --color-text-tertiary: 161 161 157; --color-accent: 217 119 87; --color-accent-hover: 200 106 74; --color-border: 61 61 58; --bg-base: rgb(var(--color-bg-base)); --bg-surface: rgb(var(--color-bg-surface)); --bg-elevated: rgb(var(--color-bg-elevated)); --text-1: rgb(var(--color-text-primary)); --text-2: rgb(var(--color-text-secondary)); --text-3: rgb(var(--color-text-tertiary)); --accent: rgb(var(--color-accent)); --accent-hover: rgb(var(--color-accent-hover)); --accent-soft: rgba(var(--color-accent) / 0.1); --accent-surface: rgba(var(--color-accent) / 0.12); --border: rgba(var(--color-border) / 0.08); --border-strong: rgba(var(--color-border) / 0.12); --space-xs: 0.4rem; --space-sm: 0.75rem; --space-md: 1rem; --space-lg: 1.5rem; --space-xl: 2rem; --space-2xl: 3rem; --radius-sm: 0.5rem; --radius-md: 0.75rem; --radius-lg: 1rem; --radius-xl: 1.25rem; --radius-2xl: 1.5rem; --radius-full: 624.9375rem; --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; --text-sm: 0.875rem; --text-base: 1rem; --text-lg: 1.125rem; --text-xl: 1.25rem; --shadow-sm: 0 1px 3px rgba(0 0 0 / 0.07), 0 1px 2px rgba(0 0 0 / 0.05); --shadow-md: 0 4px 6px rgba(0 0 0 / 0.07), 0 2px 4px rgba(0 0 0 / 0.05); --shadow-lg: 0 10px 15px rgba(0 0 0 / 0.07), 0 4px 6px rgba(0 0 0 / 0.05); --shadow-xl: 0 20px 25px rgba(0 0 0 / 0.07), 0 10px 10px rgba(0 0 0 / 0.04); --ease-out: cubic-bezier(0.2, 0.8, 0.4, 1); --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); --duration-fast: 150ms; --duration-base: 300ms; --duration-slow: 500ms;
+            --color-bg-base: 250 249 245;
+            --color-bg-surface: 255 255 255;
+            --color-bg-elevated: 245 244 237;
+            --color-text-primary: 61 61 58;
+            --color-text-secondary: 117 117 114;
+            --color-text-tertiary: 161 161 157;
+            --color-accent: 217 119 87;
+            --color-accent-hover: 200 106 74;
+            --color-border: 61 61 58;
+            --bg-base: rgb(var(--color-bg-base));
+            --bg-surface: rgb(var(--color-bg-surface));
+            --bg-elevated: rgb(var(--color-bg-elevated));
+            --text-1: rgb(var(--color-text-primary));
+            --text-2: rgb(var(--color-text-secondary));
+            --text-3: rgb(var(--color-text-tertiary));
+            --accent: rgb(var(--color-accent));
+            --accent-hover: rgb(var(--color-accent-hover));
+            --accent-soft: rgba(var(--color-accent) / 0.1);
+            --accent-surface: rgba(var(--color-accent) / 0.12);
+            --border: rgba(var(--color-border) / 0.08);
+            --border-strong: rgba(var(--color-border) / 0.12);
+            --space-xs: 0.4rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --radius-sm: 0.5rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.25rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 624.9375rem;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-xl: 1.25rem;
+            --shadow-sm: 0 1px 3px rgba(0 0 0 / 0.07), 0 1px 2px rgba(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px rgba(0 0 0 / 0.07), 0 2px 4px rgba(0 0 0 / 0.05);
+            --shadow-lg: 0 10px 15px rgba(0 0 0 / 0.07), 0 4px 6px rgba(0 0 0 / 0.05);
+            --shadow-xl: 0 20px 25px rgba(0 0 0 / 0.07), 0 10px 10px rgba(0 0 0 / 0.04);
+            --ease-out: cubic-bezier(0.2, 0.8, 0.4, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duration-fast: 150ms;
+            --duration-base: 300ms;
+            --duration-slow: 500ms;
         }
+
         @media (prefers-color-scheme: dark) {
-            :root { --color-bg-base: 38 38 36; --color-bg-surface: 47 47 44; --color-bg-elevated: 58 58 55; --color-text-primary: 242 239 233; --color-text-secondary: 147 145 137; --color-border: 147 145 137; --color-accent: 198 97 63; --color-accent-hover: 224 122 95; --shadow-sm: 0 1px 4px rgba(0 0 0 / 0.4); --shadow-md: 0 4px 8px rgba(0 0 0 / 0.5); --shadow-lg: 0 10px 20px rgba(0 0 0 / 0.6); }
+            :root {
+                --color-bg-base: 38 38 36;
+                --color-bg-surface: 47 47 44;
+                --color-bg-elevated: 58 58 55;
+                --color-text-primary: 242 239 233;
+                --color-text-secondary: 147 145 137;
+                --color-border: 147 145 137;
+                --color-accent: 198 97 63;
+                --color-accent-hover: 224 122 95;
+                --shadow-sm: 0 1px 4px rgba(0 0 0 / 0.4);
+                --shadow-md: 0 4px 8px rgba(0 0 0 / 0.5);
+                --shadow-lg: 0 10px 20px rgba(0 0 0 / 0.6);
+            }
         }
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
-        body { font-family: var(--font-sans); font-size: var(--text-base); font-weight: 400; line-height: 1.5; color: var(--text-1); background: var(--bg-base); }
-        
-        .app-wrapper { position: relative; min-height: 100vh; overflow: hidden; }
-        .view-container { transition: opacity 0.5s var(--ease-out), visibility 0s 0.5s; }
-        .view--hidden { position: absolute; top: 0; left: 0; width: 100%; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.5s var(--ease-out), visibility 0s 0.5s; }
-        .view--visible { opacity: 1; visibility: visible; transition: opacity 0.5s var(--ease-out); }
 
-        #modern-view .app { display: flex; flex-direction: column; gap: var(--space-xl); max-width: 56rem; margin: 0 auto; padding: var(--space-lg); min-height: 100vh; padding-bottom: calc(6rem + env(safe-area-inset-bottom)); }
-        #modern-view .header { display: flex; flex-direction: column; gap: var(--space-lg); transform: translateZ(0); animation: headerSlideIn 0.6s var(--ease-spring) both; }
-        @keyframes headerSlideIn { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        #modern-view .header__top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); }
-        #modern-view .header__date { font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.01em; background: linear-gradient(135deg, var(--text-1) 0%, var(--text-2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; cursor: pointer; }
-        #modern-view .week-nav { position: fixed; bottom: max(env(safe-area-inset-bottom), var(--space-md)); left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; align-items: center; gap: var(--space-sm); background: rgba(var(--color-bg-surface) / 0.8); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: var(--space-sm); box-shadow: var(--shadow-lg); transition: all var(--duration-base) var(--ease-out); animation: bottomBarSlideUp 0.5s var(--ease-spring) both; }
-        @keyframes bottomBarSlideUp { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-        #modern-view .week-nav:hover { box-shadow: var(--shadow-xl); border-color: var(--border-strong); }
-        #modern-view .btn { display: inline-flex; align-items: center; justify-content: center; height: 3rem; padding: 0 var(--space-lg); font-size: var(--text-sm); font-weight: 500; color: var(--text-2); background: transparent; border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); cursor: pointer; transition: all var(--duration-base) var(--ease-out); user-select: none; -webkit-tap-highlight-color: transparent; }
-        #modern-view .btn--icon { width: 3rem; padding: 0; }
-        #modern-view .btn:hover:not(:disabled) { color: var(--text-1); border-color: var(--border-strong); box-shadow: var(--shadow-md); transform: translateY(-2px); }
-        #modern-view .btn:active:not(:disabled) { transform: translateY(0) scale(0.98); box-shadow: var(--shadow-sm); }
-        #modern-view .btn:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
-        #modern-view .btn--primary { color: var(--accent); border-color: var(--accent-soft); background: var(--accent-soft); min-width: 4rem; font-weight: 600; font-size: var(--text-base); }
-        #modern-view .btn--primary:hover:not(:disabled) { color: var(--accent-hover); background: rgba(var(--color-accent) / 0.15); border-color: rgba(var(--color-accent) / 0.2); }
-        #modern-view .btn__icon { width: 1.25rem; height: 1.25rem; stroke-width: 2; transition: transform var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out); }
-        #modern-view .btn:hover .btn__icon { transform: scale(1.1); color: var(--text-2); }
-        #modern-view .schedule-container { display: flex; flex-direction: column; gap: var(--space-lg); transition: all var(--duration-base) var(--ease-out); flex: 1; }
-        #modern-view .schedule-container--loading { opacity: 0; transform: translateY(20px); }
-        #modern-view .day-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); overflow: hidden; animation: cardSlideIn 0.5s var(--ease-spring) both; transition: all var(--duration-base) var(--ease-out); }
-        @keyframes cardSlideIn { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        #modern-view .day-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--border-strong); }
-        #modern-view .day-card__header { padding: var(--space-md); font-size: var(--text-base); font-weight: 500; background: var(--bg-surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: var(--space-sm); transition: all var(--duration-base) var(--ease-out); }
-        #modern-view .day-card__header::before { content: ''; width: 0.5rem; height: 0.5rem; background: var(--accent); border-radius: 50%; flex-shrink: 0; transition: all var(--duration-base) var(--ease-out); }
-        #modern-view .day-card.day-card--today .day-card__header { background: var(--accent-surface); }
-        #modern-view .day-card.day-card--today .day-card__header::before { transform: scale(1.4); box-shadow: 0 0 6px var(--accent); }
-        #modern-view .day-card:hover .day-card__header::before { transform: scale(1.3); background: var(--accent-hover); }
-        #modern-view .lesson { display: flex; flex-direction: column; gap: var(--space-xs); padding: var(--space-md); color: inherit; text-decoration: none; border-bottom: 1px solid var(--border); transition: all var(--duration-base) var(--ease-out); cursor: pointer; animation: lessonSlideIn 0.6s var(--ease-out) both; }
-        @keyframes lessonSlideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
-        #modern-view .lesson:last-child { border-bottom: none; }
-        #modern-view .lesson:hover { background: var(--accent-surface); transform: translateX(8px); border-color: var(--accent-soft); }
-        #modern-view .lesson:active { transform: translateX(8px) scale(0.98); }
-        #modern-view .lesson__time { display: flex; align-items: center; gap: var(--space-xs); font-size: 0.8rem; font-weight: 500; color: var(--text-3); transition: all var(--duration-base) var(--ease-out); }
-        #modern-view .lesson:hover .lesson__time { color: var(--accent); }
-        #modern-view .lesson__icon { width: 0.9rem; height: 0.9rem; color: var(--accent); flex-shrink: 0; transition: all var(--duration-base) var(--ease-out); }
-        #modern-view .lesson:hover .lesson__icon { transform: scale(1.2) rotate(5deg); color: var(--accent-hover); }
-        #modern-view .lesson__title { font-size: 0.95rem; font-weight: 500; line-height: 1.35; color: var(--text-1); transition: all var(--duration-base) var(--ease-out); }
-        #modern-view .lesson:hover .lesson__title { color: var(--accent); transform: translateX(2px); }
-        #modern-view .lesson__meta { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-sm); }
-        #modern-view .lesson__tag { padding: 0.25rem var(--space-sm); font-size: 0.8rem; font-weight: 500; color: var(--accent); background: var(--accent-soft); border-radius: var(--radius-md); transition: all var(--duration-base) var(--ease-out); }
-        #modern-view .lesson:hover .lesson__tag { background: var(--accent); color: var(--bg-surface); transform: translateY(-2px); }
-        #modern-view .lesson__teacher { font-size: 0.8rem; color: var(--text-2); transition: all var(--duration-base) var(--ease-out); }
-        #modern-view .lesson:hover .lesson__teacher { color: var(--text-1); transform: translateX(2px); }
-        #modern-view .day-card:nth-child(1) { animation-delay: 0.1s; } #modern-view .day-card:nth-child(2) { animation-delay: 0.2s; } #modern-view .day-card:nth-child(3) { animation-delay: 0.3s; }
-        #modern-view .lesson:nth-child(1) { animation-delay: 0.15s; } #modern-view .lesson:nth-child(2) { animation-delay: 0.25s; } #modern-view .lesson:nth-child(3) { animation-delay: 0.35s; } #modern-view .lesson:nth-child(4) { animation-delay: 0.45s; }
-        
-        #classic-view { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; padding: 16px; background: var(--bg-base); color: var(--text-1); line-height: 1.5; -webkit-font-smoothing: antialiased; }
-        #classic-view .container { max-width: 1000px; margin: 0 auto; padding: 24px; background-color: var(--bg-surface); border-radius: 10px; box-shadow: var(--shadow-sm); }
-        #classic-view .header { margin-bottom: 16px; padding: 0 16px; }
-        #classic-view .date { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 16px; text-align: left; cursor: pointer; }
-        #classic-view .week { font-size: 15px; color: var(--text-2); margin-bottom: 16px; display: flex; gap: 8px; justify-content: center; }
-        #classic-view .week span { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background-color: var(--text-1); color: var(--bg-surface); font-weight: 500; font-size: 14px; line-height: 1; }
-        #classic-view .segmented-control { display: flex; background-color: var(--bg-elevated); border-radius: 9px; padding: 2px; max-width: 280px; margin: 0 auto 16px; }
-        #classic-view .segmented-control label { flex: 1; text-align: center; padding: 6px 16px; font-size: 13px; font-weight: 500; cursor: pointer; border-radius: 7px; transition: all 0.2s ease; }
-        #classic-view .segmented-control input[type="radio"] { display: none; }
-        #classic-view .segmented-control input[type="radio"]:checked + label { background-color: var(--bg-surface); color: var(--text-1); box-shadow: var(--shadow-sm); }
-        #classic-view table { width: 100%; border-spacing: 0; border-radius: 10px; overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
-        #classic-view th { background-color: var(--bg-elevated); color: var(--text-1); font-weight: 600; font-size: 13px; padding: 14px 16px; text-align: center; }
-        #classic-view td { padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--text-1); }
-        #classic-view tr:last-child td { border-bottom: none; }
-        #classic-view a { color: var(--accent); text-decoration: none; }
-        #classic-view a:hover { text-decoration: underline; }
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        @media (max-width: 768px) { #modern-view .app { padding-left: var(--space-md); padding-right: var(--space-md); gap: var(--space-lg); } #modern-view .header__top { flex-direction: column; align-items: stretch; gap: var(--space-md); } #modern-view .lesson:hover { transform: translateX(4px); } #modern-view .lesson:active { transform: translateX(4px) scale(0.98); } #classic-view { padding: 8px; } #classic-view .container { padding: 16px; } #classic-view .date { font-size: 22px; } #classic-view .week span { width: 24px; height: 24px; font-size: 13px; } #classic-view th, #classic-view td { padding: 12px; font-size: 13px; } #classic-view .segmented-control { max-width: 100%; } }
-        @media (max-width: 640px) { #modern-view .btn { height: 2.75rem; padding: 0 var(--space-md); } #modern-view .btn--icon { width: 2.75rem; } #modern-view .btn--primary { min-width: 3.5rem; font-size: var(--text-sm); } }
-        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .lesson:hover, .day-card:hover, .btn:hover:not(:disabled) { transform: none !important; } }
+        html {
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            font-size: var(--text-base);
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--text-1);
+            background: var(--bg-base);
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+            max-width: 56rem;
+            margin: 0 auto;
+            padding: var(--space-lg);
+            min-height: 100vh;
+            padding-bottom: calc(6rem + env(safe-area-inset-bottom));
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+            transform: translateZ(0);
+            animation: headerSlideIn 0.6s var(--ease-spring) both;
+        }
+
+        @keyframes headerSlideIn {
+            from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .header__top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-md);
+        }
+
+        .header__date {
+            font-size: var(--text-xl);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, var(--text-1) 0%, var(--text-2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .week-nav {
+            position: fixed;
+            bottom: max(env(safe-area-inset-bottom), var(--space-md));
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            background: rgba(var(--color-bg-surface) / 0.8);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: var(--space-sm);
+            box-shadow: var(--shadow-lg);
+            transition: all var(--duration-base) var(--ease-out);
+            animation: bottomBarSlideUp 0.5s var(--ease-spring) both;
+        }
+
+        @keyframes bottomBarSlideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
+        .week-nav:hover {
+            box-shadow: var(--shadow-xl);
+            border-color: var(--border-strong);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 3rem;
+            padding: 0 var(--space-lg);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--text-2);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: all var(--duration-base) var(--ease-out);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn--icon {
+            width: 3rem;
+            padding: 0;
+        }
+        
+        .btn:hover:not(:disabled) {
+            color: var(--text-1);
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(0) scale(0.98);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .btn--primary {
+            color: var(--accent);
+            border-color: var(--accent-soft);
+            background: rgba(var(--color-accent) / 0.1);
+            min-width: 4rem;
+            font-weight: 600;
+            font-size: var(--text-base);
+        }
+
+        .btn--primary:hover:not(:disabled) {
+            color: var(--accent-hover);
+            background: rgba(var(--color-accent) / 0.15);
+            border-color: rgba(var(--color-accent) / 0.2);
+        }
+        
+        .btn__icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            stroke-width: 2;
+            transition: transform var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+        }
+
+        .btn:hover .btn__icon {
+            transform: scale(1.1);
+            color: var(--text-2);
+        }
+
+        .schedule-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+            transition: all var(--duration-base) var(--ease-out);
+            flex: 1;
+        }
+
+        .schedule-container--loading {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .day-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            animation: cardSlideIn 0.5s var(--ease-spring) both;
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        @keyframes cardSlideIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .day-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-strong);
+        }
+
+        .day-card__header {
+            padding: var(--space-md);
+            font-size: var(--text-base);
+            font-weight: 500;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .day-card__header::before {
+            content: '';
+            width: 0.5rem;
+            height: 0.5rem;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+            transition: all var(--duration-base) var(--ease-out);
+        }
+        
+        .day-card.day-card--today .day-card__header {
+            background: var(--accent-surface);
+        }
+
+        .day-card.day-card--today .day-card__header::before {
+            transform: scale(1.4);
+            box-shadow: 0 0 6px var(--accent);
+        }
+
+        .day-card:hover .day-card__header::before {
+            transform: scale(1.3);
+            background: var(--accent-hover);
+        }
+
+        .lesson {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+            padding: var(--space-md);
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+            transition: all var(--duration-base) var(--ease-out);
+            cursor: pointer;
+            animation: lessonSlideIn 0.6s var(--ease-out) both;
+        }
+
+        @keyframes lessonSlideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .lesson:last-child {
+            border-bottom: none;
+        }
+
+        .lesson:hover {
+            background: var(--accent-surface);
+            transform: translateX(8px);
+            border-color: var(--accent-soft);
+        }
+
+        .lesson:active {
+            transform: translateX(8px) scale(0.98);
+        }
+
+        .lesson__time {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-3);
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson:hover .lesson__time {
+            color: var(--accent);
+        }
+
+        .lesson__icon {
+            width: 0.9rem;
+            height: 0.9rem;
+            color: var(--accent);
+            flex-shrink: 0;
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson:hover .lesson__icon {
+            transform: scale(1.2) rotate(5deg);
+            color: var(--accent-hover);
+        }
+
+        .lesson__title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            line-height: 1.35;
+            color: var(--text-1);
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson:hover .lesson__title {
+            color: var(--accent);
+            transform: translateX(2px);
+        }
+
+        .lesson__meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+
+        .lesson__tag {
+            padding: 0.25rem var(--space-sm);
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--accent);
+            background: var(--accent-soft);
+            border-radius: var(--radius-md);
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson:hover .lesson__tag {
+            background: var(--accent);
+            color: var(--bg-surface);
+            transform: translateY(-2px);
+        }
+
+        .lesson__teacher {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson:hover .lesson__teacher {
+            color: var(--text-1);
+            transform: translateX(2px);
+        }
+
+        .day-card:nth-child(1) { animation-delay: 0.1s; }
+        .day-card:nth-child(2) { animation-delay: 0.2s; }
+        .day-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .lesson:nth-child(1) { animation-delay: 0.15s; }
+        .lesson:nth-child(2) { animation-delay: 0.25s; }
+        .lesson:nth-child(3) { animation-delay: 0.35s; }
+        .lesson:nth-child(4) { animation-delay: 0.45s; }
+        
+        @media (max-width: 768px) {
+            .app {
+                padding-left: var(--space-md);
+                padding-right: var(--space-md);
+                gap: var(--space-lg);
+            }
+
+            .header__top {
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--space-md);
+            }
+            
+            .lesson:hover {
+                transform: translateX(4px);
+            }
+
+            .lesson:active {
+                transform: translateX(4px) scale(0.98);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .btn {
+                height: 2.75rem;
+                padding: 0 var(--space-md);
+            }
+            
+            .btn--icon {
+                width: 2.75rem;
+            }
+
+            .btn--primary {
+                min-width: 3.5rem;
+                font-size: var(--text-sm);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+            
+            .lesson:hover,
+            .day-card:hover,
+            .btn:hover:not(:disabled) {
+                transform: none !important;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="app-wrapper">
-        <div id="modern-view" class="view-container view--visible">
-            <div class="app">
-                <header class="header">
-                    <div class="header__top">
-                        <h1 class="header__date" id="modernDateDisplay"></h1>
-                    </div>
-                </header>
-                <main class="schedule-container" id="schedule"></main>
-                <nav class="week-nav" aria-label="Навигация по неделям">
-                    <button class="btn btn--icon" id="prevBtn" aria-label="Предыдущая неделя">
-                        <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                    </button>
-                    <button class="btn btn--primary" id="resetBtn"><span id="weekNumber"></span></button>
-                    <button class="btn btn--icon" id="nextBtn" aria-label="Следующая неделя">
-                        <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    </button>
-                </nav>
+    <div class="app">
+        <header class="header">
+            <div class="header__top">
+                <h1 class="header__date" id="dateDisplay"></h1>
             </div>
-        </div>
+        </header>
 
-        <div id="classic-view" class="view-container view--hidden">
-            <div class="container">
-                <div class="header">
-                    <div class="date" id="classicDateDisplay"></div>
-                    <div class="week" id="classicWeek"></div>
-                </div>
-                <div class="segmented-control">
-                    <input type="radio" name="weekToggle" id="oddWeek" value="odd"><label for="oddWeek">Нечётная</label>
-                    <input type="radio" name="weekToggle" id="evenWeek" value="even"><label for="evenWeek">Чётная</label>
-                </div>
-                <div id="scheduleTables"></div>
-            </div>
-        </div>
+        <main class="schedule-container" id="schedule"></main>
+
+        <nav class="week-nav" aria-label="Навигация по неделям">
+            <button class="btn btn--icon" id="prevBtn" aria-label="Предыдущая неделя">
+                <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <button class="btn btn--primary" id="resetBtn">
+                <span id="weekNumber"></span>
+            </button>
+            <button class="btn btn--icon" id="nextBtn" aria-label="Следующая неделя">
+                <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </nav>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const CONFIG = { WEEK_RANGE: { MIN: 1, MAX: 18 }, SEMESTER_START: { MONTH: 8, DAY: 1 }, DAYS: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'], LOCALE: 'ru-RU', MS_PER_WEEK: 604800000 };
-            const SCHEDULE_DATA = { odd: { 'Понедельник': [{ time: '17:15 - 18:50', name: 'Безопасность компьютерных сетей', type: 'Лекция + Лабораторная', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, { time: '19:00 - 20:35', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лекция + Лабораторная', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }], 'Вторник': [{ time: '17:15 - 18:50', name: 'Администрирование защищенных баз данных', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, { time: '17:15 - 18:50', name: 'Современные численные методы', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }], 'Среда': [{ time: '15:30 - 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.', location: 'ауд. 2220' }, { time: '17:15 - 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.', location: 'ауд. 2220' }] }, even: { 'Понедельник': [{ time: '17:15 - 18:50', name: 'Безопасность компьютерных сетей', type: 'Лекция + Лабораторная', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, { time: '19:00 - 20:35', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лабораторная', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }], 'Вторник': [{ time: '17:15 - 18:50', name: 'Администрирование защищенных баз данных', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, { time: '17:15 - 18:50', name: 'Современные численные методы', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }], 'Среда': [{ time: '15:30 - 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лекция', teacher: 'доц. Саблинский А.И.', location: 'ауд. 2220' }, { time: '17:15 - 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лекция', teacher: 'доц. Саблинский А.И.', location: 'ауд. 2220' }] } };
-            const DateUtils = { getAcademicWeek(d) { const y = d.getFullYear(), m = d.getMonth(), sY = m < CONFIG.SEMESTER_START.MONTH ? y - 1 : y, sS = new Date(sY, CONFIG.SEMESTER_START.MONTH, CONFIG.SEMESTER_START.DAY), dOW = sS.getDay(), fM = new Date(sS); fM.setDate(sS.getDate() - (dOW === 0 ? 6 : dOW - 1)); return Math.ceil((d - fM) / CONFIG.MS_PER_WEEK); }, addWeeks(d, w) { const r = new Date(d); r.setDate(r.getDate() + w * 7); return r; }, format: (d, o) => d.toLocaleDateString(CONFIG.LOCALE, o) };
+            
+            const CONFIG = {
+                WEEK_RANGE: { MIN: 1, MAX: 18 },
+                SEMESTER_START: { MONTH: 8, DAY: 1 },
+                DAYS: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+                LOCALE: 'ru-RU',
+                MS_PER_WEEK: 604800000
+            };
+
+            const SCHEDULE_DATA = {
+                odd: { 
+                    'Понедельник': [{ time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лабораторная', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, { time: '18:50 – 20:25', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лабораторная', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }], 
+                    'Вторник': [{ time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, { time: '18:50 – 20:25', name: 'Современные численные методы', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }], 
+                    'Среда': [{ time: '15:30 – 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }, { time: '17:15 – 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }] 
+                },
+                even: { 
+                    'Понедельник': [{ time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лекция', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, { time: '18:50 – 20:25', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лекция', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }], 
+                    'Вторник': [{ time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, { time: '18:50 – 20:25', name: 'Современные численные методы', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }], 
+                    'Среда': [{ time: '15:30 – 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }, { time: '17:15 – 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }] 
+                }
+            };
+
+            const DateUtils = {
+                getAcademicWeek(date) {
+                    const year = date.getFullYear();
+                    const month = date.getMonth();
+                    const startYear = month < CONFIG.SEMESTER_START.MONTH ? year - 1 : year;
+                    const semesterStart = new Date(startYear, CONFIG.SEMESTER_START.MONTH, CONFIG.SEMESTER_START.DAY);
+                    const dayOfWeek = semesterStart.getDay();
+                    const firstMonday = new Date(semesterStart);
+                    firstMonday.setDate(semesterStart.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+                    return Math.ceil((date - firstMonday) / CONFIG.MS_PER_WEEK);
+                },
+                addWeeks(date, weeks) {
+                    const result = new Date(date);
+                    result.setDate(result.getDate() + weeks * 7);
+                    return result;
+                },
+                format(date) {
+                    return date.toLocaleDateString(CONFIG.LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                }
+            };
 
             class ScheduleApp {
-                constructor() { this.state = { weekOffset: 0, currentView: 'modern', classicSelectedType: null }; this._bindDom(); this._bindEvents(); this.render(); }
-                _bindDom() { this.dom = { modernView: document.getElementById('modern-view'), classicView: document.getElementById('classic-view'), modernDateDisplay: document.getElementById('modernDateDisplay'), prevBtn: document.getElementById('prevBtn'), nextBtn: document.getElementById('nextBtn'), resetBtn: document.getElementById('resetBtn'), weekNumber: document.getElementById('weekNumber'), scheduleContainer: document.getElementById('schedule'), classicDateDisplay: document.getElementById('classicDateDisplay'), classicWeek: document.getElementById('classicWeek'), scheduleTables: document.getElementById('scheduleTables'), classicRadios: document.querySelectorAll('#classic-view input[name="weekToggle"]') }; }
-                _bindEvents() { this.dom.modernDateDisplay.addEventListener('click', () => this.toggleView()); this.dom.classicDateDisplay.addEventListener('click', () => this.toggleView()); this.dom.prevBtn.addEventListener('click', () => this.navigate(-1)); this.dom.nextBtn.addEventListener('click', () => this.navigate(1)); this.dom.resetBtn.addEventListener('click', () => this.reset()); this.dom.classicRadios.forEach(r => r.addEventListener('change', e => this.handleClassicWeekToggle(e.target.value))); document.addEventListener('keydown', e => this._handleKeyPress(e)); }
-                _handleKeyPress(e) { if (e.target.closest('input, textarea, select')) return; const k = { 'ArrowLeft': () => this.navigate(-1), 'ArrowRight': () => this.navigate(1), 'Home': () => this.reset() }; if (k[e.key]) { e.preventDefault(); k[e.key](); } }
-                toggleView() { this.state.currentView = this.state.currentView === 'modern' ? 'classic' : 'modern'; this.dom.modernView.classList.toggle('view--visible', this.state.currentView === 'modern'); this.dom.modernView.classList.toggle('view--hidden', this.state.currentView !== 'modern'); this.dom.classicView.classList.toggle('view--visible', this.state.currentView === 'classic'); this.dom.classicView.classList.toggle('view--hidden', this.state.currentView !== 'classic'); this.render(); }
-                _getWeekInfo(o = 0) { const d = DateUtils.addWeeks(new Date(), this.state.weekOffset + o), wN = DateUtils.getAcademicWeek(d), sT = wN % 2 === 0 ? 'even' : 'odd'; return { date: d, weekNumber: wN, scheduleType: sT, isEven: wN % 2 === 0 }; }
-                navigate(d) { const { weekNumber: w } = this._getWeekInfo(d); if (w >= CONFIG.WEEK_RANGE.MIN && w <= CONFIG.WEEK_RANGE.MAX) { this.state.weekOffset += d; this.state.classicSelectedType = null; this.render(); } }
-                reset() { if (this.state.weekOffset !== 0) { this.state.weekOffset = 0; this.state.classicSelectedType = null; this.render(); } }
-                handleClassicWeekToggle(t) { this.state.classicSelectedType = t; this._renderClassicView(); }
-                render() { this.state.currentView === 'modern' ? this._renderModernView() : this._renderClassicView(); }
-                _renderModernView() { this._updateModernHeader(); this._updateNavButtons(); this._renderModernSchedule(); }
-                _updateModernHeader() { const { date: d } = this._getWeekInfo(); this.dom.modernDateDisplay.textContent = DateUtils.format(d, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); }
-                _updateNavButtons() { const { weekNumber: w } = this._getWeekInfo(); this.dom.weekNumber.textContent = w; this.dom.prevBtn.disabled = this._getWeekInfo(-1).weekNumber < CONFIG.WEEK_RANGE.MIN; this.dom.nextBtn.disabled = this._getWeekInfo(1).weekNumber > CONFIG.WEEK_RANGE.MAX; this.dom.resetBtn.disabled = this.state.weekOffset === 0; }
-                _renderModernSchedule() { this.dom.scheduleContainer.classList.add('schedule-container--loading'); setTimeout(() => { const { scheduleType: sT } = this._getWeekInfo(); const d = new Date().getDay(), tN = this.state.weekOffset === 0 ? CONFIG.DAYS[d === 0 ? 6 : d - 1] : null; let c = ''; CONFIG.DAYS.forEach(day => { const l = SCHEDULE_DATA[sT][day]; if (l?.length > 0) c += this._createDayCard(day, l, day === tN); }); this.dom.scheduleContainer.innerHTML = c; this.dom.scheduleContainer.classList.remove('schedule-container--loading'); }, 150); }
-                _renderClassicView() { const { date: d, weekNumber: w, scheduleType: sT, isEven: iE } = this._getWeekInfo(); if (!this.state.classicSelectedType) this.state.classicSelectedType = sT; this.dom.classicDateDisplay.textContent = DateUtils.format(d, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); this.dom.classicWeek.innerHTML = `Неделя <span>${w}</span>${iE ? ' чётная' : ' нечётная'}`; document.getElementById(`${this.state.classicSelectedType}Week`).checked = true; const s = SCHEDULE_DATA[this.state.classicSelectedType]; let t = `<table><thead><tr><th>День</th><th>Время</th><th>Занятие</th></tr></thead><tbody>`; for (const day of CONFIG.DAYS) { const lessons = s[day]; if (lessons?.length > 0) { lessons.forEach((l, i) => { t += `<tr>`; if (i === 0) t += `<td rowspan="${lessons.length}">${day}</td>`; const loc = l.link ? `<a href="${this._escapeHtml(l.link)}" target="_blank">онлайн</a>` : (l.location || ''); t += `<td>${this._escapeHtml(l.time)}</td><td><em>${this._escapeHtml(l.name)}</em> <br> <strong>${this._escapeHtml(l.type)}</strong> <br> ${this._escapeHtml(l.teacher)}, ${loc}</td></tr>`; }); } } t += `</tbody></table>`; this.dom.scheduleTables.innerHTML = t; }
-                _escapeHtml(t) { const p = document.createElement('p'); p.textContent = t; return p.innerHTML; }
-                _createLesson(l) { const { time, name, type, teacher, link } = l, tag = link ? 'a' : 'div', attrs = link ? `href="${this._escapeHtml(link)}" target="_blank" rel="noopener noreferrer"` : ''; return `<${tag} class="lesson" ${attrs}><div class="lesson__time"><svg class="lesson__icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg><time>${this._escapeHtml(time)}</time></div><h3 class="lesson__title">${this._escapeHtml(name)}</h3><div class="lesson__meta"><span class="lesson__tag">${this._escapeHtml(type)}</span><span class="lesson__teacher">${this._escapeHtml(teacher)}</span></div></${tag}>`; }
-                _createDayCard(d, l, iT) { return `<article class="day-card ${iT ? 'day-card--today' : ''}" id="day-${d}"><h2 class="day-card__header">${this._escapeHtml(d)}</h2><div class="day-card__lessons">${l.map(lsn => this._createLesson(lsn)).join('')}</div></article>`; }
+                constructor() {
+                    this.state = { weekOffset: 0 };
+                    this._bindDom();
+                    this._bindEvents();
+                    this.render();
+                }
+
+                _bindDom() {
+                    this.dom = {
+                        dateDisplay: document.getElementById('dateDisplay'),
+                        prevBtn: document.getElementById('prevBtn'),
+                        nextBtn: document.getElementById('nextBtn'),
+                        resetBtn: document.getElementById('resetBtn'),
+                        weekNumber: document.getElementById('weekNumber'),
+                        scheduleContainer: document.getElementById('schedule')
+                    };
+                }
+
+                _bindEvents() {
+                    this.dom.prevBtn.addEventListener('click', () => this.navigate(-1));
+                    this.dom.nextBtn.addEventListener('click', () => this.navigate(1));
+                    this.dom.resetBtn.addEventListener('click', () => this.reset());
+                    document.addEventListener('keydown', e => this._handleKeyPress(e));
+                }
+                
+                _handleKeyPress(e) {
+                    if (e.target.closest('input, textarea, select')) return;
+                    const keyMap = { 'ArrowLeft': () => this.navigate(-1), 'ArrowRight': () => this.navigate(1), 'Home': () => this.reset() };
+                    if (keyMap[e.key]) {
+                        e.preventDefault();
+                        keyMap[e.key]();
+                    }
+                }
+
+                _getWeekInfo(offset = 0) {
+                    const date = DateUtils.addWeeks(new Date(), this.state.weekOffset + offset);
+                    const weekNumber = DateUtils.getAcademicWeek(date);
+                    const scheduleType = weekNumber % 2 === 0 ? 'even' : 'odd';
+                    return { date, weekNumber, scheduleType };
+                }
+
+                navigate(direction) {
+                    const { weekNumber } = this._getWeekInfo(direction);
+                    if (weekNumber >= CONFIG.WEEK_RANGE.MIN && weekNumber <= CONFIG.WEEK_RANGE.MAX) {
+                        this.state.weekOffset += direction;
+                        this.render();
+                    }
+                }
+
+                reset() {
+                    if (this.state.weekOffset !== 0) {
+                        this.state.weekOffset = 0;
+                        this.render();
+                    }
+                }
+
+                render() {
+                    this._updateHeader();
+                    this._updateNavButtons();
+                    this._renderScheduleWithTransition();
+                }
+
+                _updateHeader() {
+                    const { date } = this._getWeekInfo();
+                    this.dom.dateDisplay.textContent = DateUtils.format(date);
+                }
+
+                _updateNavButtons() {
+                    const { weekNumber } = this._getWeekInfo();
+                    const canGoBack = this._getWeekInfo(-1).weekNumber >= CONFIG.WEEK_RANGE.MIN;
+                    const canGoForward = this._getWeekInfo(1).weekNumber <= CONFIG.WEEK_RANGE.MAX;
+                    this.dom.weekNumber.textContent = weekNumber;
+                    this.dom.prevBtn.disabled = !canGoBack;
+                    this.dom.nextBtn.disabled = !canGoForward;
+                    this.dom.resetBtn.disabled = this.state.weekOffset === 0;
+                }
+
+                _renderScheduleWithTransition() {
+                    this.dom.scheduleContainer.classList.add('schedule-container--loading');
+                    setTimeout(() => {
+                        this._renderScheduleContent();
+                        this.dom.scheduleContainer.classList.remove('schedule-container--loading');
+                        this._scrollToToday();
+                    }, 150);
+                }
+                
+                _scrollToToday() {
+                    if (this.state.weekOffset !== 0) return;
+                    const jsDayIndex = new Date().getDay();
+                    const todayName = CONFIG.DAYS[jsDayIndex === 0 ? 6 : jsDayIndex - 1];
+                    if (!todayName) return;
+                    const todayElement = document.getElementById(`day-${todayName}`);
+                    if (todayElement) {
+                        setTimeout(() => {
+                            todayElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 500);
+                    }
+                }
+
+                _renderScheduleContent() {
+                    const { scheduleType } = this._getWeekInfo();
+                    const scheduleForWeek = SCHEDULE_DATA[scheduleType];
+                    const content = [];
+                    const jsDayIndex = new Date().getDay();
+                    const todayName = this.state.weekOffset === 0 ? CONFIG.DAYS[jsDayIndex === 0 ? 6 : jsDayIndex - 1] : null;
+
+                    CONFIG.DAYS.forEach(day => {
+                        const lessons = scheduleForWeek[day];
+                        if (lessons?.length > 0) {
+                            content.push(this._createDayCard(day, lessons, day === todayName));
+                        }
+                    });
+                    this.dom.scheduleContainer.innerHTML = content.length > 0 ? content.join('') : '';
+                }
+
+                _escapeHtml(text) {
+                    const p = document.createElement('p');
+                    p.textContent = text;
+                    return p.innerHTML;
+                }
+
+                _createLesson(lesson) {
+                    const { time, name, type, teacher, link } = lesson;
+                    const tag = link ? 'a' : 'div';
+                    const attrs = link ? `href="${this._escapeHtml(link)}" target="_blank" rel="noopener noreferrer"` : '';
+                    return `<${tag} class="lesson" ${attrs}>
+                                <div class="lesson__time">
+                                    <svg class="lesson__icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                                    <time>${this._escapeHtml(time)}</time>
+                                </div>
+                                <h3 class="lesson__title">${this._escapeHtml(name)}</h3>
+                                <div class="lesson__meta">
+                                    <span class="lesson__tag">${this._escapeHtml(type)}</span>
+                                    <span class="lesson__teacher">${this._escapeHtml(teacher)}</span>
+                                </div>
+                            </${tag}>`;
+                }
+
+                _createDayCard(day, lessons, isToday) {
+                    const todayClass = isToday ? 'day-card--today' : '';
+                    return `<article class="day-card ${todayClass}" id="day-${day}">
+                                <h2 class="day-card__header">${this._escapeHtml(day)}</h2>
+                                <div class="day-card__lessons">${lessons.map(l => this._createLesson(l)).join('')}</div>
+                            </article>`;
+                }
             }
+
             new ScheduleApp();
         });
     </script>

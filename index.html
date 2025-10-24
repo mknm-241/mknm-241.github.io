@@ -19,7 +19,6 @@
             --color-accent: 217 119 6;
             --color-accent-hover: 180 83 9;
             --color-border: 0 0 0;
-
             --bg-base: rgb(var(--color-bg-base));
             --bg-surface: rgb(var(--color-bg-surface));
             --bg-elevated: rgb(var(--color-bg-elevated));
@@ -32,32 +31,27 @@
             --accent-surface: rgba(var(--color-accent) / 0.12);
             --border: rgba(var(--color-border) / 0.08);
             --border-strong: rgba(var(--color-border) / 0.12);
-
-            --space-xs: 0.5rem;
+            --space-xs: 0.4rem;
             --space-sm: 0.75rem;
             --space-md: 1rem;
             --space-lg: 1.5rem;
             --space-xl: 2rem;
             --space-2xl: 3rem;
-
             --radius-sm: 0.5rem;
             --radius-md: 0.75rem;
             --radius-lg: 1rem;
             --radius-xl: 1.25rem;
             --radius-2xl: 1.5rem;
             --radius-full: 624.9375rem;
-
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
             --text-sm: 0.875rem;
             --text-base: 1rem;
             --text-lg: 1.125rem;
             --text-xl: 1.25rem;
-
             --shadow-sm: 0 1px 3px rgba(0 0 0 / 0.1), 0 1px 2px rgba(0 0 0 / 0.06);
             --shadow-md: 0 4px 6px rgba(0 0 0 / 0.1), 0 2px 4px rgba(0 0 0 / 0.06);
             --shadow-lg: 0 10px 15px rgba(0 0 0 / 0.1), 0 4px 6px rgba(0 0 0 / 0.05);
             --shadow-xl: 0 20px 25px rgba(0 0 0 / 0.1), 0 10px 10px rgba(0 0 0 / 0.04);
-
             --ease-out: cubic-bezier(0.2, 0.8, 0.4, 1);
             --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             --duration-fast: 150ms;
@@ -91,6 +85,7 @@
             -webkit-text-size-adjust: 100%;
             -webkit-font-smoothing: antialiased;
             text-rendering: optimizeLegibility;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -135,7 +130,7 @@
 
         .header__date {
             font-size: var(--text-xl);
-            font-weight: 450;
+            font-weight: 600;
             letter-spacing: -0.01em;
             background: linear-gradient(135deg, var(--text-1) 0%, var(--text-2) 100%);
             -webkit-background-clip: text;
@@ -278,7 +273,7 @@
         }
 
         .day-card__header {
-            padding: var(--space-lg);
+            padding: var(--space-md);
             font-size: var(--text-lg);
             font-weight: 500;
             background: var(--bg-surface);
@@ -298,6 +293,15 @@
             flex-shrink: 0;
             transition: all var(--duration-base) var(--ease-out);
         }
+        
+        .day-card.day-card--today .day-card__header {
+            background: var(--accent-surface);
+        }
+
+        .day-card.day-card--today .day-card__header::before {
+            transform: scale(1.4);
+            box-shadow: 0 0 6px var(--accent);
+        }
 
         .day-card:hover .day-card__header::before {
             transform: scale(1.3);
@@ -307,8 +311,8 @@
         .lesson {
             display: flex;
             flex-direction: column;
-            gap: var(--space-sm);
-            padding: var(--space-lg);
+            gap: var(--space-xs);
+            padding: var(--space-md);
             color: inherit;
             text-decoration: none;
             border-bottom: 1px solid var(--border);
@@ -365,7 +369,7 @@
 
         .lesson__title {
             font-weight: 450;
-            line-height: 1.4;
+            line-height: 1.35;
             transition: all var(--duration-base) var(--ease-out);
         }
 
@@ -382,7 +386,7 @@
         }
 
         .lesson__tag {
-            padding: 0.375rem var(--space-sm);
+            padding: 0.25rem var(--space-sm);
             font-size: var(--text-sm);
             font-weight: 500;
             color: var(--accent);
@@ -430,10 +434,6 @@
                 gap: var(--space-md);
             }
             
-            .day-card__header, .lesson {
-                padding: var(--space-md);
-            }
-
             .lesson:hover {
                 transform: translateX(4px);
             }
@@ -513,32 +513,14 @@
 
             const SCHEDULE_DATA = {
                 odd: { 
-                    'Понедельник': [
-                        { time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лабораторная', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, 
-                        { time: '18:50 – 20:25', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лабораторная', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }
-                    ], 
-                    'Вторник': [
-                        { time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, 
-                        { time: '18:50 – 20:25', name: 'Современные численные методы', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }
-                    ], 
-                    'Среда': [
-                        { time: '15:30 – 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }, 
-                        { time: '17:15 – 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }
-                    ] 
+                    'Понедельник': [{ time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лабораторная', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, { time: '18:50 – 20:25', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лабораторная', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }], 
+                    'Вторник': [{ time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, { time: '18:50 – 20:25', name: 'Современные численные методы', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }], 
+                    'Среда': [{ time: '15:30 – 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }, { time: '17:15 – 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }] 
                 },
                 even: { 
-                    'Понедельник': [
-                        { time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лекция', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, 
-                        { time: '18:50 – 20:25', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лекция', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }
-                    ], 
-                    'Вторник': [
-                        { time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, 
-                        { time: '18:50 – 20:25', name: 'Современные численные методы', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }
-                    ], 
-                    'Среда': [
-                        { time: '15:30 – 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }, 
-                        { time: '17:15 – 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }
-                    ] 
+                    'Понедельник': [{ time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лекция', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, { time: '18:50 – 20:25', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лекция', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }], 
+                    'Вторник': [{ time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, { time: '18:50 – 20:25', name: 'Современные численные методы', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }], 
+                    'Среда': [{ time: '15:30 – 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }, { time: '17:15 – 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }] 
                 }
             };
 
@@ -559,12 +541,7 @@
                     return result;
                 },
                 format(date) {
-                    return date.toLocaleDateString(CONFIG.LOCALE, { 
-                        weekday: 'long', 
-                        day: 'numeric', 
-                        month: 'long',
-                        year: 'numeric'
-                    });
+                    return date.toLocaleDateString(CONFIG.LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
                 }
             };
 
@@ -596,11 +573,7 @@
                 
                 _handleKeyPress(e) {
                     if (e.target.closest('input, textarea, select')) return;
-                    const keyMap = { 
-                        'ArrowLeft': () => this.navigate(-1), 
-                        'ArrowRight': () => this.navigate(1), 
-                        'Home': () => this.reset() 
-                    };
+                    const keyMap = { 'ArrowLeft': () => this.navigate(-1), 'ArrowRight': () => this.navigate(1), 'Home': () => this.reset() };
                     if (keyMap[e.key]) {
                         e.preventDefault();
                         keyMap[e.key]();
@@ -644,7 +617,6 @@
                     const { weekNumber } = this._getWeekInfo();
                     const canGoBack = this._getWeekInfo(-1).weekNumber >= CONFIG.WEEK_RANGE.MIN;
                     const canGoForward = this._getWeekInfo(1).weekNumber <= CONFIG.WEEK_RANGE.MAX;
-                    
                     this.dom.weekNumber.textContent = weekNumber;
                     this.dom.prevBtn.disabled = !canGoBack;
                     this.dom.nextBtn.disabled = !canGoForward;
@@ -653,25 +625,39 @@
 
                 _renderScheduleWithTransition() {
                     this.dom.scheduleContainer.classList.add('schedule-container--loading');
-                    
                     setTimeout(() => {
                         this._renderScheduleContent();
                         this.dom.scheduleContainer.classList.remove('schedule-container--loading');
+                        this._scrollToToday();
                     }, 150);
+                }
+                
+                _scrollToToday() {
+                    if (this.state.weekOffset !== 0) return;
+                    const jsDayIndex = new Date().getDay();
+                    const todayName = CONFIG.DAYS[jsDayIndex === 0 ? 6 : jsDayIndex - 1];
+                    if (!todayName) return;
+                    const todayElement = document.getElementById(`day-${todayName}`);
+                    if (todayElement) {
+                        setTimeout(() => {
+                            todayElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 500);
+                    }
                 }
 
                 _renderScheduleContent() {
                     const { scheduleType } = this._getWeekInfo();
                     const scheduleForWeek = SCHEDULE_DATA[scheduleType];
                     const content = [];
+                    const jsDayIndex = new Date().getDay();
+                    const todayName = this.state.weekOffset === 0 ? CONFIG.DAYS[jsDayIndex === 0 ? 6 : jsDayIndex - 1] : null;
 
                     CONFIG.DAYS.forEach(day => {
                         const lessons = scheduleForWeek[day];
                         if (lessons?.length > 0) {
-                            content.push(this._createDayCard(day, lessons));
+                            content.push(this._createDayCard(day, lessons, day === todayName));
                         }
                     });
-
                     this.dom.scheduleContainer.innerHTML = content.length > 0 ? content.join('') : '';
                 }
 
@@ -685,28 +671,25 @@
                     const { time, name, type, teacher, link } = lesson;
                     const tag = link ? 'a' : 'div';
                     const attrs = link ? `href="${this._escapeHtml(link)}" target="_blank" rel="noopener noreferrer"` : '';
-                    return `
-                        <${tag} class="lesson" ${attrs}>
-                            <div class="lesson__time">
-                                <svg class="lesson__icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
-                                <time>${this._escapeHtml(time)}</time>
-                            </div>
-                            <h3 class="lesson__title">${this._escapeHtml(name)}</h3>
-                            <div class="lesson__meta">
-                                <span class="lesson__tag">${this._escapeHtml(type)}</span>
-                                <span class="lesson__teacher">${this._escapeHtml(teacher)}</span>
-                            </div>
-                        </${tag}>
-                    `;
+                    return `<${tag} class="lesson" ${attrs}>
+                                <div class="lesson__time">
+                                    <svg class="lesson__icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                                    <time>${this._escapeHtml(time)}</time>
+                                </div>
+                                <h3 class="lesson__title">${this._escapeHtml(name)}</h3>
+                                <div class="lesson__meta">
+                                    <span class="lesson__tag">${this._escapeHtml(type)}</span>
+                                    <span class="lesson__teacher">${this._escapeHtml(teacher)}</span>
+                                </div>
+                            </${tag}>`;
                 }
 
-                _createDayCard(day, lessons) {
-                    return `
-                        <article class="day-card">
-                            <h2 class="day-card__header">${this._escapeHtml(day)}</h2>
-                            <div class="day-card__lessons">${lessons.map(l => this._createLesson(l)).join('')}</div>
-                        </article>
-                    `;
+                _createDayCard(day, lessons, isToday) {
+                    const todayClass = isToday ? 'day-card--today' : '';
+                    return `<article class="day-card ${todayClass}" id="day-${day}">
+                                <h2 class="day-card__header">${this._escapeHtml(day)}</h2>
+                                <div class="day-card__lessons">${lessons.map(l => this._createLesson(l)).join('')}</div>
+                            </article>`;
                 }
             }
 

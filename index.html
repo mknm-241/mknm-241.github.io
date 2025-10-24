@@ -542,7 +542,7 @@
                     return result;
                 },
                 format(date) {
-                    return date.toLocaleDateString(CONFIG.LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                    return date.toLocaleDateString(CONFIG.LOCALE, { weekday: 'short', day: 'numeric', month: 'numeric', year: 'numeric' });
                 }
             };
 

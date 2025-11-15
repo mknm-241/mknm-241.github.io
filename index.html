@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#FAF9F5" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#262624" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#F0F4F8" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0A1428" media="(prefers-color-scheme: dark)">
     <title>Расписание МКНм-241</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@350..600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-bg-base: 250 249 245;
+            --color-bg-base: 240 244 248;
             --color-bg-surface: 255 255 255;
-            --color-bg-elevated: 245 244 237;
-            --color-text-primary: 61 61 58;
-            --color-text-secondary: 117 117 114;
-            --color-text-tertiary: 161 161 157;
-            --color-accent: 75 107 175;
-            --color-accent-hover: 92 124 192;
-            --color-border: 61 61 58;
+            --color-bg-elevated: 248 250 252;
+            --color-text-primary: 15 25 45;
+            --color-text-secondary: 75 85 105;
+            --color-text-tertiary: 125 135 155;
+            --color-accent: 32 56 100;
+            --color-accent-hover: 44 72 124;
+            --color-accent-light: 75 107 175;
+            --color-border: 15 25 45;
             --bg-base: rgb(var(--color-bg-base));
             --bg-surface: rgb(var(--color-bg-surface));
             --bg-elevated: rgb(var(--color-bg-elevated));
@@ -27,7 +28,8 @@
             --text-3: rgb(var(--color-text-tertiary));
             --accent: rgb(var(--color-accent));
             --accent-hover: rgb(var(--color-accent-hover));
-            --accent-soft: rgba(var(--color-accent) / 0.1);
+            --accent-light: rgb(var(--color-accent-light));
+            --accent-soft: rgba(var(--color-accent) / 0.08);
             --accent-surface: rgba(var(--color-accent) / 0.12);
             --border: rgba(var(--color-border) / 0.08);
             --border-strong: rgba(var(--color-border) / 0.12);
@@ -48,10 +50,10 @@
             --text-base: 1rem;
             --text-lg: 1.125rem;
             --text-xl: 1.25rem;
-            --shadow-sm: 0 1px 3px rgba(0 0 0 / 0.07), 0 1px 2px rgba(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px rgba(0 0 0 / 0.07), 0 2px 4px rgba(0 0 0 / 0.05);
-            --shadow-lg: 0 10px 15px rgba(0 0 0 / 0.07), 0 4px 6px rgba(0 0 0 / 0.05);
-            --shadow-xl: 0 20px 25px rgba(0 0 0 / 0.07), 0 10px 10px rgba(0 0 0 / 0.04);
+            --shadow-sm: 0 1px 3px rgba(15 25 45 / 0.07), 0 1px 2px rgba(15 25 45 / 0.05);
+            --shadow-md: 0 4px 6px rgba(15 25 45 / 0.07), 0 2px 4px rgba(15 25 45 / 0.05);
+            --shadow-lg: 0 10px 15px rgba(15 25 45 / 0.07), 0 4px 6px rgba(15 25 45 / 0.05);
+            --shadow-xl: 0 20px 25px rgba(15 25 45 / 0.07), 0 10px 10px rgba(15 25 45 / 0.04);
             --ease-out: cubic-bezier(0.2, 0.8, 0.4, 1);
             --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             --duration-fast: 150ms;
@@ -61,14 +63,16 @@
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --color-bg-base: 38 38 36;
-                --color-bg-surface: 47 47 44;
-                --color-bg-elevated: 58 58 55;
-                --color-text-primary: 242 239 233;
-                --color-text-secondary: 147 145 137;
-                --color-border: 147 145 137;
-                --color-accent: 96 130 204;
-                --color-accent-hover: 115 149 223;
+                --color-bg-base: 10 20 40;
+                --color-bg-surface: 15 25 45;
+                --color-bg-elevated: 20 35 60;
+                --color-text-primary: 235 240 250;
+                --color-text-secondary: 175 185 205;
+                --color-text-tertiary: 125 140 165;
+                --color-accent: 75 107 175;
+                --color-accent-hover: 92 124 192;
+                --color-accent-light: 115 149 223;
+                --color-border: 235 240 250;
                 --shadow-sm: 0 1px 4px rgba(0 0 0 / 0.4);
                 --shadow-md: 0 4px 8px rgba(0 0 0 / 0.5);
                 --shadow-lg: 0 10px 20px rgba(0 0 0 / 0.6);
@@ -95,6 +99,9 @@
             line-height: 1.5;
             color: var(--text-1);
             background: var(--bg-base);
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(var(--color-accent) / 0.03) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(var(--color-accent) / 0.03) 0px, transparent 50%);
         }
 
         .app {
@@ -132,7 +139,7 @@
             font-size: var(--text-xl);
             font-weight: 600;
             letter-spacing: -0.01em;
-            background: linear-gradient(135deg, var(--text-1) 0%, var(--text-2) 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -147,7 +154,7 @@
             display: flex;
             align-items: center;
             gap: var(--space-sm);
-            background: rgba(var(--color-bg-surface) / 0.8);
+            background: rgba(var(--color-bg-surface) / 0.9);
             backdrop-filter: blur(40px) saturate(180%);
             -webkit-backdrop-filter: blur(40px) saturate(180%);
             border: 1px solid var(--border);
@@ -166,6 +173,7 @@
         .week-nav:hover {
             box-shadow: var(--shadow-xl);
             border-color: var(--border-strong);
+            background: rgba(var(--color-bg-surface) / 0.95);
         }
 
         .btn {
@@ -197,6 +205,7 @@
             border-color: var(--border-strong);
             box-shadow: var(--shadow-md);
             transform: translateY(-2px);
+            background: rgba(var(--color-accent) / 0.02);
         }
 
         .btn:active:not(:disabled) {
@@ -234,7 +243,7 @@
 
         .btn:hover .btn__icon {
             transform: scale(1.1);
-            color: var(--text-2);
+            color: var(--accent);
         }
 
         .schedule-container {
@@ -258,6 +267,19 @@
             overflow: hidden;
             animation: cardSlideIn 0.5s var(--ease-spring) both;
             transition: all var(--duration-base) var(--ease-out);
+            position: relative;
+        }
+
+        .day-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity var(--duration-base) var(--ease-out);
         }
 
         @keyframes cardSlideIn {
@@ -271,6 +293,10 @@
             border-color: var(--border-strong);
         }
 
+        .day-card:hover::before {
+            opacity: 1;
+        }
+
         .day-card__header {
             padding: var(--space-md);
             font-size: var(--text-base);
@@ -281,6 +307,7 @@
             align-items: center;
             gap: var(--space-sm);
             transition: background-color var(--duration-base) var(--ease-out);
+            position: relative;
         }
 
         .day-card__header::before {
@@ -290,7 +317,8 @@
             background: var(--accent);
             border-radius: 50%;
             flex-shrink: 0;
-            transition: all var(--duration-base) var(--ease-out);
+            transition: all var(--duration-base) var(--ease-out;
+            box-shadow: 0 0 0 0 rgba(var(--color-accent) / 0.4);
         }
         
         .day-card--today .day-card__header {
@@ -299,7 +327,14 @@
 
         .day-card--today .day-card__header::before {
             transform: scale(1.4);
-            box-shadow: 0 0 6px var(--accent);
+            box-shadow: 0 0 0 4px rgba(var(--color-accent) / 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(var(--color-accent) / 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(var(--color-accent) / 0); }
+            100% { box-shadow: 0 0 0 0 rgba(var(--color-accent) / 0); }
         }
 
         .day-card:hover .day-card__header::before {
@@ -318,6 +353,20 @@
             transition: all var(--duration-base) var(--ease-out);
             cursor: pointer;
             animation: lessonSlideIn 0.6s var(--ease-out) both;
+            position: relative;
+        }
+
+        .lesson::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform var(--duration-base) var(--ease-out);
+            transform-origin: center;
         }
 
         @keyframes lessonSlideIn {
@@ -330,9 +379,13 @@
         }
 
         .lesson:hover {
-            background: var(--accent-surface);
+            background: var(--accent-soft);
             transform: translateX(8px);
             border-color: var(--accent-soft);
+        }
+
+        .lesson:hover::before {
+            transform: scaleY(1);
         }
 
         .lesson:active {
@@ -394,12 +447,14 @@
             background: var(--accent-soft);
             border-radius: var(--radius-md);
             transition: all var(--duration-base) var(--ease-out);
+            border: 1px solid transparent;
         }
 
         .lesson:hover .lesson__tag {
             background: var(--accent);
             color: var(--bg-surface);
             transform: translateY(-2px);
+            border-color: rgba(var(--color-accent) / 0.2);
         }
 
         .lesson__teacher {
@@ -519,214 +574,4 @@
             const SCHEDULE_DATA = {
                 odd: { 
                     'Понедельник': [{ time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лабораторная', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, { time: '18:50 – 20:25', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лабораторная', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }], 
-                    'Вторник': [{ time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, { time: '18:50 – 20:25', name: 'Современные численные методы', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }], 
-                    'Среда': [{ time: '15:30 – 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }, { time: '17:15 – 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }] 
-                },
-                even: { 
-                    'Понедельник': [{ time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лекция', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, { time: '18:50 – 20:25', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лекция', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }], 
-                    'Вторник': [{ time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, { time: '18:50 – 20:25', name: 'Современные численные методы', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }], 
-                    'Среда': [{ time: '15:30 – 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }, { time: '17:15 – 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }] 
-                }
-            };
-
-            const DateManager = {
-                getAcademicWeek(date) {
-                    const year = date.getFullYear();
-                    const month = date.getMonth();
-                    const startYear = month < CONFIG.SEMESTER_START.MONTH ? year - 1 : year;
-                    const semesterStart = new Date(startYear, CONFIG.SEMESTER_START.MONTH, CONFIG.SEMESTER_START.DAY);
-                    const dayOfWeek = semesterStart.getDay();
-                    const firstMonday = new Date(semesterStart);
-                    const dayCorrection = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-                    firstMonday.setDate(semesterStart.getDate() - dayCorrection);
-                    return Math.ceil((date - firstMonday) / CONFIG.MS_IN_WEEK);
-                },
-                addWeeks(date, weeks) {
-                    const result = new Date(date);
-                    result.setDate(result.getDate() + weeks * 7);
-                    return result;
-                },
-                formatHeaderDate(date) {
-                    return date.toLocaleDateString(CONFIG.LOCALE, { weekday: 'short', day: 'numeric', month: 'numeric', year: 'numeric' });
-                }
-            };
-
-            class ScheduleApp {
-                constructor() {
-                    this.state = { weekOffset: 0 };
-                    this.dom = {};
-                    this.init();
-                }
-
-                init() {
-                    this.bindDomElements();
-                    this.bindEventListeners();
-                    this.render();
-                }
-
-                bindDomElements() {
-                    this.dom.dateDisplay = document.getElementById('dateDisplay');
-                    this.dom.prevBtn = document.getElementById('prevBtn');
-                    this.dom.nextBtn = document.getElementById('nextBtn');
-                    this.dom.resetBtn = document.getElementById('resetBtn');
-                    this.dom.weekNumber = document.getElementById('weekNumber');
-                    this.dom.scheduleContainer = document.getElementById('schedule');
-                }
-
-                bindEventListeners() {
-                    this.dom.prevBtn.addEventListener('click', () => this.navigate(-1));
-                    this.dom.nextBtn.addEventListener('click', () => this.navigate(1));
-                    this.dom.resetBtn.addEventListener('click', () => this.reset());
-                    document.addEventListener('keydown', this.handleKeyPress.bind(this));
-                }
-                
-                handleKeyPress(event) {
-                    if (event.target.closest('input, textarea, select')) return;
-                    
-                    const keyActions = {
-                        'ArrowLeft': () => this.navigate(-1),
-                        'ArrowRight': () => this.navigate(1),
-                        'Home': () => this.reset()
-                    };
-
-                    if (keyActions[event.key]) {
-                        event.preventDefault();
-                        keyActions[event.key]();
-                    }
-                }
-
-                getCurrentWeekInfo(offset = 0) {
-                    const targetDate = DateManager.addWeeks(new Date(), this.state.weekOffset + offset);
-                    const weekNumber = DateManager.getAcademicWeek(targetDate);
-                    const scheduleType = weekNumber % 2 === 0 ? 'even' : 'odd';
-                    return { date: targetDate, weekNumber, scheduleType };
-                }
-
-                navigate(direction) {
-                    const { weekNumber } = this.getCurrentWeekInfo(direction);
-                    const isWithinRange = weekNumber >= CONFIG.WEEK_RANGE.MIN && weekNumber <= CONFIG.WEEK_RANGE.MAX;
-
-                    if (isWithinRange) {
-                        this.state.weekOffset += direction;
-                        this.render();
-                    }
-                }
-
-                reset() {
-                    if (this.state.weekOffset !== 0) {
-                        this.state.weekOffset = 0;
-                        this.render();
-                    }
-                }
-
-                render() {
-                    this.updateHeader();
-                    this.updateNavigation();
-                    this.renderScheduleWithTransition();
-                }
-
-                updateHeader() {
-                    const { date } = this.getCurrentWeekInfo();
-                    this.dom.dateDisplay.textContent = DateManager.formatHeaderDate(date);
-                }
-
-                updateNavigation() {
-                    const { weekNumber } = this.getCurrentWeekInfo();
-                    const prevWeekInfo = this.getCurrentWeekInfo(-1);
-                    const nextWeekInfo = this.getCurrentWeekInfo(1);
-
-                    const canGoBack = prevWeekInfo.weekNumber >= CONFIG.WEEK_RANGE.MIN;
-                    const canGoForward = nextWeekInfo.weekNumber <= CONFIG.WEEK_RANGE.MAX;
-
-                    this.dom.weekNumber.textContent = weekNumber;
-                    this.dom.prevBtn.disabled = !canGoBack;
-                    this.dom.nextBtn.disabled = !canGoForward;
-                    this.dom.resetBtn.disabled = this.state.weekOffset === 0;
-                }
-
-                renderScheduleWithTransition() {
-                    this.dom.scheduleContainer.classList.add('schedule-container--loading');
-                    
-                    setTimeout(() => {
-                        this.renderScheduleContent();
-                        this.dom.scheduleContainer.classList.remove('schedule-container--loading');
-                        this.scrollToToday();
-                    }, CONFIG.TRANSITION_DURATION);
-                }
-                
-                scrollToToday() {
-                    if (this.state.weekOffset !== 0) return;
-
-                    const todayIndex = new Date().getDay();
-                    const dayName = CONFIG.DAYS_OF_WEEK[todayIndex === 0 ? 6 : todayIndex - 1];
-                    if (!dayName) return;
-
-                    const todayElement = document.getElementById(`day-${dayName}`);
-                    if (todayElement) {
-                        setTimeout(() => {
-                            todayElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }, CONFIG.SCROLL_DELAY);
-                    }
-                }
-
-                renderScheduleContent() {
-                    const { scheduleType } = this.getCurrentWeekInfo();
-                    const scheduleForWeek = SCHEDULE_DATA[scheduleType];
-                    const todayIndex = new Date().getDay();
-                    const todayName = this.state.weekOffset === 0 ? CONFIG.DAYS_OF_WEEK[todayIndex === 0 ? 6 : todayIndex - 1] : null;
-
-                    const scheduleHtml = CONFIG.DAYS_OF_WEEK
-                        .map(day => {
-                            const lessons = scheduleForWeek[day];
-                            if (lessons && lessons.length > 0) {
-                                return this.createDayCard(day, lessons, day === todayName);
-                            }
-                            return '';
-                        })
-                        .join('');
-
-                    this.dom.scheduleContainer.innerHTML = scheduleHtml || '<p>На этой неделе занятий нет.</p>';
-                }
-
-                escapeHtml(text) {
-                    const p = document.createElement('p');
-                    p.textContent = text;
-                    return p.innerHTML;
-                }
-
-                createLessonHtml({ time, name, type, teacher, link }) {
-                    const safeLink = this.escapeHtml(link || '');
-                    const tag = link ? 'a' : 'div';
-                    const attrs = link ? `href="${safeLink}" target="_blank" rel="noopener noreferrer"` : '';
-                    
-                    return `
-                        <${tag} class="lesson" ${attrs}>
-                            <div class="lesson__time">
-                                <svg class="lesson__icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
-                                <time>${this.escapeHtml(time)}</time>
-                            </div>
-                            <h3 class="lesson__title">${this.escapeHtml(name)}</h3>
-                            <div class="lesson__meta">
-                                <span class="lesson__tag">${this.escapeHtml(type)}</span>
-                                <span class="lesson__teacher">${this.escapeHtml(teacher)}</span>
-                            </div>
-                        </${tag}>`;
-                }
-
-                createDayCard(day, lessons, isToday) {
-                    const todayClass = isToday ? 'day-card--today' : '';
-                    const lessonsHtml = lessons.map(lesson => this.createLessonHtml(lesson)).join('');
-
-                    return `
-                        <article class="day-card ${todayClass}" id="day-${this.escapeHtml(day)}">
-                            <h2 class="day-card__header">${this.escapeHtml(day)}</h2>
-                            <div class="day-card__lessons">${lessonsHtml}</div>
-                        </article>`;
-                }
-            }
-
-            new ScheduleApp();
-        });
-    </script>
-</body>
-</html>
+                    'Вторник': [{ time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, { time: '18

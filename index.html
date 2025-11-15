@@ -574,4 +574,214 @@
             const SCHEDULE_DATA = {
                 odd: { 
                     'Понедельник': [{ time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лабораторная', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, { time: '18:50 – 20:25', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лабораторная', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }], 
-                    'Вторник': [{ time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, { time: '18
+                    'Вторник': [{ time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, { time: '18:50 – 20:25', name: 'Современные численные методы', type: 'Лабораторная', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }], 
+                    'Среда': [{ time: '15:30 – 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }, { time: '17:15 – 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }] 
+                },
+                even: { 
+                    'Понедельник': [{ time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лекция', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }, { time: '18:50 – 20:25', name: 'Анализ защищенности компьютерных систем и приложений', type: 'Лекция', teacher: 'ст. преп. Торгулькин В.В.', link: 'https://bbb.kemsu.ru/b/adm-dao-8lw-i1t' }], 
+                    'Вторник': [{ time: '17:15 – 18:50', name: 'Администрирование защищенных баз данных', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }, { time: '18:50 – 20:25', name: 'Современные численные методы', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }], 
+                    'Среда': [{ time: '15:30 – 17:05', name: 'Математические модели и методы искусственного интеллекта', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }, { time: '17:15 – 18:50', name: 'Введение в Data Science и машинное обучение', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }] 
+                }
+            };
+
+            const DateManager = {
+                getAcademicWeek(date) {
+                    const year = date.getFullYear();
+                    const month = date.getMonth();
+                    const startYear = month < CONFIG.SEMESTER_START.MONTH ? year - 1 : year;
+                    const semesterStart = new Date(startYear, CONFIG.SEMESTER_START.MONTH, CONFIG.SEMESTER_START.DAY);
+                    const dayOfWeek = semesterStart.getDay();
+                    const firstMonday = new Date(semesterStart);
+                    const dayCorrection = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+                    firstMonday.setDate(semesterStart.getDate() - dayCorrection);
+                    return Math.ceil((date - firstMonday) / CONFIG.MS_IN_WEEK);
+                },
+                addWeeks(date, weeks) {
+                    const result = new Date(date);
+                    result.setDate(result.getDate() + weeks * 7);
+                    return result;
+                },
+                formatHeaderDate(date) {
+                    return date.toLocaleDateString(CONFIG.LOCALE, { weekday: 'short', day: 'numeric', month: 'numeric', year: 'numeric' });
+                }
+            };
+
+            class ScheduleApp {
+                constructor() {
+                    this.state = { weekOffset: 0 };
+                    this.dom = {};
+                    this.init();
+                }
+
+                init() {
+                    this.bindDomElements();
+                    this.bindEventListeners();
+                    this.render();
+                }
+
+                bindDomElements() {
+                    this.dom.dateDisplay = document.getElementById('dateDisplay');
+                    this.dom.prevBtn = document.getElementById('prevBtn');
+                    this.dom.nextBtn = document.getElementById('nextBtn');
+                    this.dom.resetBtn = document.getElementById('resetBtn');
+                    this.dom.weekNumber = document.getElementById('weekNumber');
+                    this.dom.scheduleContainer = document.getElementById('schedule');
+                }
+
+                bindEventListeners() {
+                    this.dom.prevBtn.addEventListener('click', () => this.navigate(-1));
+                    this.dom.nextBtn.addEventListener('click', () => this.navigate(1));
+                    this.dom.resetBtn.addEventListener('click', () => this.reset());
+                    document.addEventListener('keydown', this.handleKeyPress.bind(this));
+                }
+                
+                handleKeyPress(event) {
+                    if (event.target.closest('input, textarea, select')) return;
+                    
+                    const keyActions = {
+                        'ArrowLeft': () => this.navigate(-1),
+                        'ArrowRight': () => this.navigate(1),
+                        'Home': () => this.reset()
+                    };
+
+                    if (keyActions[event.key]) {
+                        event.preventDefault();
+                        keyActions[event.key]();
+                    }
+                }
+
+                getCurrentWeekInfo(offset = 0) {
+                    const targetDate = DateManager.addWeeks(new Date(), this.state.weekOffset + offset);
+                    const weekNumber = DateManager.getAcademicWeek(targetDate);
+                    const scheduleType = weekNumber % 2 === 0 ? 'even' : 'odd';
+                    return { date: targetDate, weekNumber, scheduleType };
+                }
+
+                navigate(direction) {
+                    const { weekNumber } = this.getCurrentWeekInfo(direction);
+                    const isWithinRange = weekNumber >= CONFIG.WEEK_RANGE.MIN && weekNumber <= CONFIG.WEEK_RANGE.MAX;
+
+                    if (isWithinRange) {
+                        this.state.weekOffset += direction;
+                        this.render();
+                    }
+                }
+
+                reset() {
+                    if (this.state.weekOffset !== 0) {
+                        this.state.weekOffset = 0;
+                        this.render();
+                    }
+                }
+
+                render() {
+                    this.updateHeader();
+                    this.updateNavigation();
+                    this.renderScheduleWithTransition();
+                }
+
+                updateHeader() {
+                    const { date } = this.getCurrentWeekInfo();
+                    this.dom.dateDisplay.textContent = DateManager.formatHeaderDate(date);
+                }
+
+                updateNavigation() {
+                    const { weekNumber } = this.getCurrentWeekInfo();
+                    const prevWeekInfo = this.getCurrentWeekInfo(-1);
+                    const nextWeekInfo = this.getCurrentWeekInfo(1);
+
+                    const canGoBack = prevWeekInfo.weekNumber >= CONFIG.WEEK_RANGE.MIN;
+                    const canGoForward = nextWeekInfo.weekNumber <= CONFIG.WEEK_RANGE.MAX;
+
+                    this.dom.weekNumber.textContent = weekNumber;
+                    this.dom.prevBtn.disabled = !canGoBack;
+                    this.dom.nextBtn.disabled = !canGoForward;
+                    this.dom.resetBtn.disabled = this.state.weekOffset === 0;
+                }
+
+                renderScheduleWithTransition() {
+                    this.dom.scheduleContainer.classList.add('schedule-container--loading');
+                    
+                    setTimeout(() => {
+                        this.renderScheduleContent();
+                        this.dom.scheduleContainer.classList.remove('schedule-container--loading');
+                        this.scrollToToday();
+                    }, CONFIG.TRANSITION_DURATION);
+                }
+                
+                scrollToToday() {
+                    if (this.state.weekOffset !== 0) return;
+
+                    const todayIndex = new Date().getDay();
+                    const dayName = CONFIG.DAYS_OF_WEEK[todayIndex === 0 ? 6 : todayIndex - 1];
+                    if (!dayName) return;
+
+                    const todayElement = document.getElementById(`day-${dayName}`);
+                    if (todayElement) {
+                        setTimeout(() => {
+                            todayElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, CONFIG.SCROLL_DELAY);
+                    }
+                }
+
+                renderScheduleContent() {
+                    const { scheduleType } = this.getCurrentWeekInfo();
+                    const scheduleForWeek = SCHEDULE_DATA[scheduleType];
+                    const todayIndex = new Date().getDay();
+                    const todayName = this.state.weekOffset === 0 ? CONFIG.DAYS_OF_WEEK[todayIndex === 0 ? 6 : todayIndex - 1] : null;
+
+                    const scheduleHtml = CONFIG.DAYS_OF_WEEK
+                        .map(day => {
+                            const lessons = scheduleForWeek[day];
+                            if (lessons && lessons.length > 0) {
+                                return this.createDayCard(day, lessons, day === todayName);
+                            }
+                            return '';
+                        })
+                        .join('');
+
+                    this.dom.scheduleContainer.innerHTML = scheduleHtml || '<p>На этой неделе занятий нет.</p>';
+                }
+
+                escapeHtml(text) {
+                    const p = document.createElement('p');
+                    p.textContent = text;
+                    return p.innerHTML;
+                }
+
+                createLessonHtml({ time, name, type, teacher, link }) {
+                    const safeLink = this.escapeHtml(link || '');
+                    const tag = link ? 'a' : 'div';
+                    const attrs = link ? `href="${safeLink}" target="_blank" rel="noopener noreferrer"` : '';
+                    
+                    return `
+                        <${tag} class="lesson" ${attrs}>
+                            <div class="lesson__time">
+                                <svg class="lesson__icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                                <time>${this.escapeHtml(time)}</time>
+                            </div>
+                            <h3 class="lesson__title">${this.escapeHtml(name)}</h3>
+                            <div class="lesson__meta">
+                                <span class="lesson__tag">${this.escapeHtml(type)}</span>
+                                <span class="lesson__teacher">${this.escapeHtml(teacher)}</span>
+                            </div>
+                        </${tag}>`;
+                }
+
+                createDayCard(day, lessons, isToday) {
+                    const todayClass = isToday ? 'day-card--today' : '';
+                    const lessonsHtml = lessons.map(lesson => this.createLessonHtml(lesson)).join('');
+
+                    return `
+                        <article class="day-card ${todayClass}" id="day-${this.escapeHtml(day)}">
+                            <h2 class="day-card__header">${this.escapeHtml(day)}</h2>
+                            <div class="day-card__lessons">${lessonsHtml}</div>
+                        </article>`;
+                }
+            }
+
+            new ScheduleApp();
+        });
+    </script>
+</body>
+</html>

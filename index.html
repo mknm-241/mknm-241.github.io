@@ -82,6 +82,56 @@
             background: rgb(var(--color-bg-base));
         }
 
+        /* Снежинки - показываются только в праздничный период */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -20px;
+            color: rgb(var(--color-text-tertiary));
+            font-size: 1rem;
+            opacity: 0.8;
+            animation: snowfall linear infinite;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .snowflake:nth-child(1) { left: 5%; animation-duration: 8s; animation-delay: 0s; font-size: 0.8rem; }
+        .snowflake:nth-child(2) { left: 15%; animation-duration: 12s; animation-delay: 1s; font-size: 1.2rem; }
+        .snowflake:nth-child(3) { left: 25%; animation-duration: 10s; animation-delay: 2s; font-size: 0.9rem; }
+        .snowflake:nth-child(4) { left: 35%; animation-duration: 14s; animation-delay: 0.5s; font-size: 1.1rem; }
+        .snowflake:nth-child(5) { left: 45%; animation-duration: 9s; animation-delay: 3s; font-size: 0.7rem; }
+        .snowflake:nth-child(6) { left: 55%; animation-duration: 11s; animation-delay: 1.5s; font-size: 1rem; }
+        .snowflake:nth-child(7) { left: 65%; animation-duration: 13s; animation-delay: 2.5s; font-size: 1.3rem; }
+        .snowflake:nth-child(8) { left: 75%; animation-duration: 8s; animation-delay: 4s; font-size: 0.8rem; }
+        .snowflake:nth-child(9) { left: 85%; animation-duration: 10s; animation-delay: 0.8s; font-size: 1rem; }
+        .snowflake:nth-child(10) { left: 95%; animation-duration: 15s; animation-delay: 2s; font-size: 0.9rem; }
+
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-20px) rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg) translateX(30px);
+                opacity: 0;
+            }
+        }
+
         .app {
             display: flex;
             flex-direction: column;
@@ -290,7 +340,6 @@
             text-decoration: none;
             border-bottom: 1px solid rgb(var(--color-border) / 0.08);
             transition: all var(--duration-base) var(--ease-out);
-            cursor: pointer;
             animation: lessonSlideIn 0.6s var(--ease-out) both;
         }
 
@@ -303,13 +352,17 @@
             border-bottom: none;
         }
 
-        .lesson:hover {
+        .lesson--clickable {
+            cursor: pointer;
+        }
+
+        .lesson--clickable:hover {
             background: rgb(var(--color-accent) / 0.12);
             transform: translateX(8px);
             border-color: rgb(var(--color-accent) / 0.1);
         }
 
-        .lesson:active {
+        .lesson--clickable:active {
             transform: translateX(8px) scale(0.98);
         }
 
@@ -323,7 +376,7 @@
             transition: color var(--duration-base) var(--ease-out);
         }
 
-        .lesson:hover .lesson__time {
+        .lesson--clickable:hover .lesson__time {
             color: rgb(var(--color-accent));
         }
 
@@ -335,7 +388,7 @@
             transition: all var(--duration-base) var(--ease-out);
         }
 
-        .lesson:hover .lesson__icon {
+        .lesson--clickable:hover .lesson__icon {
             transform: scale(1.2) rotate(5deg);
             color: rgb(var(--color-accent-hover));
         }
@@ -348,7 +401,7 @@
             transition: all var(--duration-base) var(--ease-out);
         }
 
-        .lesson:hover .lesson__title {
+        .lesson--clickable:hover .lesson__title {
             color: rgb(var(--color-accent));
             transform: translateX(2px);
         }
@@ -370,7 +423,7 @@
             transition: all var(--duration-base) var(--ease-out);
         }
 
-        .lesson:hover .lesson__tag {
+        .lesson--clickable:hover .lesson__tag {
             background: rgb(var(--color-accent));
             color: rgb(var(--color-bg-surface));
             transform: translateY(-2px);
@@ -382,9 +435,206 @@
             transition: all var(--duration-base) var(--ease-out);
         }
 
-        .lesson:hover .lesson__teacher {
+        .lesson--clickable:hover .lesson__teacher {
             color: rgb(var(--color-text-primary));
             transform: translateX(2px);
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-lg);
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+            background: rgb(var(--color-bg-surface));
+            border: 1px solid rgb(var(--color-border) / 0.08);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+            animation: cardSlideIn 0.5s var(--ease-spring) both;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Базовая ёлка */
+        .holiday-tree {
+            font-size: 5rem;
+            line-height: 1;
+            animation: treeFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 128, 0, 0.3));
+        }
+
+        @keyframes treeFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg) scale(1); }
+            50% { transform: translateY(-10px) rotate(2deg) scale(1.05); }
+        }
+
+        /* Праздничный режим - расширенные стили */
+        .holiday-mode .holiday-tree {
+            font-size: 6rem;
+            animation: treeDance 2s ease-in-out infinite, treeGlow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes treeDance {
+            0%, 100% { transform: translateY(0) rotate(-3deg) scale(1); }
+            25% { transform: translateY(-15px) rotate(2deg) scale(1.08); }
+            50% { transform: translateY(-5px) rotate(-2deg) scale(1.03); }
+            75% { transform: translateY(-12px) rotate(3deg) scale(1.06); }
+        }
+
+        @keyframes treeGlow {
+            from { filter: drop-shadow(0 0 10px rgba(0, 200, 0, 0.4)) drop-shadow(0 0 20px rgba(255, 215, 0, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(0, 200, 0, 0.6)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.5)); }
+        }
+
+        /* Гирлянда */
+        .garland {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: -1rem;
+        }
+
+        .garland__light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: twinkle 1s ease-in-out infinite;
+        }
+
+        .garland__light:nth-child(1) { background: #ff4444; animation-delay: 0s; }
+        .garland__light:nth-child(2) { background: #44ff44; animation-delay: 0.2s; }
+        .garland__light:nth-child(3) { background: #4444ff; animation-delay: 0.4s; }
+        .garland__light:nth-child(4) { background: #ffff44; animation-delay: 0.6s; }
+        .garland__light:nth-child(5) { background: #ff44ff; animation-delay: 0.8s; }
+        .garland__light:nth-child(6) { background: #44ffff; animation-delay: 1s; }
+        .garland__light:nth-child(7) { background: #ff8844; animation-delay: 0.3s; }
+
+        @keyframes twinkle {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1);
+                box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+            }
+            50% { 
+                opacity: 0.4; 
+                transform: scale(0.8);
+                box-shadow: 0 0 5px currentColor;
+            }
+        }
+
+        /* Искры вокруг ёлки */
+        .sparkles {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            font-size: 1.2rem;
+            animation: sparkleFloat 2s ease-in-out infinite;
+        }
+
+        .sparkle:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 20%; right: 10%; animation-delay: 0.3s; }
+        .sparkle:nth-child(3) { top: 50%; left: 5%; animation-delay: 0.6s; }
+        .sparkle:nth-child(4) { top: 50%; right: 5%; animation-delay: 0.9s; }
+        .sparkle:nth-child(5) { bottom: 20%; left: 15%; animation-delay: 0.2s; }
+        .sparkle:nth-child(6) { bottom: 20%; right: 15%; animation-delay: 0.5s; }
+
+        @keyframes sparkleFloat {
+            0%, 100% { 
+                opacity: 0; 
+                transform: scale(0) rotate(0deg); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1) rotate(180deg); 
+            }
+        }
+
+        /* Звезда на верхушке */
+        .tree-star {
+            position: absolute;
+            top: -10px;
+            font-size: 1.5rem;
+            animation: starPulse 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes starPulse {
+            from { 
+                transform: scale(1) rotate(-10deg);
+                filter: drop-shadow(0 0 5px gold);
+            }
+            to { 
+                transform: scale(1.3) rotate(10deg);
+                filter: drop-shadow(0 0 15px gold) drop-shadow(0 0 25px orange);
+            }
+        }
+
+        /* Контейнер для ёлки с декорациями */
+        .tree-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .empty-state__title {
+            font-size: var(--text-xl);
+            font-weight: 600;
+            color: rgb(var(--color-text-primary));
+        }
+
+        .holiday-mode .empty-state__title {
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 25%, #ffe66d 50%, #95e1d3 75%, #ff6b6b 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+
+        .empty-state__text {
+            font-size: var(--text-base);
+            color: rgb(var(--color-text-secondary));
+            max-width: 20rem;
+        }
+
+        /* Конфетти эффект для праздничного режима */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confettiFall linear infinite;
+        }
+
+        .confetti:nth-child(1) { left: 10%; background: #ff4444; animation-duration: 3s; animation-delay: 0s; border-radius: 50%; }
+        .confetti:nth-child(2) { left: 20%; background: #44ff44; animation-duration: 4s; animation-delay: 0.5s; }
+        .confetti:nth-child(3) { left: 30%; background: #4444ff; animation-duration: 3.5s; animation-delay: 1s; border-radius: 50%; }
+        .confetti:nth-child(4) { left: 40%; background: #ffff44; animation-duration: 4.5s; animation-delay: 0.2s; }
+        .confetti:nth-child(5) { left: 50%; background: #ff44ff; animation-duration: 3s; animation-delay: 0.7s; border-radius: 50%; }
+        .confetti:nth-child(6) { left: 60%; background: #44ffff; animation-duration: 4s; animation-delay: 1.2s; }
+        .confetti:nth-child(7) { left: 70%; background: #ff8844; animation-duration: 3.5s; animation-delay: 0.3s; border-radius: 50%; }
+        .confetti:nth-child(8) { left: 80%; background: #88ff44; animation-duration: 4.5s; animation-delay: 0.9s; }
+        .confetti:nth-child(9) { left: 90%; background: #ff4488; animation-duration: 3s; animation-delay: 1.5s; border-radius: 50%; }
+
+        @keyframes confettiFall {
+            0% { 
+                transform: translateY(-20px) rotate(0deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(300px) rotate(720deg);
+                opacity: 0;
+            }
         }
 
         .day-card:nth-child(1) { animation-delay: 0.1s; }
@@ -405,12 +655,20 @@
                 gap: var(--space-lg);
             }
 
-            .lesson:hover {
+            .lesson--clickable:hover {
                 transform: translateX(4px);
             }
 
-            .lesson:active {
+            .lesson--clickable:active {
                 transform: translateX(4px) scale(0.98);
+            }
+
+            .holiday-tree {
+                font-size: 4rem;
+            }
+
+            .holiday-mode .holiday-tree {
+                font-size: 5rem;
             }
         }
 
@@ -436,10 +694,16 @@
                 transition: none !important;
             }
 
-            .lesson:hover,
+            .lesson--clickable:hover,
             .day-card:hover,
             .btn:hover:not(:disabled) {
                 transform: none !important;
+            }
+
+            .snowflakes,
+            .sparkles,
+            .garland {
+                display: none !important;
             }
         }
     </style>
@@ -469,9 +733,28 @@
         </nav>
     </div>
 
+    <!-- Снежинки для праздничного периода -->
+    <div class="snowflakes" id="snowflakes" style="display: none;">
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❄</div>
+    </div>
+
     <script type="module">
         const CONFIG = Object.freeze({
-            WEEK_RANGE: Object.freeze({ MIN: 1, MAX: 18 }),
+            WEEK_RANGE: Object.freeze({ MIN: 1, MAX: 39 }),
+            PERIODS: Object.freeze({
+                SEMESTER_1: { min: 1, max: 18 },
+                HOLIDAYS: { min: 19, max: 20 },
+                SEMESTER_2: { min: 21, max: 39 }
+            }),
             SEMESTER_START: Object.freeze({ MONTH: 8, DAY: 1 }),
             DAYS_OF_WEEK: Object.freeze(['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']),
             LOCALE: 'ru-RU',
@@ -480,7 +763,8 @@
             SCROLL_DELAY: 500,
         });
 
-        const SCHEDULE_DATA = Object.freeze({
+        // Расписание 1 семестра (недели 1-18)
+        const SCHEDULE_SEM1 = Object.freeze({
             odd: Object.freeze({
                 'Понедельник': Object.freeze([
                     Object.freeze({ time: '17:15 – 18:50', name: 'Безопасность компьютерных сетей', type: 'Лабораторная', teacher: 'доц. Карабцев С.Н.', link: 'https://bbb.kemsu.ru/b/6vx-3s8-jrp-5cy' }),
@@ -511,6 +795,26 @@
             })
         });
 
+        // Расписание 2 семестра (недели 21-39)
+        const SCHEDULE_SEM2 = Object.freeze({
+            odd: Object.freeze({
+                'Среда': Object.freeze([
+                    Object.freeze({ time: '15:30 – 17:05', name: 'Современные численные методы', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.' }),
+                    Object.freeze({ time: '17:15 – 18:50', name: 'Анализ безопасности веб-приложений', type: 'Лекция', teacher: 'доц. Саблинский А.И.' }),
+                    Object.freeze({ time: '19:00 – 20:35', name: 'Анализ безопасности веб-приложений', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' })
+                ])
+            }),
+            even: Object.freeze({
+                'Среда': Object.freeze([
+                    Object.freeze({ time: '15:30 – 17:05', name: 'Современные численные методы', type: 'Практика', teacher: 'зав. кафедрой Гудов А.М.' })
+                ]),
+                'Пятница': Object.freeze([
+                    Object.freeze({ time: '17:15 – 18:50', name: 'Математические методы и модели кодирования и криптографии', type: 'Лекция', teacher: 'доц. Сергеева О.А.' }),
+                    Object.freeze({ time: '19:00 – 20:35', name: 'Математические методы и модели кодирования и криптографии', type: 'Лабораторная', teacher: 'доц. Сергеева О.А.' })
+                ])
+            })
+        });
+
         const DateManager = Object.freeze({
             getAcademicWeek(date) {
                 const year = date.getFullYear();
@@ -535,6 +839,13 @@
                     month: 'numeric',
                     year: 'numeric'
                 });
+            },
+            isHolidaySeason() {
+                const now = new Date();
+                const month = now.getMonth();
+                const day = now.getDate();
+                // 25 декабря (месяц 11) - 14 января (месяц 0)
+                return (month === 11 && day >= 25) || (month === 0 && day <= 14);
             }
         });
 
@@ -542,15 +853,24 @@
             #state = { weekOffset: 0 };
             #dom = {};
             #abortController = null;
+            #isHolidaySeason = false;
 
             constructor() {
                 this.#init();
             }
 
             #init() {
+                this.#isHolidaySeason = DateManager.isHolidaySeason();
                 this.#bindDomElements();
                 this.#bindEventListeners();
+                this.#initHolidayEffects();
                 this.#render();
+            }
+
+            #initHolidayEffects() {
+                if (this.#isHolidaySeason) {
+                    document.getElementById('snowflakes').style.display = 'block';
+                }
             }
 
             #bindDomElements() {
@@ -594,7 +914,34 @@
                 const targetDate = DateManager.addWeeks(new Date(), this.#state.weekOffset + offset);
                 const weekNumber = DateManager.getAcademicWeek(targetDate);
                 const scheduleType = weekNumber % 2 === 0 ? 'even' : 'odd';
-                return Object.freeze({ date: targetDate, weekNumber, scheduleType });
+                const period = this.#getPeriodType(weekNumber);
+                return Object.freeze({ date: targetDate, weekNumber, scheduleType, period });
+            }
+
+            #getPeriodType(weekNumber) {
+                const { PERIODS } = CONFIG;
+                if (weekNumber >= PERIODS.SEMESTER_1.min && weekNumber <= PERIODS.SEMESTER_1.max) {
+                    return 'SEMESTER_1';
+                }
+                if (weekNumber >= PERIODS.HOLIDAYS.min && weekNumber <= PERIODS.HOLIDAYS.max) {
+                    return 'HOLIDAYS';
+                }
+                if (weekNumber >= PERIODS.SEMESTER_2.min && weekNumber <= PERIODS.SEMESTER_2.max) {
+                    return 'SEMESTER_2';
+                }
+                return 'SEMESTER_2';
+            }
+
+            #getScheduleForPeriod(period, scheduleType) {
+                switch (period) {
+                    case 'SEMESTER_1':
+                        return SCHEDULE_SEM1[scheduleType] || {};
+                    case 'SEMESTER_2':
+                        return SCHEDULE_SEM2[scheduleType] || {};
+                    case 'HOLIDAYS':
+                    default:
+                        return null;
+                }
             }
 
             #navigate(direction) {
@@ -665,8 +1012,14 @@
             }
 
             #renderScheduleContent() {
-                const { scheduleType } = this.#getCurrentWeekInfo();
-                const scheduleForWeek = SCHEDULE_DATA[scheduleType];
+                const { scheduleType, period } = this.#getCurrentWeekInfo();
+                
+                if (period === 'HOLIDAYS') {
+                    this.#dom.scheduleContainer.innerHTML = this.#createHolidaysMessage();
+                    return;
+                }
+
+                const scheduleForWeek = this.#getScheduleForPeriod(period, scheduleType);
                 const todayIndex = new Date().getDay();
                 const todayName = this.#state.weekOffset === 0
                     ? CONFIG.DAYS_OF_WEEK[todayIndex === 0 ? 6 : todayIndex - 1]
@@ -682,7 +1035,61 @@
                     })
                     .join('');
 
-                this.#dom.scheduleContainer.innerHTML = scheduleHtml || '<p>На этой неделе занятий нет.</p>';
+                this.#dom.scheduleContainer.innerHTML = scheduleHtml;
+            }
+
+            #createHolidaysMessage() {
+                const holidayModeClass = this.#isHolidaySeason ? 'holiday-mode' : '';
+                
+                const sparklesHtml = this.#isHolidaySeason ? `
+                    <div class="sparkles">
+                        <div class="sparkle">✨</div>
+                        <div class="sparkle">⭐</div>
+                        <div class="sparkle">✨</div>
+                        <div class="sparkle">⭐</div>
+                        <div class="sparkle">✨</div>
+                        <div class="sparkle">⭐</div>
+                    </div>
+                ` : '';
+
+                const starHtml = this.#isHolidaySeason ? '<div class="tree-star">⭐</div>' : '';
+
+                const garlandHtml = this.#isHolidaySeason ? `
+                    <div class="garland">
+                        <div class="garland__light"></div>
+                        <div class="garland__light"></div>
+                        <div class="garland__light"></div>
+                        <div class="garland__light"></div>
+                        <div class="garland__light"></div>
+                        <div class="garland__light"></div>
+                        <div class="garland__light"></div>
+                    </div>
+                ` : '';
+
+                const confettiHtml = this.#isHolidaySeason ? `
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                ` : '';
+
+                return `
+                    <div class="empty-state ${holidayModeClass}">
+                        ${confettiHtml}
+                        <div class="tree-container">
+                            ${sparklesHtml}
+                            ${starHtml}
+                            <div class="holiday-tree">🎄</div>
+                        </div>
+                        ${garlandHtml}
+                        <h2 class="empty-state__title">Новогодние каникулы</h2>
+                        <p class="empty-state__text">Занятий нет. С новым годом!</p>
+                    </div>`;
             }
 
             #sanitizeHtml(text) {
@@ -701,13 +1108,15 @@
             }
 
             #createLessonHtml({ time, name, type, teacher, link }) {
-                const tag = link && this.#isValidUrl(link) ? 'a' : 'div';
-                const attrs = tag === 'a'
+                const hasValidLink = link && this.#isValidUrl(link);
+                const tag = hasValidLink ? 'a' : 'div';
+                const clickableClass = hasValidLink ? 'lesson--clickable' : '';
+                const attrs = hasValidLink
                     ? `href="${this.#sanitizeHtml(link)}" target="_blank" rel="noopener noreferrer"`
                     : '';
 
                 return `
-                    <${tag} class="lesson" ${attrs}>
+                    <${tag} class="lesson ${clickableClass}" ${attrs}>
                         <div class="lesson__time">
                             <svg class="lesson__icon" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>

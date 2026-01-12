@@ -1,622 +1,559 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#f0efeb">
-<meta name="description" content="Расписание занятий МКНм-241">
-<title>Расписание МКНм-241</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root {
---mocha: #A47864;
---mocha-light: #C0A294;
---mocha-dark: #8B6354;
---cloud: #f0efeb;
---glass-bg: rgba(240, 239, 235, 0.65);
---glass-border: rgba(255, 255, 255, 0.75);
---glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
---text-primary: #252525;
---text-secondary: #6F6F6F;
---text-tertiary: #8D8D8D;
---border: rgba(164, 120, 100, 0.15);
---accent-glow: rgba(164, 120, 100, 0.25);
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#f0eee9" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#252525" media="(prefers-color-scheme: dark)">
+    <meta name="description" content="Расписание занятий МКНм-241">
+    <title>Расписание МКНм-241</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mocha-mousse: #A47864;
+            --mocha-light: #C0A294;
+            --mocha-dark: #8B6354;
+            --cloud-dancer: #f0eee9;
+            --bg-base: #f5f5f5;
+            --bg-surface: #ffffff;
+            --bg-elevated: #f0efeb;
+            --text-primary: #252525;
+            --text-secondary: #6F6F6F;
+            --text-tertiary: #8D8D8D;
+            --border-color: #E0E0E0;
+            --border-light: #C6C6C6;
+            
+            --space-xs: 0.375rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            
+            --radius-sm: 0.5rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            
+            --ease-out: cubic-bezier(0.2, 0.8, 0.4, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duration: 200ms;
+        }
 
-@media (prefers-color-scheme: dark) {
-:root {
---cloud: #252525;
---glass-bg: rgba(37, 37, 37, 0.7);
---glass-border: rgba(255, 255, 255, 0.1);
---glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
---text-primary: #f0efeb;
---text-secondary: #a0a0a0;
---text-tertiary: #6F6F6F;
---border: rgba(192, 162, 148, 0.2);
---mocha: #C0A294;
---mocha-light: #d4bbb0;
---mocha-dark: #A47864;
-}
-}
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-base: #161616;
+                --bg-surface: #252525;
+                --bg-elevated: #2f2f2f;
+                --text-primary: #f0eee9;
+                --text-secondary: #a0a0a0;
+                --text-tertiary: #6F6F6F;
+                --border-color: #3d3d3d;
+                --border-light: #4e4e4e;
+                --mocha-mousse: #C0A294;
+                --mocha-light: #d4bbb0;
+                --mocha-dark: #A47864;
+                --shadow-sm: 0 1px 4px rgba(0,0,0,0.3);
+                --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+                --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
+            }
+        }
 
-* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-}
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-html {
--webkit-text-size-adjust: 100%;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-text-rendering: optimizeLegibility;
-}
+        html {
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
 
-body {
-font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-font-size: 1rem;
-line-height: 1.5;
-color: var(--text-primary);
-background: linear-gradient(135deg, var(--cloud) 0%, #faf9f7 100%);
-min-height: 100vh;
-overflow-x: hidden;
-}
+        body {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+            background: var(--bg-base);
+            min-height: 100vh;
+        }
 
-@media (prefers-color-scheme: dark) {
-body {
-background: linear-gradient(135deg, #161616 0%, #252525 100%);
-}
-}
+        .app {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+            max-width: 52rem;
+            margin: 0 auto;
+            padding: var(--space-lg);
+            padding-bottom: calc(5rem + env(safe-area-inset-bottom));
+        }
 
-.app {
-display: flex;
-flex-direction: column;
-gap: 1.25rem;
-max-width: 52rem;
-margin: 0 auto;
-padding: 1rem;
-padding-bottom: calc(5rem + env(safe-area-inset-bottom));
-}
+        .header {
+            animation: fadeSlideIn 0.5s var(--ease-out) both;
+        }
 
-.header {
-animation: fadeSlideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
+        .header__date {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--mocha-mousse);
+        }
 
-.header__date {
-font-size: 1.25rem;
-font-weight: 700;
-letter-spacing: -0.03em;
-background: linear-gradient(135deg, var(--mocha) 0%, var(--mocha-light) 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-}
+        .week-nav {
+            position: fixed;
+            bottom: max(env(safe-area-inset-bottom), var(--space-md));
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-xs);
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.4s var(--ease-spring) both;
+        }
 
-.week-nav {
-position: fixed;
-bottom: max(env(safe-area-inset-bottom), 1rem);
-left: 50%;
-transform: translateX(-50%);
-z-index: 100;
-display: flex;
-align-items: center;
-gap: 0.375rem;
-padding: 0.375rem;
-background: var(--glass-bg);
-backdrop-filter: blur(40px) saturate(180%);
--webkit-backdrop-filter: blur(40px) saturate(180%);
-border: 1px solid var(--glass-border);
-border-radius: 1.75rem;
-box-shadow: var(--glass-shadow), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-animation: slideUpBounce 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
+        @media (prefers-color-scheme: dark) {
+            .week-nav {
+                background: rgba(37,37,37,0.9);
+            }
+        }
 
-.week-nav::before {
-content: '';
-position: absolute;
-inset: -1px;
-background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
-border-radius: inherit;
-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-mask-composite: exclude;
--webkit-mask-composite: xor;
-padding: 1px;
-pointer-events: none;
-opacity: 0.6;
-}
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 2.75rem;
+            padding: 0 var(--space-md);
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--duration) var(--ease-out);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-.btn {
-position: relative;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-height: 2.5rem;
-padding: 0 1rem;
-font-family: inherit;
-font-size: 0.875rem;
-font-weight: 600;
-color: var(--text-secondary);
-background: transparent;
-border: none;
-border-radius: 0.875rem;
-cursor: pointer;
-transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
-user-select: none;
--webkit-tap-highlight-color: transparent;
-overflow: hidden;
-}
+        .btn--icon {
+            width: 2.75rem;
+            padding: 0;
+        }
 
-.btn::before {
-content: '';
-position: absolute;
-inset: 0;
-background: radial-gradient(circle at center, var(--mocha-light), transparent 70%);
-opacity: 0;
-transition: opacity 400ms cubic-bezier(0.16, 1, 0.3, 1);
-}
+        .btn:hover:not(:disabled) {
+            color: var(--mocha-mousse);
+            background: rgba(164,120,100,0.1);
+        }
 
-.btn:hover::before {
-opacity: 0.15;
-}
+        .btn:active:not(:disabled) {
+            transform: scale(0.95);
+        }
 
-.btn--icon {
-width: 2.5rem;
-padding: 0;
-}
+        .btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
 
-.btn:hover:not(:disabled) {
-color: var(--mocha);
-transform: translateY(-1px);
-}
+        .btn--primary {
+            min-width: 3.5rem;
+            font-weight: 600;
+            color: #fff;
+            background: var(--mocha-mousse);
+        }
 
-.btn:active:not(:disabled) {
-transform: scale(0.98);
-transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
-}
+        .btn--primary:hover:not(:disabled) {
+            background: var(--mocha-dark);
+            color: #fff;
+        }
 
-.btn:disabled {
-opacity: 0.25;
-cursor: not-allowed;
-transform: none;
-}
+        .btn__icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            stroke-width: 2.5;
+        }
 
-.btn--primary {
-min-width: 3.5rem;
-color: #fff;
-background: linear-gradient(135deg, var(--mocha) 0%, var(--mocha-dark) 100%);
-box-shadow: 0 4px 16px var(--accent-glow), 0 0 0 1px rgba(255,255,255,0.2) inset;
-}
+        .schedule {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            transition: opacity var(--duration) var(--ease-out);
+        }
 
-.btn--primary:hover:not(:disabled) {
-color: #fff;
-box-shadow: 0 6px 20px var(--accent-glow), 0 0 0 1px rgba(255,255,255,0.3) inset;
-transform: translateY(-2px);
-}
+        .schedule--loading {
+            opacity: 0;
+        }
 
-.btn__icon {
-width: 1.125rem;
-height: 1.125rem;
-stroke-width: 2.5;
-}
+        .day-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            animation: fadeSlideIn 0.4s var(--ease-out) both;
+            transition: transform var(--duration) var(--ease-out), box-shadow var(--duration) var(--ease-out);
+        }
 
-.schedule {
-display: flex;
-flex-direction: column;
-gap: 1rem;
-transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
-}
+        .day-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
 
-.schedule--loading {
-opacity: 0;
-pointer-events: none;
-}
+        .day-card__header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border-color);
+        }
 
-.day-card {
-position: relative;
-background: var(--glass-bg);
-backdrop-filter: blur(30px) saturate(150%);
--webkit-backdrop-filter: blur(30px) saturate(150%);
-border: 1px solid var(--glass-border);
-border-radius: 1.25rem;
-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.15) inset;
-overflow: hidden;
-animation: fadeSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-transition: all 500ms cubic-bezier(0.16, 1, 0.3, 1);
-will-change: transform;
-}
+        .day-card__header::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--mocha-mousse);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
 
-.day-card::before {
-content: '';
-position: absolute;
-inset: 0;
-background: radial-gradient(circle at top left, rgba(164,120,100,0.08), transparent 60%);
-opacity: 0;
-transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
-pointer-events: none;
-}
+        .day-card--today .day-card__header {
+            background: linear-gradient(135deg, rgba(164,120,100,0.15), rgba(192,162,148,0.1));
+        }
 
-.day-card:hover {
-transform: translateY(-3px);
-box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
-border-color: rgba(164, 120, 100, 0.3);
-}
+        .day-card--today .day-card__header::before {
+            box-shadow: 0 0 0 3px rgba(164,120,100,0.3);
+        }
 
-.day-card:hover::before {
-opacity: 1;
-}
+        .lesson {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+            padding: var(--space-md);
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px solid var(--border-color);
+            transition: background var(--duration) var(--ease-out);
+        }
 
-.day-card__header {
-display: flex;
-align-items: center;
-gap: 0.75rem;
-padding: 0.875rem 1.125rem;
-font-size: 0.9375rem;
-font-weight: 700;
-color: var(--text-primary);
-background: linear-gradient(135deg, rgba(240,239,235,0.5), rgba(255,255,255,0.3));
-border-bottom: 1px solid var(--border);
-letter-spacing: -0.01em;
-}
+        .lesson:last-child {
+            border-bottom: none;
+        }
 
-@media (prefers-color-scheme: dark) {
-.day-card__header {
-background: linear-gradient(135deg, rgba(47,47,47,0.6), rgba(37,37,37,0.4));
-}
-}
+        a.lesson:hover {
+            background: rgba(164,120,100,0.08);
+        }
 
-.day-card__header::before {
-content: '';
-width: 8px;
-height: 8px;
-background: linear-gradient(135deg, var(--mocha), var(--mocha-light));
-border-radius: 50%;
-flex-shrink: 0;
-box-shadow: 0 0 10px var(--accent-glow);
-animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
+        .lesson__time {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-tertiary);
+        }
 
-.day-card--today .day-card__header {
-background: linear-gradient(135deg, rgba(164,120,100,0.2), rgba(192,162,148,0.15));
-}
+        .lesson__icon {
+            width: 0.875rem;
+            height: 0.875rem;
+            color: var(--mocha-mousse);
+        }
 
-.day-card--today .day-card__header::before {
-box-shadow: 0 0 0 4px rgba(164,120,100,0.25), 0 0 16px var(--mocha);
-}
+        .lesson__title {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
 
-.lesson {
-display: flex;
-flex-direction: column;
-gap: 0.5rem;
-padding: 1rem 1.125rem;
-color: inherit;
-text-decoration: none;
-border-bottom: 1px solid var(--border);
-transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
-position: relative;
-}
+        a.lesson:hover .lesson__title {
+            color: var(--mocha-mousse);
+        }
 
-.lesson::before {
-content: '';
-position: absolute;
-left: 0;
-top: 0;
-bottom: 0;
-width: 3px;
-background: linear-gradient(180deg, var(--mocha), var(--mocha-light));
-opacity: 0;
-transition: opacity 400ms cubic-bezier(0.16, 1, 0.3, 1);
-}
+        .lesson__meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
 
-.lesson:last-child {
-border-bottom: none;
-}
+        .lesson__tag {
+            padding: 0.2rem var(--space-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--mocha-mousse);
+            background: rgba(164,120,100,0.12);
+            border-radius: var(--radius-sm);
+        }
 
-a.lesson:hover {
-background: linear-gradient(90deg, rgba(164,120,100,0.08), transparent);
-padding-left: 1.375rem;
-}
+        .lesson__teacher {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
 
-a.lesson:hover::before {
-opacity: 1;
-}
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-lg);
+            padding: var(--space-xl);
+            text-align: center;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            animation: fadeSlideIn 0.4s var(--ease-out) both;
+        }
 
-.lesson__time {
-display: flex;
-align-items: center;
-gap: 0.5rem;
-font-size: 0.875rem;
-font-weight: 600;
-color: var(--text-tertiary);
-}
+        .empty-state__emoji {
+            font-size: 3.5rem;
+        }
 
-.lesson__icon {
-width: 1rem;
-height: 1rem;
-color: var(--mocha);
-}
+        .empty-state__title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
 
-.lesson__title {
-font-size: 1rem;
-font-weight: 600;
-color: var(--text-primary);
-line-height: 1.4;
-letter-spacing: -0.01em;
-transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
-}
+        .empty-state__text {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
 
-a.lesson:hover .lesson__title {
-color: var(--mocha);
-transform: translateX(0.25rem);
-}
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-.lesson__meta {
-display: flex;
-align-items: center;
-flex-wrap: wrap;
-gap: 0.625rem;
-}
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
 
-.lesson__tag {
-padding: 0.25rem 0.75rem;
-font-size: 0.75rem;
-font-weight: 700;
-color: var(--mocha);
-background: linear-gradient(135deg, rgba(164,120,100,0.15), rgba(192,162,148,0.1));
-border: 1px solid rgba(164,120,100,0.2);
-border-radius: 0.5rem;
-letter-spacing: 0.01em;
-box-shadow: 0 2px 8px rgba(164,120,100,0.1);
-transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
-}
+        .day-card:nth-child(1) { animation-delay: 0.05s; }
+        .day-card:nth-child(2) { animation-delay: 0.1s; }
+        .day-card:nth-child(3) { animation-delay: 0.15s; }
+        .day-card:nth-child(4) { animation-delay: 0.2s; }
+        .day-card:nth-child(5) { animation-delay: 0.25s; }
+        .day-card:nth-child(6) { animation-delay: 0.3s; }
 
-a.lesson:hover .lesson__tag {
-transform: scale(1.03);
-box-shadow: 0 3px 10px rgba(164,120,100,0.15);
-}
-
-.lesson__teacher {
-font-size: 0.8125rem;
-font-weight: 500;
-color: var(--text-secondary);
-}
-
-
-
-@keyframes fadeSlideIn {
-from { opacity: 0; transform: translateY(16px); }
-to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeSlideDown {
-from { opacity: 0; transform: translateY(-16px); }
-to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideUpBounce {
-from { opacity: 0; transform: translateX(-50%) translateY(30px); }
-to { opacity: 1; transform: translateX(-50%) translateY(0); }
-}
-
-@keyframes pulse {
-0%, 100% { transform: scale(1); opacity: 1; }
-50% { transform: scale(1.08); opacity: 0.85; }
-}
-
-
-
-.day-card:nth-child(1) { animation-delay: 0.05s; }
-.day-card:nth-child(2) { animation-delay: 0.1s; }
-.day-card:nth-child(3) { animation-delay: 0.15s; }
-.day-card:nth-child(4) { animation-delay: 0.2s; }
-.day-card:nth-child(5) { animation-delay: 0.25s; }
-.day-card:nth-child(6) { animation-delay: 0.3s; }
-
-@media (max-width: 640px) {
-.app { padding: 0.875rem; gap: 1rem; }
-.header__date { font-size: 1.125rem; }
-.week-nav { bottom: 0.875rem; }
-.day-card { border-radius: 1.125rem; }
-.day-card__header { padding: 0.75rem 1rem; font-size: 0.875rem; }
-.lesson { padding: 0.875rem 1rem; }
-.lesson__title { font-size: 0.9375rem; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-*, *::before, *::after {
-animation-duration: 0.01ms !important;
-transition-duration: 0.01ms !important;
-}
-}
-</style>
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="app">
-<header class="header">
-<h1 class="header__date" id="dateDisplay"></h1>
-</header>
-<main class="schedule" id="schedule"></main>
-<nav class="week-nav" aria-label="Навигация по неделям">
-<button class="btn btn--icon" id="prevBtn" aria-label="Предыдущая неделя">
-<svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
-</svg>
-</button>
-<button class="btn btn--primary" id="resetBtn"><span id="weekNumber"></span></button>
-<button class="btn btn--icon" id="nextBtn" aria-label="Следующая неделя">
-<svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-</svg>
-</button>
-</nav>
-</div>
+    <div class="app">
+        <header class="header">
+            <h1 class="header__date" id="dateDisplay"></h1>
+        </header>
+        <main class="schedule" id="schedule"></main>
+        <nav class="week-nav" aria-label="Навигация по неделям">
+            <button class="btn btn--icon" id="prevBtn" aria-label="Предыдущая неделя">
+                <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <button class="btn btn--primary" id="resetBtn"><span id="weekNumber"></span></button>
+            <button class="btn btn--icon" id="nextBtn" aria-label="Следующая неделя">
+                <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </nav>
+    </div>
 
-<script>
-const CONFIG = Object.freeze({
-MIN_WEEK: 20,
-MAX_WEEK: 39,
-SEMESTER_START: Object.freeze({ month: 8, day: 1 }),
-DAYS: Object.freeze(['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']),
-MS_PER_WEEK: 604800000
-});
+    <script>
+        const CONFIG = Object.freeze({
+            MIN_WEEK: 20,
+            MAX_WEEK: 39,
+            SEMESTER_START: Object.freeze({ month: 8, day: 1 }),
+            DAYS: Object.freeze(['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']),
+            MS_PER_WEEK: 604800000
+        });
 
-const SCHEDULE = Object.freeze({
-odd: Object.freeze({
-'Среда': [
-{ time: '15:30 – 17:05', name: 'Современные численные методы', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' },
-{ time: '17:15 – 18:50', name: 'Анализ безопасности веб-приложений', type: 'Лекция', teacher: 'доц. Саблинский А.И.' },
-{ time: '19:00 – 20:35', name: 'Анализ безопасности веб-приложений', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }
-]
-}),
-even: Object.freeze({
-'Среда': [
-{ time: '15:30 – 17:05', name: 'Современные численные методы', type: 'Практика', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }
-],
-'Пятница': [
-{ time: '17:15 – 18:50', name: 'Математические методы и модели кодирования и криптографии', type: 'Лекция', teacher: 'доц. Сергеева О.А.' },
-{ time: '19:00 – 20:35', name: 'Математические методы и модели кодирования и криптографии', type: 'Лабораторная', teacher: 'доц. Сергеева О.А.' }
-]
-})
-});
+        const SCHEDULE = Object.freeze({
+            odd: Object.freeze({
+                'Среда': [
+                    { time: '15:30 – 17:05', name: 'Современные численные методы', type: 'Лекция', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' },
+                    { time: '17:15 – 18:50', name: 'Анализ безопасности веб-приложений', type: 'Лекция', teacher: 'доц. Саблинский А.И.' },
+                    { time: '19:00 – 20:35', name: 'Анализ безопасности веб-приложений', type: 'Лабораторная', teacher: 'доц. Саблинский А.И.' }
+                ]
+            }),
+            even: Object.freeze({
+                'Среда': [
+                    { time: '15:30 – 17:05', name: 'Современные численные методы', type: 'Практика', teacher: 'зав. кафедрой Гудов А.М.', link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe' }
+                ],
+                'Пятница': [
+                    { time: '17:15 – 18:50', name: 'Математические методы и модели кодирования и криптографии', type: 'Лекция', teacher: 'доц. Сергеева О.А.' },
+                    { time: '19:00 – 20:35', name: 'Математические методы и модели кодирования и криптографии', type: 'Лабораторная', teacher: 'доц. Сергеева О.А.' }
+                ]
+            })
+        });
 
-const getAcademicWeek = date => {
-const year = date.getMonth() < CONFIG.SEMESTER_START.month ? date.getFullYear() - 1 : date.getFullYear();
-const start = new Date(year, CONFIG.SEMESTER_START.month, CONFIG.SEMESTER_START.day);
-const dayOffset = (start.getDay() + 6) % 7;
-start.setDate(start.getDate() - dayOffset);
-return Math.ceil((date - start) / CONFIG.MS_PER_WEEK);
-};
+        const getAcademicWeek = (date) => {
+            const year = date.getMonth() < CONFIG.SEMESTER_START.month ? date.getFullYear() - 1 : date.getFullYear();
+            const start = new Date(year, CONFIG.SEMESTER_START.month, CONFIG.SEMESTER_START.day);
+            const dayOffset = (start.getDay() + 6) % 7;
+            start.setDate(start.getDate() - dayOffset);
+            return Math.ceil((date - start) / CONFIG.MS_PER_WEEK);
+        };
 
-const addWeeks = (date, weeks) => {
-const result = new Date(date);
-result.setDate(result.getDate() + weeks * 7);
-return result;
-};
+        const addWeeks = (date, weeks) => {
+            const result = new Date(date);
+            result.setDate(result.getDate() + weeks * 7);
+            return result;
+        };
 
-const escapeHtml = str => {
-const div = document.createElement('div');
-div.textContent = str;
-return div.innerHTML;
-};
+        const escapeHtml = (str) => {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        };
 
-const isValidLink = url => {
-try { return new URL(url).protocol === 'https:'; }
-catch { return false; }
-};
+        const isValidLink = (url) => {
+            try { return new URL(url).protocol === 'https:'; }
+            catch { return false; }
+        };
 
-class ScheduleApp {
-constructor() {
-this.weekOffset = 0;
-this.dom = {
-dateDisplay: document.getElementById('dateDisplay'),
-schedule: document.getElementById('schedule'),
-weekNumber: document.getElementById('weekNumber'),
-prevBtn: document.getElementById('prevBtn'),
-nextBtn: document.getElementById('nextBtn'),
-resetBtn: document.getElementById('resetBtn')
-};
-this.init();
-}
+        class ScheduleApp {
+            constructor() {
+                this.weekOffset = 0;
+                this.dom = {
+                    dateDisplay: document.getElementById('dateDisplay'),
+                    schedule: document.getElementById('schedule'),
+                    weekNumber: document.getElementById('weekNumber'),
+                    prevBtn: document.getElementById('prevBtn'),
+                    nextBtn: document.getElementById('nextBtn'),
+                    resetBtn: document.getElementById('resetBtn')
+                };
+                this.init();
+            }
 
-init() {
-this.dom.prevBtn.addEventListener('click', () => this.navigate(-1));
-this.dom.nextBtn.addEventListener('click', () => this.navigate(1));
-this.dom.resetBtn.addEventListener('click', () => this.reset());
-document.addEventListener('keydown', e => this.handleKey(e));
-this.render();
-}
+            init() {
+                this.dom.prevBtn.addEventListener('click', () => this.navigate(-1));
+                this.dom.nextBtn.addEventListener('click', () => this.navigate(1));
+                this.dom.resetBtn.addEventListener('click', () => this.reset());
+                document.addEventListener('keydown', (e) => this.handleKey(e));
+                this.render();
+            }
 
-handleKey(e) {
-if (e.target.closest('input, textarea')) return;
-const actions = { ArrowLeft: -1, ArrowRight: 1, Home: 0 };
-if (e.key in actions) {
-e.preventDefault();
-e.key === 'Home' ? this.reset() : this.navigate(actions[e.key]);
-}
-}
+            handleKey(e) {
+                if (e.target.closest('input, textarea')) return;
+                const actions = { ArrowLeft: -1, ArrowRight: 1, Home: 0 };
+                if (e.key in actions) {
+                    e.preventDefault();
+                    e.key === 'Home' ? this.reset() : this.navigate(actions[e.key]);
+                }
+            }
 
-getWeekInfo(offset = 0) {
-const date = addWeeks(new Date(), this.weekOffset + offset);
-const week = getAcademicWeek(date);
-return { date, week, type: week % 2 === 0 ? 'even' : 'odd' };
-}
+            getWeekInfo(offset = 0) {
+                const date = addWeeks(new Date(), this.weekOffset + offset);
+                const week = getAcademicWeek(date);
+                return { date, week, type: week % 2 === 0 ? 'even' : 'odd' };
+            }
 
-navigate(dir) {
-const { week } = this.getWeekInfo(dir);
-if (week >= CONFIG.MIN_WEEK && week <= CONFIG.MAX_WEEK) {
-this.weekOffset += dir;
-this.render();
-}
-}
+            navigate(dir) {
+                const { week } = this.getWeekInfo(dir);
+                if (week >= CONFIG.MIN_WEEK && week <= CONFIG.MAX_WEEK) {
+                    this.weekOffset += dir;
+                    this.render();
+                }
+            }
 
-reset() {
-if (this.weekOffset !== 0) {
-this.weekOffset = 0;
-this.render();
-}
-}
+            reset() {
+                if (this.weekOffset !== 0) {
+                    this.weekOffset = 0;
+                    this.render();
+                }
+            }
 
-render() {
-const { date, week, type } = this.getWeekInfo();
-const prev = this.getWeekInfo(-1);
-const next = this.getWeekInfo(1);
+            render() {
+                const { date, week, type } = this.getWeekInfo();
+                const prev = this.getWeekInfo(-1);
+                const next = this.getWeekInfo(1);
 
-this.dom.dateDisplay.textContent = date.toLocaleDateString('ru-RU', {
-weekday: 'short', day: 'numeric', month: 'numeric', year: 'numeric'
-});
-this.dom.weekNumber.textContent = week;
-this.dom.prevBtn.disabled = prev.week < CONFIG.MIN_WEEK;
-this.dom.nextBtn.disabled = next.week > CONFIG.MAX_WEEK;
-this.dom.resetBtn.disabled = this.weekOffset === 0;
+                this.dom.dateDisplay.textContent = date.toLocaleDateString('ru-RU', {
+                    weekday: 'short', day: 'numeric', month: 'numeric', year: 'numeric'
+                });
+                this.dom.weekNumber.textContent = week;
+                this.dom.prevBtn.disabled = prev.week < CONFIG.MIN_WEEK;
+                this.dom.nextBtn.disabled = next.week > CONFIG.MAX_WEEK;
+                this.dom.resetBtn.disabled = this.weekOffset === 0;
 
-this.dom.schedule.classList.add('schedule--loading');
-setTimeout(() => {
-this.renderSchedule(SCHEDULE[type] || {});
-this.dom.schedule.classList.remove('schedule--loading');
-}, 150);
-}
+                this.dom.schedule.classList.add('schedule--loading');
+                setTimeout(() => {
+                    this.renderSchedule(SCHEDULE[type] || {});
+                    this.dom.schedule.classList.remove('schedule--loading');
+                }, 150);
+            }
 
-renderSchedule(schedule) {
-const today = new Date();
-const todayName = this.weekOffset === 0 ? CONFIG.DAYS[(today.getDay() + 6) % 7] : null;
+            renderSchedule(schedule) {
+                const today = new Date();
+                const todayName = this.weekOffset === 0 ? CONFIG.DAYS[(today.getDay() + 6) % 7] : null;
 
-this.dom.schedule.innerHTML = CONFIG.DAYS
-.filter(day => schedule[day]?.length)
-.map(day => this.createDayCard(day, schedule[day], day === todayName))
-.join('');
-}
+                const html = CONFIG.DAYS
+                    .filter(day => schedule[day]?.length)
+                    .map(day => this.createDayCard(day, schedule[day], day === todayName))
+                    .join('');
 
-createDayCard(day, lessons, isToday) {
-return `
-<article class="day-card ${isToday ? 'day-card--today' : ''}" id="day-${day}">
-<h2 class="day-card__header">${escapeHtml(day)}</h2>
-${lessons.map(l => this.createLesson(l)).join('')}
-</article>`;
-}
+                this.dom.schedule.innerHTML = html || `
+                    <div class="empty-state">
+                        <div class="empty-state__emoji">📚</div>
+                        <h2 class="empty-state__title">Нет занятий</h2>
+                        <p class="empty-state__text">На этой неделе пар нет</p>
+                    </div>`;
+            }
 
-createLesson({ time, name, type, teacher, link }) {
-const hasLink = link && isValidLink(link);
-const tag = hasLink ? 'a' : 'div';
-const attrs = hasLink ? `href="${escapeHtml(link)}" target="_blank" rel="noopener"` : '';
+            createDayCard(day, lessons, isToday) {
+                return `
+                    <article class="day-card ${isToday ? 'day-card--today' : ''}" id="day-${day}">
+                        <h2 class="day-card__header">${escapeHtml(day)}</h2>
+                        ${lessons.map(l => this.createLesson(l)).join('')}
+                    </article>`;
+            }
 
-return `
-<${tag} class="lesson" ${attrs}>
-<div class="lesson__time">
-<svg class="lesson__icon" fill="currentColor" viewBox="0 0 20 20">
-<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-</svg>
-<time>${escapeHtml(time)}</time>
-</div>
-<h3 class="lesson__title">${escapeHtml(name)}</h3>
-<div class="lesson__meta">
-<span class="lesson__tag">${escapeHtml(type)}</span>
-<span class="lesson__teacher">${escapeHtml(teacher)}</span>
-</div>
-</${tag}>`;
-}
-}
+            createLesson({ time, name, type, teacher, link }) {
+                const hasLink = link && isValidLink(link);
+                const tag = hasLink ? 'a' : 'div';
+                const attrs = hasLink ? `href="${escapeHtml(link)}" target="_blank" rel="noopener"` : '';
 
-new ScheduleApp();
-</script>
+                return `
+                    <${tag} class="lesson" ${attrs}>
+                        <div class="lesson__time">
+                            <svg class="lesson__icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                            </svg>
+                            <time>${escapeHtml(time)}</time>
+                        </div>
+                        <h3 class="lesson__title">${escapeHtml(name)}</h3>
+                        <div class="lesson__meta">
+                            <span class="lesson__tag">${escapeHtml(type)}</span>
+                            <span class="lesson__teacher">${escapeHtml(teacher)}</span>
+                        </div>
+                    </${tag}>`;
+            }
+        }
+
+        new ScheduleApp();
+    </script>
 </body>
 </html>

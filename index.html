@@ -2,236 +2,781 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#f0efeb" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FAF9F5" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#262624" media="(prefers-color-scheme: dark)">
+    <meta name="description" content="Расписание занятий МКНм-241">
     <title>Расписание МКНм-241</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@350..600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-body: #f0efeb;
-            --text-main: #2d2d30;
-            --text-sub: #6e6e73;
-            --text-accent: #000000;
-            --card-bg: rgba(255, 255, 255, 0.6);
-            --card-border: rgba(255, 255, 255, 0.5);
-            --lesson-bg: rgba(255, 255, 255, 0.5);
-            --lesson-hover: #ffffff;
-            --nav-bg: #ffffff;
-            --nav-btn-bg: #f7f7f8;
-            --nav-btn-hover: #eeeeee;
-            --tag-bg: rgba(0, 0, 0, 0.04);
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-            --dot-lec: #d4e4f1;
-            --dot-pra: #f0d9cc;
-            --dot-lab: #dbd3dc;
-            --ease: cubic-bezier(0.4, 0.0, 0.2, 1);
+            --color-bg-base: 250 249 245;
+            --color-bg-surface: 255 255 255;
+            --color-text-primary: 61 61 58;
+            --color-text-secondary: 117 117 114;
+            --color-text-tertiary: 161 161 157;
+            --color-accent: 217 119 87;
+            --color-accent-hover: 200 106 74;
+            --color-border: 61 61 58;
+
+            --space-xs: 0.4rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.25rem;
+
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-xl: 1.25rem;
+
+            --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.07), 0 1px 2px rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px rgb(0 0 0 / 0.07), 0 2px 4px rgb(0 0 0 / 0.05);
+            --shadow-lg: 0 10px 15px rgb(0 0 0 / 0.07), 0 4px 6px rgb(0 0 0 / 0.05);
+            --shadow-xl: 0 20px 25px rgb(0 0 0 / 0.07), 0 10px 10px rgb(0 0 0 / 0.04);
+
+            --ease-out: cubic-bezier(0.2, 0.8, 0.4, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duration-fast: 150ms;
+            --duration-base: 300ms;
         }
+
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-body: #121212;
-                --text-main: #e0e0e0;
-                --text-sub: #a0a0a0;
-                --text-accent: #ffffff;
-                --card-bg: rgba(30, 30, 30, 0.6);
-                --card-border: rgba(255, 255, 255, 0.1);
-                --lesson-bg: rgba(45, 45, 45, 0.5);
-                --lesson-hover: #2c2c2c;
-                --nav-bg: #1e1e1e;
-                --nav-btn-bg: #2c2c2c;
-                --nav-btn-hover: #3a3a3a;
-                --tag-bg: rgba(255, 255, 255, 0.1);
-                --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-                --dot-lec: #8ab6d6;
-                --dot-pra: #d6bfae;
-                --dot-lab: #b3a5b5;
+                --color-bg-base: 38 38 36;
+                --color-bg-surface: 47 47 44;
+                --color-text-primary: 242 239 233;
+                --color-text-secondary: 147 145 137;
+                --color-border: 147 145 137;
+                --color-accent: 198 97 63;
+                --color-accent-hover: 224 122 95;
+                --shadow-sm: 0 1px 4px rgb(0 0 0 / 0.4);
+                --shadow-md: 0 4px 8px rgb(0 0 0 / 0.5);
+                --shadow-lg: 0 10px 20px rgb(0 0 0 / 0.6);
             }
         }
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            min-height: 100vh;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .app-container {
-            width: 100%;
-            max-width: 1200px;
-            padding: 20px 20px 120px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-        .header { margin-top: 10px; padding: 0 10px; text-align: left; }
-        .header__label { font-size: 0.85rem; color: var(--text-sub); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-        .header__title { font-size: 2.5rem; font-weight: 300; letter-spacing: -0.03em; color: var(--text-accent); line-height: 1.1; }
-        .schedule-grid { display: flex; flex-direction: column; gap: 16px; opacity: 1; transition: opacity 0.25s var(--ease), transform 0.25s var(--ease); }
-        .schedule-grid.fade-out { opacity: 0; transform: translateY(10px); }
-        @media (min-width: 768px) {
-            .schedule-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); align-items: start; gap: 24px; }
-            .header { padding-left: 20px; margin-top: 40px; margin-bottom: 20px; }
-        }
-        .day-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            box-shadow: var(--shadow);
-        }
-        .day-card--today {
-            background: var(--card-bg);
-            border: 2px solid var(--text-main);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-        .day-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--card-border); margin-bottom: 4px; }
-        .day-title { font-size: 1.1rem; font-weight: 600; color: var(--text-main); }
-        .today-badge { font-size: 0.7rem; font-weight: 700; color: var(--bg-body); background: var(--text-main); padding: 4px 12px; border-radius: 100px; }
-        .lesson {
-            position: relative;
-            padding: 12px 16px;
-            background: var(--lesson-bg);
-            border-radius: 16px;
-            text-decoration: none;
-            color: inherit;
-            transition: background 0.2s, transform 0.2s;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .lesson:hover { background: var(--lesson-hover); box-shadow: var(--shadow); transform: translateY(-2px); }
-        .lesson__time { font-size: 0.75rem; font-weight: 600; color: var(--text-sub); display: flex; align-items: center; gap: 8px; }
-        
-        /* Кружочки без обводки */
-        .lesson__time::before {
-            content: ''; width: 8px; height: 8px; border-radius: 50%;
-            background: #d1d1d6;
-        }
-        .lesson[data-type="Лекция"] .lesson__time::before { background: var(--dot-lec); }
-        .lesson[data-type="Практика"] .lesson__time::before { background: var(--dot-pra); }
-        .lesson[data-type="Лабораторная"] .lesson__time::before { background: var(--dot-lab); }
 
-        .lesson__name { font-size: 0.95rem; font-weight: 500; line-height: 1.4; color: var(--text-main); }
-        .lesson__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-        .tag { font-size: 0.7rem; padding: 3px 10px; border-radius: 6px; background: var(--tag-bg); color: var(--text-sub); }
-        .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 100; pointer-events: none; }
-        .nav-pill { pointer-events: auto; background: var(--nav-bg); padding: 6px; border-radius: 100px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid var(--card-border); display: flex; align-items: center; gap: 8px; }
-        .nav-btn { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--nav-btn-bg); color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-        .nav-btn:hover:not(:disabled) { background: var(--nav-btn-hover); transform: scale(1.05); }
-        .nav-btn:active:not(:disabled) { transform: scale(0.95); }
-        .nav-btn:disabled { opacity: 0.4; cursor: default; }
-        .nav-info { padding: 0 16px; text-align: center; min-width: 90px; cursor: pointer; border-radius: 12px; }
-        .nav-info:hover { background: var(--tag-bg); }
-        .nav-info__label { font-size: 0.65rem; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.1em; }
-        .nav-info__val { font-size: 1.1rem; font-weight: 600; color: var(--text-accent); }
-        .empty-state { grid-column: 1 / -1; text-align: center; padding: 80px 20px; color: var(--text-sub); background: var(--card-bg); border-radius: 24px; border: 1px solid var(--card-border); }
-        .empty-icon { font-size: 3rem; display: block; margin-bottom: 16px; opacity: 0.5; filter: grayscale(1); }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            font-size: var(--text-base);
+            font-weight: 400;
+            line-height: 1.5;
+            color: rgb(var(--color-text-primary));
+            background: rgb(var(--color-bg-base));
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+            max-width: 56rem;
+            margin: 0 auto;
+            padding: var(--space-lg);
+            min-height: 100vh;
+            padding-bottom: calc(6rem + env(safe-area-inset-bottom));
+        }
+
+        .header {
+            animation: headerSlideIn 0.6s var(--ease-spring) both;
+        }
+
+        @keyframes headerSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header__date {
+            font-size: var(--text-xl);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, rgb(var(--color-text-primary)) 0%, rgb(var(--color-text-secondary)) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .week-nav {
+            position: fixed;
+            bottom: max(env(safe-area-inset-bottom), var(--space-md));
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            background: rgb(var(--color-bg-surface) / 0.8);
+            backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgb(var(--color-border) / 0.08);
+            border-radius: var(--radius-xl);
+            padding: var(--space-sm);
+            box-shadow: var(--shadow-lg);
+            transition: all var(--duration-base) var(--ease-out);
+            animation: bottomBarSlideUp 0.5s var(--ease-spring) both;
+        }
+
+        @keyframes bottomBarSlideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .week-nav:hover {
+            box-shadow: var(--shadow-xl);
+            border-color: rgb(var(--color-border) / 0.12);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 3rem;
+            padding: 0 var(--space-lg);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: rgb(var(--color-text-secondary));
+            background: transparent;
+            border: 1px solid rgb(var(--color-border) / 0.08);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: all var(--duration-base) var(--ease-out);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn--icon {
+            width: 3rem;
+            padding: 0;
+        }
+
+        .btn:hover:not(:disabled) {
+            color: rgb(var(--color-text-primary));
+            border-color: rgb(var(--color-border) / 0.12);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(0) scale(0.98);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .btn--primary {
+            color: rgb(var(--color-accent));
+            border-color: rgb(var(--color-accent) / 0.1);
+            background: rgb(var(--color-accent) / 0.1);
+            min-width: 4rem;
+            font-weight: 600;
+            font-size: var(--text-base);
+        }
+
+        .btn--primary:hover:not(:disabled) {
+            color: rgb(var(--color-accent-hover));
+            background: rgb(var(--color-accent) / 0.15);
+            border-color: rgb(var(--color-accent) / 0.2);
+        }
+
+        .btn__icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            stroke-width: 2;
+            transition: transform var(--duration-fast) var(--ease-out);
+        }
+
+        .btn:hover .btn__icon {
+            transform: scale(1.1);
+        }
+
+        .schedule {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+            transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-base) var(--ease-out);
+            flex: 1;
+        }
+
+        .schedule--loading {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .day-card {
+            background: rgb(var(--color-bg-surface));
+            border: 1px solid rgb(var(--color-border) / 0.08);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            animation: cardSlideIn 0.5s var(--ease-spring) both;
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        @keyframes cardSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .day-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgb(var(--color-border) / 0.12);
+        }
+
+        .day-card:nth-child(1) { animation-delay: 0.1s; }
+        .day-card:nth-child(2) { animation-delay: 0.2s; }
+        .day-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .day-card__header {
+            padding: var(--space-md);
+            font-size: var(--text-base);
+            font-weight: 500;
+            background: rgb(var(--color-bg-surface));
+            border-bottom: 1px solid rgb(var(--color-border) / 0.08);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            transition: background-color var(--duration-base) var(--ease-out);
+        }
+
+        .day-card__header::before {
+            content: '';
+            width: 0.5rem;
+            height: 0.5rem;
+            background: rgb(var(--color-accent));
+            border-radius: 50%;
+            flex-shrink: 0;
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .day-card--today .day-card__header {
+            background: rgb(var(--color-accent) / 0.12);
+        }
+
+        .day-card--today .day-card__header::before {
+            transform: scale(1.4);
+            box-shadow: 0 0 6px rgb(var(--color-accent));
+        }
+
+        .day-card:hover .day-card__header::before {
+            transform: scale(1.3);
+            background: rgb(var(--color-accent-hover));
+        }
+
+        .lesson {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+            padding: var(--space-md);
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px solid rgb(var(--color-border) / 0.08);
+            transition: all var(--duration-base) var(--ease-out);
+            animation: lessonSlideIn 0.6s var(--ease-out) both;
+        }
+
+        @keyframes lessonSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .lesson:last-child {
+            border-bottom: none;
+        }
+
+        .lesson:nth-child(1) { animation-delay: 0.15s; }
+        .lesson:nth-child(2) { animation-delay: 0.25s; }
+        .lesson:nth-child(3) { animation-delay: 0.35s; }
+
+        .lesson--clickable {
+            cursor: pointer;
+        }
+
+        .lesson--clickable:hover {
+            background: rgb(var(--color-accent) / 0.12);
+            transform: translateX(8px);
+            border-color: rgb(var(--color-accent) / 0.1);
+        }
+
+        .lesson--clickable:active {
+            transform: translateX(8px) scale(0.98);
+        }
+
+        .lesson__time {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: rgb(var(--color-text-tertiary));
+            transition: color var(--duration-base) var(--ease-out);
+        }
+
+        .lesson--clickable:hover .lesson__time {
+            color: rgb(var(--color-accent));
+        }
+
+        .lesson__icon {
+            width: 0.9rem;
+            height: 0.9rem;
+            color: rgb(var(--color-accent));
+            flex-shrink: 0;
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson--clickable:hover .lesson__icon {
+            transform: scale(1.2) rotate(5deg);
+            color: rgb(var(--color-accent-hover));
+        }
+
+        .lesson__title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            line-height: 1.35;
+            color: rgb(var(--color-text-primary));
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson--clickable:hover .lesson__title {
+            color: rgb(var(--color-accent));
+            transform: translateX(2px);
+        }
+
+        .lesson__meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+
+        .lesson__tag {
+            padding: 0.25rem var(--space-sm);
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: rgb(var(--color-accent));
+            background: rgb(var(--color-accent) / 0.1);
+            border-radius: var(--radius-md);
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson--clickable:hover .lesson__tag {
+            background: rgb(var(--color-accent));
+            color: rgb(var(--color-bg-surface));
+            transform: translateY(-2px);
+        }
+
+        .lesson__teacher {
+            font-size: 0.8rem;
+            color: rgb(var(--color-text-secondary));
+            transition: all var(--duration-base) var(--ease-out);
+        }
+
+        .lesson--clickable:hover .lesson__teacher {
+            color: rgb(var(--color-text-primary));
+            transform: translateX(2px);
+        }
+
+        @media (max-width: 768px) {
+            .app {
+                padding-inline: var(--space-md);
+                gap: var(--space-lg);
+            }
+
+            .lesson--clickable:hover {
+                transform: translateX(4px);
+            }
+
+            .lesson--clickable:active {
+                transform: translateX(4px) scale(0.98);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .btn {
+                height: 2.75rem;
+                padding: 0 var(--space-md);
+            }
+
+            .btn--icon {
+                width: 2.75rem;
+            }
+
+            .btn--primary {
+                min-width: 3.5rem;
+                font-size: var(--text-sm);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .lesson--clickable:hover,
+            .day-card:hover,
+            .btn:hover:not(:disabled) {
+                transform: none !important;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="app-container">
+    <div class="app">
         <header class="header">
-            <div class="header__label" id="yearDisplay">2024</div>
-            <h1 class="header__title" id="dateDisplay">...</h1>
+            <h1 class="header__date" id="dateDisplay"></h1>
         </header>
-        <main class="schedule-grid" id="schedule"></main>
-    </div>
-    <div class="nav-wrapper">
-        <nav class="nav-pill">
-            <button class="nav-btn" id="prevBtn" aria-label="Назад">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+
+        <main class="schedule" id="schedule"></main>
+
+        <nav class="week-nav" aria-label="Навигация по неделям">
+            <button class="btn btn--icon" id="prevBtn" aria-label="Предыдущая неделя" type="button">
+                <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
             </button>
-            <div class="nav-info" id="resetBtn" role="button">
-                <div class="nav-info__label">Неделя</div>
-                <div class="nav-info__val" id="weekNumber">--</div>
-            </div>
-            <button class="nav-btn" id="nextBtn" aria-label="Вперед">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            <button class="btn btn--primary" id="resetBtn" type="button">
+                <span id="weekNumber"></span>
+            </button>
+            <button class="btn btn--icon" id="nextBtn" aria-label="Следующая неделя" type="button">
+                <svg class="btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
             </button>
         </nav>
     </div>
-<script>
-    const CONFIG={MIN:20,MAX:39,START:{m:8,d:1},DAYS:['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'],MS:604800000};
-    const DATA={
-        odd:{'Среда':[{t:'15:30 – 17:05',n:'Современные численные методы',y:'Лекция',p:'зав. кафедрой Гудов А.М.',l:'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'},{t:'17:15 – 18:50',n:'Анализ безопасности веб-приложений',y:'Лекция',p:'доц. Саблинский А.И.'},{t:'19:00 – 20:35',n:'Анализ безопасности веб-приложений',y:'Лабораторная',p:'доц. Саблинский А.И.'}]},
-        even:{'Среда':[{t:'15:30 – 17:05',n:'Современные численные методы',y:'Практика',p:'зав. кафедрой Гудов А.М.',l:'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'}],'Пятница':[{t:'17:15 – 18:50',n:'Математические методы и модели кодирования и криптографии',y:'Лекция',p:'доц. Сергеева О.А.'},{t:'19:00 – 20:35',n:'Математические методы и модели кодирования и криптографии',y:'Лабораторная',p:'доц. Сергеева О.А.'}]}
-    };
-    const getWeek=d=>{
-        const y=d.getMonth()<CONFIG.START.m?d.getFullYear()-1:d.getFullYear();
-        const s=new Date(y,CONFIG.START.m,CONFIG.START.d);
-        s.setDate(s.getDate()-((s.getDay()+6)%7));
-        return Math.ceil((d-s)/CONFIG.MS);
-    };
-    const addW=(d,w)=>{const r=new Date(d);r.setDate(r.getDate()+w*7);return r;};
-    const esc=s=>s?document.createElement('div').appendChild(document.createTextNode(s)).parentNode.innerHTML:'';
-    
-    class App {
-        constructor() {
-            this.off=0;
-            this.ui={
-                y:document.getElementById('yearDisplay'),
-                d:document.getElementById('dateDisplay'),
-                s:document.getElementById('schedule'),
-                w:document.getElementById('weekNumber'),
-                p:document.getElementById('prevBtn'),
-                n:document.getElementById('nextBtn'),
-                r:document.getElementById('resetBtn')
-            };
-            this.ui.p.onclick=()=>this.go(-1);
-            this.ui.n.onclick=()=>this.go(1);
-            this.ui.r.onclick=()=>this.rst();
-            document.onkeydown=e=>!e.target.closest('input')&&{ArrowLeft:-1,ArrowRight:1,Home:0}[e.key]!==undefined&&(e.key==='Home'?this.rst():this.go({ArrowLeft:-1,ArrowRight:1}[e.key]));
-            this.draw();
-        }
-        state(o=0){
-            const d=addW(new Date(),this.off+o), w=getWeek(d);
-            return {d,w,t:w%2===0?'even':'odd'};
-        }
-        go(d){
-            const w=this.state(d).w;
-            if(w>=CONFIG.MIN&&w<=CONFIG.MAX){
-                this.ui.s.classList.add('fade-out');
-                setTimeout(()=>{this.off+=d;this.draw();this.ui.s.classList.remove('fade-out');},250);
+
+    <script type="module">
+        const CONFIG = Object.freeze({
+            WEEK_RANGE: Object.freeze({ MIN: 20, MAX: 39 }),
+            SEMESTER_START: Object.freeze({ MONTH: 8, DAY: 1 }),
+            DAYS_OF_WEEK: Object.freeze([
+                'Понедельник',
+                'Вторник',
+                'Среда',
+                'Четверг',
+                'Пятница',
+                'Суббота'
+            ]),
+            LOCALE: 'ru-RU',
+            MS_IN_WEEK: 604800000,
+            TRANSITION_DURATION: 150,
+            SCROLL_DELAY: 500
+        });
+
+        const SCHEDULE = Object.freeze({
+            odd: Object.freeze({
+                'Среда': Object.freeze([
+                    Object.freeze({
+                        time: '15:30 – 17:05',
+                        name: 'Современные численные методы',
+                        type: 'Лекция',
+                        teacher: 'зав. кафедрой Гудов А.М.',
+                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
+                    }),
+                    Object.freeze({
+                        time: '17:15 – 18:50',
+                        name: 'Анализ безопасности веб-приложений',
+                        type: 'Лекция',
+                        teacher: 'доц. Саблинский А.И.'
+                    }),
+                    Object.freeze({
+                        time: '19:00 – 20:35',
+                        name: 'Анализ безопасности веб-приложений',
+                        type: 'Лабораторная',
+                        teacher: 'доц. Саблинский А.И.'
+                    })
+                ])
+            }),
+            even: Object.freeze({
+                'Среда': Object.freeze([
+                    Object.freeze({
+                        time: '15:30 – 17:05',
+                        name: 'Современные численные методы',
+                        type: 'Практика',
+                        teacher: 'зав. кафедрой Гудов А.М.',
+                        link: 'https://bbb.kemsu.ru/b/nt9-332-k4x-2pe'
+                    })
+                ]),
+                'Пятница': Object.freeze([
+                    Object.freeze({
+                        time: '17:15 – 18:50',
+                        name: 'Математические методы и модели кодирования и криптографии',
+                        type: 'Лекция',
+                        teacher: 'доц. Сергеева О.А.'
+                    }),
+                    Object.freeze({
+                        time: '19:00 – 20:35',
+                        name: 'Математические методы и модели кодирования и криптографии',
+                        type: 'Лабораторная',
+                        teacher: 'доц. Сергеева О.А.'
+                    })
+                ])
+            })
+        });
+
+        const CLOCK_ICON = `<svg class="lesson__icon" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+        </svg>`;
+
+        const DateUtils = Object.freeze({
+            getAcademicWeek(date) {
+                const year = date.getFullYear();
+                const month = date.getMonth();
+                const startYear = month < CONFIG.SEMESTER_START.MONTH ? year - 1 : year;
+                const semesterStart = new Date(startYear, CONFIG.SEMESTER_START.MONTH, CONFIG.SEMESTER_START.DAY);
+
+                const dayOfWeek = semesterStart.getDay();
+                const firstMonday = new Date(semesterStart);
+                firstMonday.setDate(semesterStart.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+
+                return Math.ceil((date - firstMonday) / CONFIG.MS_IN_WEEK);
+            },
+
+            addWeeks(date, weeks) {
+                const result = new Date(date);
+                result.setDate(result.getDate() + weeks * 7);
+                return result;
+            },
+
+            formatDate(date) {
+                return date.toLocaleDateString(CONFIG.LOCALE, {
+                    weekday: 'short',
+                    day: 'numeric',
+                    month: 'numeric',
+                    year: 'numeric'
+                });
+            },
+
+            getTodayName() {
+                const dayIndex = new Date().getDay();
+                return CONFIG.DAYS_OF_WEEK[dayIndex === 0 ? 6 : dayIndex - 1] || null;
+            }
+        });
+
+        const HtmlUtils = Object.freeze({
+            escape(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            },
+
+            isValidHttpsUrl(url) {
+                try {
+                    return new URL(url).protocol === 'https:';
+                } catch {
+                    return false;
+                }
+            }
+        });
+
+        class ScheduleApp {
+            #weekOffset = 0;
+            #elements = {};
+            #abortController = null;
+
+            constructor() {
+                this.#cacheElements();
+                this.#bindEvents();
+                this.#render();
+            }
+
+            #cacheElements() {
+                this.#elements = {
+                    dateDisplay: document.getElementById('dateDisplay'),
+                    prevBtn: document.getElementById('prevBtn'),
+                    nextBtn: document.getElementById('nextBtn'),
+                    resetBtn: document.getElementById('resetBtn'),
+                    weekNumber: document.getElementById('weekNumber'),
+                    schedule: document.getElementById('schedule')
+                };
+            }
+
+            #bindEvents() {
+                this.#abortController?.abort();
+                this.#abortController = new AbortController();
+                const { signal } = this.#abortController;
+
+                this.#elements.prevBtn.addEventListener('click', () => this.#navigate(-1), { signal });
+                this.#elements.nextBtn.addEventListener('click', () => this.#navigate(1), { signal });
+                this.#elements.resetBtn.addEventListener('click', () => this.#reset(), { signal });
+                document.addEventListener('keydown', this.#handleKeydown.bind(this), { signal });
+            }
+
+            #handleKeydown(event) {
+                if (event.target.closest('input, textarea, select')) return;
+
+                switch (event.key) {
+                    case 'ArrowLeft':
+                        event.preventDefault();
+                        this.#navigate(-1);
+                        break;
+                    case 'ArrowRight':
+                        event.preventDefault();
+                        this.#navigate(1);
+                        break;
+                    case 'Home':
+                        event.preventDefault();
+                        this.#reset();
+                        break;
+                }
+            }
+
+            #getWeekInfo(offset = 0) {
+                const date = DateUtils.addWeeks(new Date(), this.#weekOffset + offset);
+                const weekNumber = DateUtils.getAcademicWeek(date);
+                const scheduleType = weekNumber % 2 === 0 ? 'even' : 'odd';
+                return { date, weekNumber, scheduleType };
+            }
+
+            #navigate(direction) {
+                const { weekNumber } = this.#getWeekInfo(direction);
+                const { MIN, MAX } = CONFIG.WEEK_RANGE;
+
+                if (weekNumber >= MIN && weekNumber <= MAX) {
+                    this.#weekOffset += direction;
+                    this.#render();
+                }
+            }
+
+            #reset() {
+                if (this.#weekOffset !== 0) {
+                    this.#weekOffset = 0;
+                    this.#render();
+                }
+            }
+
+            #render() {
+                const { date, weekNumber, scheduleType } = this.#getWeekInfo();
+                const prevWeek = this.#getWeekInfo(-1).weekNumber;
+                const nextWeek = this.#getWeekInfo(1).weekNumber;
+                const { MIN, MAX } = CONFIG.WEEK_RANGE;
+
+                this.#elements.dateDisplay.textContent = DateUtils.formatDate(date);
+                this.#elements.weekNumber.textContent = weekNumber;
+                this.#elements.prevBtn.disabled = prevWeek < MIN;
+                this.#elements.nextBtn.disabled = nextWeek > MAX;
+                this.#elements.resetBtn.disabled = this.#weekOffset === 0;
+
+                this.#renderSchedule(scheduleType);
+            }
+
+            #renderSchedule(scheduleType) {
+                const container = this.#elements.schedule;
+                container.classList.add('schedule--loading');
+
+                setTimeout(() => {
+                    const schedule = SCHEDULE[scheduleType] || {};
+                    const todayName = this.#weekOffset === 0 ? DateUtils.getTodayName() : null;
+
+                    container.innerHTML = CONFIG.DAYS_OF_WEEK
+                        .filter(day => schedule[day]?.length)
+                        .map(day => this.#renderDayCard(day, schedule[day], day === todayName))
+                        .join('');
+
+                    container.classList.remove('schedule--loading');
+                    this.#scrollToToday(todayName);
+                }, CONFIG.TRANSITION_DURATION);
+            }
+
+            #renderDayCard(day, lessons, isToday) {
+                const escapedDay = HtmlUtils.escape(day);
+                return `
+                    <article class="day-card${isToday ? ' day-card--today' : ''}" id="day-${escapedDay}">
+                        <h2 class="day-card__header">${escapedDay}</h2>
+                        <div class="day-card__lessons">
+                            ${lessons.map(lesson => this.#renderLesson(lesson)).join('')}
+                        </div>
+                    </article>
+                `;
+            }
+
+            #renderLesson({ time, name, type, teacher, link }) {
+                const hasLink = link && HtmlUtils.isValidHttpsUrl(link);
+                const tag = hasLink ? 'a' : 'div';
+                const attrs = hasLink ? `href="${HtmlUtils.escape(link)}" target="_blank" rel="noopener noreferrer"` : '';
+                const clickableClass = hasLink ? ' lesson--clickable' : '';
+
+                return `
+                    <${tag} class="lesson${clickableClass}" ${attrs}>
+                        <div class="lesson__time">
+                            ${CLOCK_ICON}
+                            <time>${HtmlUtils.escape(time)}</time>
+                        </div>
+                        <h3 class="lesson__title">${HtmlUtils.escape(name)}</h3>
+                        <div class="lesson__meta">
+                            <span class="lesson__tag">${HtmlUtils.escape(type)}</span>
+                            <span class="lesson__teacher">${HtmlUtils.escape(teacher)}</span>
+                        </div>
+                    </${tag}>
+                `;
+            }
+
+            #scrollToToday(todayName) {
+                if (this.#weekOffset !== 0 || !todayName) return;
+
+                const element = document.getElementById(`day-${todayName}`);
+                if (element) {
+                    setTimeout(() => {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, CONFIG.SCROLL_DELAY);
+                }
+            }
+
+            destroy() {
+                this.#abortController?.abort();
             }
         }
-        rst(){
-            if(this.off!==0){
-                this.ui.s.classList.add('fade-out');
-                setTimeout(()=>{this.off=0;this.draw();this.ui.s.classList.remove('fade-out');},250);
-            }
-        }
-        draw(){
-            const {d,w,t}=this.state(), p=this.state(-1), n=this.state(1);
-            this.ui.y.textContent=d.getFullYear();
-            this.ui.d.innerHTML=d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'});
-            this.ui.w.textContent=w;
-            this.ui.p.disabled=p.w<CONFIG.MIN;
-            this.ui.n.disabled=n.w>CONFIG.MAX;
-            this.ui.r.style.opacity=this.off===0?'0.4':'1';
-            
-            const sch=DATA[t]||{}, tds=CONFIG.DAYS.filter(k=>sch[k]?.length), today=(new Date().getDay()+6)%7;
-            this.ui.s.innerHTML=!tds.length?
-                `<div class="empty-state"><span class="empty-icon">🍃</span><p>Свободная неделя</p></div>`:
-                tds.map(k=>this.card(k,sch[k],this.off===0&&CONFIG.DAYS[today]===k)).join('');
-        }
-        card(d,ls,now){
-            return `<article class="day-card ${now?'day-card--today':''}"><div class="day-header"><h2 class="day-title">${esc(d)}</h2>${now?'<span class="today-badge">Сегодня</span>':''}</div><div style="display:flex;flex-direction:column;gap:8px">${ls.map(l=>this.item(l)).join('')}</div></article>`;
-        }
-        item(l){
-            const tag=l.l&&l.l.startsWith('https')?'a':'div', att=tag==='a'?`href="${esc(l.l)}" target="_blank"`:'';
-            return `<${tag} class="lesson" ${att} data-type="${esc(l.y)}"><div class="lesson__time">${esc(l.t)}</div><div class="lesson__name">${esc(l.n)}</div><div class="lesson__meta"><span class="tag">${esc(l.y)}</span><span class="tag">${esc(l.p)}</span></div></${tag}>`;
-        }
-    }
-    new App();
-</script>
+
+        new ScheduleApp();
+    </script>
 </body>
 </html>
